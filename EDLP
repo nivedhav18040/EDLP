@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ManageEngine Endpoint DLP</title>
+
+<style>
+:root{
+  --blue:#1e4fa3;
+  --blue-dark:#143a78;
+  --red:#e53935;
+  --ink:#0f172a;
+  --muted:#5b6b84;
+  --bg:#f6f9ff;
+  --card:#ffffff;
+  --shadow:0 20px 60px rgba(2,10,30,.12);
+  --soft-shadow:0 14px 40px rgba(2,10,30,.10);
+  --radius:22px;
+}
+
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Segoe UI,Arial,sans-serif;}
+body{background:#fff;color:var(--ink);}
+a{text-decoration:none;color:inherit;}
+.wrap{width:min(1180px,92%);margin:auto;}
+
+/* HEADER */
+.header{
+  position:absolute;top:0;left:0;width:100%;
+  padding:20px 60px;
+  display:flex;justify-content:space-between;align-items:center;
+  z-index:10;
+}
+.header img{height:42px;}
+.nav{display:flex;gap:22px;align-items:center;flex-wrap:wrap;}
+.nav a{color:#fff;font-size:14px;font-weight:600;}
+.nav a.cta{
+  background:var(--red);
+  padding:10px 16px;
+  border-radius:8px;
+  box-shadow:0 14px 30px rgba(229,57,53,.25);
+}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  background:linear-gradient(135deg,var(--blue-dark),var(--blue));
+  color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;
+  padding:140px 20px 90px;
+}
+.hero h1{
+  font-size:56px;font-weight:900;line-height:1.15;
+  max-width:980px;margin:auto;
+}
+.hero h1 span{color:#bcd4ff;}
+.hero p{
+  font-size:18px;max-width:760px;
+  margin:26px auto 40px;
+  line-height:1.7;
+}
+.hero-actions{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;}
+.hero-actions a{
+  padding:16px 34px;border-radius:12px;
+  font-weight:800;font-size:16px;
+}
+.primary{background:var(--red);color:#fff;}
+.secondary{
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.35);
+  color:#fff;
+}
+.hero-note{margin-top:22px;font-size:14px;opacity:.85;}
+
+/* TRUSTED */
+.trusted{background:#f9fbff;padding:70px 0;text-align:center;}
+.trusted h3{font-size:14px;letter-spacing:1.8px;color:#6b7280;margin-bottom:40px;}
+.trusted-logos{display:flex;flex-wrap:wrap;gap:28px;justify-content:center;}
+.logo-box{
+  background:#fff;padding:18px 26px;border-radius:14px;
+  box-shadow:0 10px 25px rgba(0,0,0,.06);
+  border:1px solid rgba(15,23,42,.06);
+  font-weight:800;color:#64748b;
+}
+
+/* STATS */
+.stats{padding:90px 0;}
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:40px;text-align:center;
+}
+.stat{
+  padding:30px;border-radius:16px;
+  background:#fff;
+  border:1px solid rgba(15,23,42,.06);
+  box-shadow:var(--soft-shadow);
+  transition:.3s ease;
+}
+.stat:hover{transform:scale(1.08);box-shadow:var(--shadow);}
+.stat h2{font-size:46px;color:var(--blue);font-weight:900;}
+.stat p{margin-top:10px;color:#475569;font-size:15px;}
+
+/* TESTIMONIALS */
+.testimonials{padding:90px 0;background:#fff;}
+.testimonial-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:34px;
+}
+.testimonial{
+  background:#f9fbff;
+  border-radius:20px;
+  padding:40px;
+  border:1px solid rgba(15,23,42,.06);
+  box-shadow:0 20px 45px rgba(0,0,0,.08);
+}
+.testimonial p{font-size:17px;line-height:1.7;margin-bottom:26px;}
+.role{font-weight:900;color:var(--blue);}
+.org{font-size:14px;color:#64748b;}
+
+/* SECTION COMMON */
+.section{padding:90px 0;}
+.section.soft{background:var(--bg);}
+.kicker{
+  font-size:13px;font-weight:900;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--blue);
+}
+.title{
+  font-size:42px;font-weight:900;margin:14px 0;
+}
+.title span{color:var(--blue);}
+.sub{max-width:860px;font-size:17px;color:var(--muted);line-height:1.7;margin-bottom:36px;}
+
+/* FEATURE SPLIT */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+@media(max-width:900px){.split{grid-template-columns:1fr;}}
+.card{
+  background:#fff;border-radius:var(--radius);
+  padding:34px;
+  border:1px solid rgba(15,23,42,.06);
+  box-shadow:var(--soft-shadow);
+}
+.card h3{font-size:26px;margin-bottom:10px;}
+.card p{color:var(--muted);margin-bottom:18px;}
+.list{list-style:none;display:grid;gap:12px;}
+.list li{display:flex;gap:12px;align-items:flex-start;}
+.check{
+  width:22px;height:22px;border-radius:6px;
+  background:rgba(30,79,163,.12);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--blue);font-weight:900;
+}
+
+/* OUTCOMES */
+.outcomes{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:900px){.outcomes{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:520px){.outcomes{grid-template-columns:1fr;}}
+.outcome{
+  background:#fff;padding:22px;border-radius:18px;
+  border:1px solid rgba(15,23,42,.06);
+  box-shadow:var(--soft-shadow);
+}
+.outcome b{display:block;margin-bottom:8px;}
+
+/* PRICING */
+.pricing{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+@media(max-width:900px){.pricing{grid-template-columns:1fr;}}
+.price-card{
+  background:#fff;padding:34px;border-radius:var(--radius);
+  border:1px solid rgba(15,23,42,.06);
+  box-shadow:var(--soft-shadow);
+}
+.price-card.featured{border:2px solid var(--blue);}
+.plan{font-weight:900;color:var(--blue);}
+.price{font-size:40px;font-weight:900;margin:10px 0;}
+.price small{font-size:14px;color:var(--muted);}
+.btns{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;}
+.btn{
+  padding:14px 18px;border-radius:12px;
+  font-weight:900;font-size:14px;
+}
+.btn.primary{background:var(--red);color:#fff;}
+.btn.ghost{background:rgba(30,79,163,.1);color:var(--blue);}
+
+/* FAQ */
+.faq{max-width:980px;margin:auto;display:grid;gap:12px;}
+.qa{border:1px solid rgba(15,23,42,.08);border-radius:16px;overflow:hidden;}
+.q{padding:18px;font-weight:900;cursor:pointer;background:#fff;}
+.a{padding:0 18px 18px;color:var(--muted);display:none;}
+.qa.open .a{display:block;}
+
+/* FOOTER */
+.footer{
+  background:linear-gradient(180deg,#0b1b3f,#07122b);
+  color:#fff;padding:70px 0 26px;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr 1fr;
+  gap:30px;
+}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:520px){.footer-grid{grid-template-columns:1fr;}}
+.footer img{height:36px;filter:brightness(0) invert(1);}
+.footer a{color:rgba(255,255,255,.8);display:block;margin:8px 0;}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,.15);
+  margin-top:30px;padding-top:18px;
+  font-size:13px;color:rgba(255,255,255,.7);
+  display:flex;justify-content:space-between;flex-wrap:wrap;
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <img src="Endpoint DLP Plus_with ME_Black.png" alt="Endpoint DLP">
+  <nav class="nav">
+    <a href="https://www.manageengine.com/endpoint-dlp/features.html">Features</a>
+    <a href="https://www.manageengine.com/endpoint-dlp/request-demo.html">Demo</a>
+    <a href="https://www.manageengine.com/endpoint-dlp/help.html">Resources</a>
+    <a href="https://www.manageengine.com/endpoint-dlp/support.html">Support</a>
+    <a href="https://www.manageengine.com/endpoint-dlp/get-quote.html">Get quote</a>
+    <a class="cta" href="https://www.manageengine.com/endpoint-dlp/download.html">Download</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div>
+    <h1>Prevent data leaks <br><span>without slowing your workforce</span></h1>
+    <p>Discover, classify, and protect sensitive data across endpoints—without interrupting how users work.</p>
+    <div class="hero-actions">
+      <a class="primary" href="https://www.manageengine.com/products/desktop-central/cloud">Get started</a>
+      <a class="secondary" href="https://www.manageengine.com/endpoint-dlp/request-demo.html">Request demo</a>
+    </div>
+    <div class="hero-note">30-day free trial • No credit card required • Free forever for up to 25 devices</div>
+  </div>
+</section>
+
+<section class="trusted">
+  <div class="wrap">
+    <h3>TRUSTED BY LEADING BRANDS WORLDWIDE</h3>
+    <div class="trusted-logos">
+      <div class="logo-box">Brand logo</div>
+      <div class="logo-box">Brand logo</div>
+      <div class="logo-box">Brand logo</div>
+      <div class="logo-box">Brand logo</div>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="wrap stats-grid">
+    <div class="stat"><h2>5M+</h2><p>endpoints protected</p></div>
+    <div class="stat"><h2>6+</h2><p>years in the industry</p></div>
+    <div class="stat"><h2>100+</h2><p>countries served</p></div>
+    <div class="stat"><h2>5000+</h2><p>organizations worldwide</p></div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="wrap testimonial-grid">
+    <div class="testimonial">
+      <p>“We started in audit mode and enforced policies gradually. The visibility was invaluable.”</p>
+      <div class="role">Security Administrator</div>
+      <div class="org">Enterprise environment</div>
+    </div>
+    <div class="testimonial">
+      <p>“Endpoint DLP protected data without disrupting everyday workflows.”</p>
+      <div class="role">IT Operations Manager</div>
+      <div class="org">Distributed workforce</div>
+    </div>
+  </div>
+</section>
+
+<section class="section soft">
+  <div class="wrap">
+    <div class="kicker">Capabilities</div>
+    <h2 class="title"><span>Discover</span> sensitive data, then <span>control</span> its movement</h2>
+    <p class="sub">Identify what’s sensitive first, then enforce clear boundaries across endpoints.</p>
+
+    <div class="split">
+      <div class="card">
+        <h3>Data discovery & classification</h3>
+        <p>Locate and label sensitive files using built-in or custom templates.</p>
+        <ul class="list">
+          <li><span class="check">✓</span>Endpoint-wide scans</li>
+          <li><span class="check">✓</span>Predefined and custom rules</li>
+          <li><span class="check">✓</span>Pattern & fingerprint matching</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Data movement protection</h3>
+        <p>Prevent unauthorized sharing without blocking productivity.</p>
+        <ul class="list">
+          <li><span class="check">✓</span>Cloud & web upload control</li>
+          <li><span class="check">✓</span>Email attachment protection</li>
+          <li><span class="check">✓</span>USB & peripheral monitoring</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="kicker">Impact</div>
+    <h2 class="title">Security outcomes that <span>matter</span></h2>
+    <div class="outcomes">
+      <div class="outcome"><b>Data visibility</b><p>Know where sensitive data resides.</p></div>
+      <div class="outcome"><b>Reduced leakage</b><p>Stop risky transfers in real time.</p></div>
+      <div class="outcome"><b>Policy accuracy</b><p>Fewer false positives.</p></div>
+      <div class="outcome"><b>Audit readiness</b><p>Compliance-ready reports.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section soft">
+  <div class="wrap">
+    <div class="kicker">Pricing</div>
+    <h2 class="title">Simple pricing for every <span>scale</span></h2>
+
+    <div class="pricing">
+      <div class="price-card">
+        <div class="plan">Free</div>
+        <div class="price">$0 <small>/ year</small></div>
+        <p>Free forever for up to 25 devices.</p>
+      </div>
+
+      <div class="price-card featured">
+        <div class="plan">Professional</div>
+        <div class="price">$795 <small>/ year</small></div>
+        <p>For 100 computers, single technician.</p>
+        <div class="btns">
+          <a class="btn primary" href="https://www.manageengine.com/products/desktop-central/cloud">Get started</a>
+          <a class="btn ghost" href="https://www.manageengine.com/endpoint-dlp/get-quote.html">Get quote</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="kicker">FAQ</div>
+    <h2 class="title">Common questions about <span>Endpoint DLP</span></h2>
+
+    <div class="faq">
+      <div class="qa"><div class="q">What is endpoint DLP?</div><div class="a">It prevents sensitive data on endpoints from being leaked or misused.</div></div>
+      <div class="qa"><div class="q">What is data classification?</div><div class="a">Labeling data based on sensitivity.</div></div>
+      <div class="qa"><div class="q">What is audit mode?</div><div class="a">Monitor data movement without blocking.</div></div>
+      <div class="qa"><div class="q">Can I customize policies?</div><div class="a">Yes, using templates and custom rules.</div></div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <img src="Endpoint DLP Plus_with ME_Black.png" alt="Endpoint DLP">
+      <p style="margin-top:14px;color:rgba(255,255,255,.75);">
+        Prevent sensitive data leaks without disrupting work.
+      </p>
+    </div>
+    <div>
+      <strong>Product</strong>
+      <a href="#">Overview</a>
+      <a href="#">Features</a>
+      <a href="#">Download</a>
+    </div>
+    <div>
+      <strong>Resources</strong>
+      <a href="#">Help</a>
+      <a href="#">FAQ</a>
+      <a href="#">Demo</a>
+    </div>
+    <div>
+      <strong>Support</strong>
+      <a href="#">Support</a>
+      <a href="#">Contact sales</a>
+    </div>
+  </div>
+
+  <div class="wrap footer-bottom">
+    <div>© <span id="year"></span> ManageEngine</div>
+  </div>
+</footer>
+
+<script>
+document.getElementById("year").textContent=new Date().getFullYear();
+document.querySelectorAll(".qa").forEach(q=>{
+  q.querySelector(".q").onclick=()=>q.classList.toggle("open");
+});
+</script>
+
+</body>
+</html>
