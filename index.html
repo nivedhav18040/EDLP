@@ -17,8 +17,8 @@
   --bg:#f6f9ff;
 
   --card:#ffffff;
-  --shadow:0 20px 60px rgba(2,10,30,.12);
-  --soft-shadow:0 14px 40px rgba(2,10,30,.10);
+  --shadow:0 26px 80px rgba(2,10,30,.16);
+  --soft-shadow:0 18px 55px rgba(2,10,30,.10);
 
   --radius:22px;
 }
@@ -30,61 +30,112 @@ a{text-decoration:none;color:inherit;}
 img{max-width:100%;display:block;}
 ::selection{background:rgba(30,79,163,.18);}
 
-/* ---------- Header ---------- */
+/* =========================
+   Header
+========================= */
 .header{
   position:absolute;top:0;left:0;width:100%;
   padding:18px 52px;
   display:flex;justify-content:space-between;align-items:center;
-  z-index:30;
+  z-index:50;
 }
-.brand{
-  display:flex;align-items:center;gap:12px;
-}
-.brand img{
-  height:40px;
-  /* ✅ Make logo visible on dark hero */
-  filter: brightness(0) invert(1);
-  drop-shadow: 0 10px 20px rgba(0,0,0,.30);
-  -webkit-filter: brightness(0) invert(1);
+.brand{display:flex;align-items:center;gap:12px;}
+/* ✅ Strong “make it white” treatment */
+.brand-logo{
+  height:42px;width:auto;
+  filter: brightness(0) invert(1) contrast(1.05);
+  -webkit-filter: brightness(0) invert(1) contrast(1.05);
+  mix-blend-mode: screen; /* helps on some PNGs */
+  drop-shadow: 0 12px 22px rgba(0,0,0,.35);
 }
 .nav{display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
-.nav a{color:#fff;font-size:14px;font-weight:650;opacity:.92}
+.nav a{color:#fff;font-size:14px;font-weight:750;opacity:.92}
 .nav a:hover{opacity:1}
 .nav a.cta{
   background:var(--red);
-  padding:10px 16px;border-radius:10px;
-  box-shadow:0 14px 30px rgba(229,57,53,.26);
+  padding:10px 16px;border-radius:12px;
+  box-shadow:0 16px 34px rgba(229,57,53,.28);
   opacity:1;
 }
 @media(max-width:980px){
   .header{padding:16px 18px}
   .nav{gap:12px}
-  .brand img{height:36px}
+  .brand-logo{height:38px}
 }
 
-/* ---------- Hero ---------- */
+/* =========================
+   Zoho-like visual language helpers
+========================= */
+.bg-blobs{
+  position:absolute; inset:0; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(900px 520px at 18% 12%, rgba(255,255,255,.14), transparent 62%),
+    radial-gradient(860px 520px at 82% 26%, rgba(229,57,53,.20), transparent 60%),
+    radial-gradient(880px 640px at 55% 92%, rgba(43,102,217,.26), transparent 62%);
+  opacity:1;
+}
+.grid-dots{
+  position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,.12) 1px, transparent 1px);
+  background-size: 26px 26px;
+  opacity:.08;
+  mask-image: radial-gradient(60% 50% at 50% 40%, #000 55%, transparent 80%);
+}
+.wave{
+  position:absolute;left:0;right:0;top:-1px;height:96px;
+  pointer-events:none;opacity:.95;
+}
+.wave.bottom{top:auto;bottom:-1px;transform:scaleY(-1);opacity:.62;}
+.wave svg{width:100%;height:100%}
+
+/* =========================
+   Emboss hover (YOU asked)
+   - Cards lift
+   - Text emboss (shadow + slight translate)
+========================= */
+.emboss{
+  transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+  will-change: transform, box-shadow;
+}
+.emboss *{
+  transition: transform .28s ease, text-shadow .28s ease, opacity .28s ease;
+}
+.emboss:hover{
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow);
+  border-color: rgba(30,79,163,.22);
+}
+.emboss:hover h3,
+.emboss:hover b,
+.emboss:hover .plan{
+  transform: translateY(-2px);
+  text-shadow: 0 10px 18px rgba(2,10,30,.18);
+}
+.emboss:hover p,
+.emboss:hover li,
+.emboss:hover .mini,
+.emboss:hover span{
+  transform: translateY(-1px);
+}
+
+/* =========================
+   Hero
+========================= */
 .hero{
   position:relative;
   min-height:100vh;
   background:linear-gradient(135deg,var(--blue-dark),var(--blue));
   color:#fff;
-  padding:120px 0 70px;
+  padding:120px 0 72px;
   overflow:hidden;
-}
-.hero::before{
-  content:"";
-  position:absolute;inset:-2px;
-  background:
-    radial-gradient(980px 560px at 20% 10%, rgba(255,255,255,.16), transparent 60%),
-    radial-gradient(760px 460px at 82% 26%, rgba(229,57,53,.20), transparent 65%),
-    radial-gradient(860px 660px at 55% 95%, rgba(43,102,217,.26), transparent 60%);
-  pointer-events:none;
 }
 .hero::after{
   content:"";
   position:absolute;inset:0;
   background:linear-gradient(to bottom, rgba(0,0,0,.06), rgba(0,0,0,.22));
   pointer-events:none;
+  z-index:1;
 }
 .hero-grid{
   position:relative;
@@ -100,7 +151,7 @@ img{max-width:100%;display:block;}
 .hero h1{
   font-size:56px;
   font-weight:950;
-  line-height:1.1;
+  line-height:1.08;
   letter-spacing:-.02em;
 }
 .hero h1 span{color:#bcd4ff}
@@ -119,8 +170,8 @@ img{max-width:100%;display:block;}
 @media(max-width:980px){.hero-actions{justify-content:center}}
 .hero-actions a{
   padding:14px 22px;
-  border-radius:12px;
-  font-weight:850;
+  border-radius:14px;
+  font-weight:900;
   font-size:15px;
   display:inline-flex;align-items:center;gap:10px;
 }
@@ -136,37 +187,26 @@ img{max-width:100%;display:block;}
   color:rgba(255,255,255,.82);
 }
 
-/* ---------- Hero visual (map) ---------- */
-.map{
+/* Hero illustration (Zoho-ish: abstract + motion) */
+.hero-art{
   position:relative;
-  border-radius:28px;
+  border-radius:30px;
   background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.18);
-  box-shadow:0 30px 90px rgba(0,0,0,.26);
+  box-shadow:0 30px 90px rgba(0,0,0,.28);
   overflow:hidden;
   padding:18px;
 }
-.map .gridbg{
-  position:absolute;inset:0;
-  background:
-    radial-gradient(circle at 25% 20%, rgba(229,57,53,.18), transparent 56%),
-    radial-gradient(circle at 80% 38%, rgba(188,212,255,.20), transparent 58%),
-    linear-gradient(to bottom, rgba(255,255,255,.07), rgba(255,255,255,.02)),
-    repeating-linear-gradient(0deg, rgba(255,255,255,.06) 0, rgba(255,255,255,.06) 1px, transparent 1px, transparent 22px),
-    repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0, rgba(255,255,255,.05) 1px, transparent 1px, transparent 22px);
-  opacity:.75;
-  pointer-events:none;
-}
-.map-inner{
+.hero-art .inner{
   position:relative;
-  border-radius:22px;
-  background:rgba(8,14,28,.72);
+  border-radius:24px;
+  background:rgba(8,14,28,.62);
   border:1px solid rgba(255,255,255,.12);
   backdrop-filter: blur(10px);
   overflow:hidden;
   padding:18px;
 }
-.map-top{
+.hero-art .topbar{
   display:flex;align-items:center;justify-content:space-between;
   gap:10px;
   padding:10px 12px;
@@ -179,9 +219,9 @@ img{max-width:100%;display:block;}
 .dot.red{background:#ff5f56}
 .dot.yellow{background:#ffbd2e}
 .dot.green{background:#27c93f}
-.map-title{
+.hero-art .title{
   font-size:12px;
-  color:rgba(255,255,255,.80);
+  color:rgba(255,255,255,.82);
   font-weight:900;
   letter-spacing:-.01em;
 }
@@ -191,9 +231,19 @@ img{max-width:100%;display:block;}
   background:rgba(30,79,163,.38);
   border:1px solid rgba(188,212,255,.22);
   padding:6px 10px;border-radius:999px;
-  font-weight:900;
+  font-weight:950;
 }
-.chip{
+.orbit{
+  position:absolute; inset:-20px;
+  background:
+    radial-gradient(circle at 20% 18%, rgba(229,57,53,.18), transparent 55%),
+    radial-gradient(circle at 78% 28%, rgba(188,212,255,.22), transparent 58%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0, rgba(255,255,255,.05) 1px, transparent 1px, transparent 24px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0, rgba(255,255,255,.05) 1px, transparent 1px, transparent 24px);
+  opacity:.55;
+  pointer-events:none;
+}
+.float-chip{
   position:absolute;
   display:flex;align-items:center;gap:10px;
   padding:10px 12px;border-radius:16px;
@@ -204,30 +254,21 @@ img{max-width:100%;display:block;}
   animation: floaty 6.6s ease-in-out infinite;
 }
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-.chip .ic{
+.float-chip .ic{
   width:32px;height:32px;border-radius:12px;
   display:grid;place-items:center;
   background:rgba(30,79,163,.22);
   border:1px solid rgba(188,212,255,.22);
   color:#eaf2ff;font-weight:950;
 }
-.chip b{color:#fff;font-size:12.5px}
-.chip small{color:rgba(255,255,255,.72);font-weight:800;font-size:11px}
-.c1{top:18px;right:18px;animation-delay:.2s}
-.c2{bottom:18px;left:18px;animation-delay:1.2s}
-.svgwrap{margin-top:14px; position:relative;}
-.legend{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
-.badge{
-  font-size:11px;font-weight:950;
-  padding:7px 10px;border-radius:999px;
-  border:1px solid rgba(255,255,255,.16);
-  background:rgba(255,255,255,.06);
-  color:rgba(255,255,255,.86);
-}
-.badge.red{border-color:rgba(229,57,53,.30);background:rgba(229,57,53,.14)}
-.badge.blue{border-color:rgba(188,212,255,.28);background:rgba(188,212,255,.12)}
+.float-chip b{color:#fff;font-size:12.5px}
+.float-chip small{color:rgba(255,255,255,.72);font-weight:850;font-size:11px}
+.f1{top:18px;right:18px;animation-delay:.2s}
+.f2{bottom:18px;left:18px;animation-delay:1.2s}
 
-/* ---------- Zoho-books style ribbon (graphics across page) ---------- */
+/* =========================
+   Ribbon (Zoho-style strip)
+========================= */
 .ribbon{
   position:relative;
   background:linear-gradient(90deg, #ffffff, #f4f9ff, #ffffff);
@@ -251,7 +292,7 @@ img{max-width:100%;display:block;}
   background:#fff;
   border:1px solid rgba(15,23,42,.08);
   box-shadow:0 10px 22px rgba(2,10,30,.06);
-  font-weight:900;
+  font-weight:950;
   color:#0f172a;
   white-space:nowrap;
 }
@@ -263,55 +304,60 @@ img{max-width:100%;display:block;}
   font-style:normal;
 }
 
-/* ---------- Trusted logos ---------- */
+/* =========================
+   Trusted Logos (BIGGER + clear)
+========================= */
 .trusted{
   background:#f9fbff;
-  padding:70px 0 40px;
+  padding:70px 0 46px;
   text-align:center;
   position:relative;
+  overflow:hidden;
 }
 .trusted::before{
   content:"";
   position:absolute;inset:0;
   background:
-    radial-gradient(700px 320px at 20% 20%, rgba(30,79,163,.08), transparent 60%),
-    radial-gradient(700px 320px at 80% 10%, rgba(229,57,53,.07), transparent 60%);
+    radial-gradient(760px 340px at 18% 18%, rgba(30,79,163,.08), transparent 60%),
+    radial-gradient(760px 340px at 82% 10%, rgba(229,57,53,.07), transparent 60%);
   pointer-events:none;
 }
 .trusted h3{
   position:relative;
   font-size:14px;letter-spacing:1.8px;
-  color:#6b7280;margin-bottom:26px;
+  color:#6b7280;margin-bottom:28px;
 }
 .logo-strip{
   position:relative;
-  display:flex;flex-wrap:wrap;gap:18px;
+  display:flex;flex-wrap:wrap;gap:22px;
   justify-content:center;
-  align-items:center;
+  align-items:stretch;
 }
 .logo-card{
   background:#fff;
-  border:1px solid rgba(15,23,42,.06);
-  box-shadow:0 10px 25px rgba(0,0,0,.06);
-  border-radius:16px;
-  padding:14px 18px;
-  height:72px;
+  border:1px solid rgba(15,23,42,.08);
+  box-shadow:0 16px 40px rgba(0,0,0,.08);
+  border-radius:20px;
+  padding:18px 22px;
+  height:110px;
+  width:min(320px, 92vw);
   display:flex;align-items:center;justify-content:center;
-  transition:.25s ease;
-  width:min(220px, 44vw);
 }
 .logo-card img{
-  max-height:42px;
+  max-height:78px;
   width:auto;
-  filter:grayscale(1) contrast(1.05) opacity(.88);
-  transition:.25s ease;
+  filter:none;
+  opacity:1;
 }
-.logo-card:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(0,0,0,.10)}
-.logo-card:hover img{filter:grayscale(0) opacity(1)}
-.logo-fallback{font-weight:950;color:#64748b;}
+@media(max-width:520px){
+  .logo-card{height:104px}
+  .logo-card img{max-height:70px}
+}
 
-/* ---------- Stats ---------- */
-.stats{padding:60px 0 80px;background:#fff;}
+/* =========================
+   Stats
+========================= */
+.stats{padding:60px 0 86px;background:#fff;}
 .stats-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -322,9 +368,7 @@ img{max-width:100%;display:block;}
   padding:28px;border-radius:18px;
   background:#fff;border:1px solid rgba(15,23,42,.06);
   box-shadow:var(--soft-shadow);
-  transition:.28s ease;
-  position:relative;
-  overflow:hidden;
+  position:relative;overflow:hidden;
 }
 .stat::before{
   content:"";
@@ -332,44 +376,36 @@ img{max-width:100%;display:block;}
   width:180px;height:180px;border-radius:50%;
   background:radial-gradient(circle, rgba(30,79,163,.12), transparent 60%);
 }
-.stat:hover{transform:scale(1.06);box-shadow:var(--shadow);}
 .stat .num{font-size:46px;color:var(--blue);font-weight:950;letter-spacing:-.02em;position:relative}
 .stat p{margin-top:10px;color:#475569;font-size:15px;position:relative}
 
-/* ---------- Section common ---------- */
-.section{padding:88px 0;position:relative;}
+/* =========================
+   Sections (common)
+========================= */
+.section{padding:90px 0;position:relative;overflow:hidden;}
 .section.soft{background:var(--bg);}
 .kicker{
   font-size:12.5px;font-weight:950;
   letter-spacing:.12em;text-transform:uppercase;
   color:var(--blue);
 }
-.title{
+.h2{
   font-size:42px;font-weight:950;margin:14px 0 12px;
   letter-spacing:-.02em;
 }
-.title span{color:var(--blue);}
+.h2 span{color:var(--blue);}
 .sub{
-  max-width:900px;
+  max-width:920px;
   font-size:17px;
   color:var(--muted);
   line-height:1.75;
   margin-bottom:34px;
 }
-@media(max-width:680px){
-  .title{font-size:34px}
-}
+@media(max-width:680px){.h2{font-size:34px}}
 
-/* Decorative section wave (graphics beyond hero) */
-.wave{
-  position:absolute;left:0;right:0;top:-1px;height:90px;
-  pointer-events:none;
-  opacity:.9;
-}
-.wave.bottom{top:auto;bottom:-1px;transform:scaleY(-1);opacity:.55;}
-.wave svg{width:100%;height:100%}
-
-/* ---------- Feature cards + built-in graphics ---------- */
+/* =========================
+   Feature Cards (emboss + better layout)
+========================= */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
 @media(max-width:920px){.split{grid-template-columns:1fr;}}
 .card{
@@ -382,87 +418,91 @@ img{max-width:100%;display:block;}
 }
 .card::before{
   content:"";
-  position:absolute;inset:-40px -60px auto auto;
-  width:220px;height:220px;border-radius:50%;
-  background:radial-gradient(circle, rgba(30,79,163,.16), transparent 60%);
-  transform:translate(30px,-30px);
+  position:absolute;inset:-60px -80px auto auto;
+  width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle, rgba(30,79,163,.14), transparent 60%);
+  transform:translate(40px,-40px);
 }
-.card h3{font-size:26px;margin-bottom:8px;position:relative}
+.card .head{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:18px;
+  margin-bottom:10px;
+  position:relative;
+}
+.card .icon{
+  width:64px;height:64px;border-radius:20px;
+  display:grid;place-items:center;
+  background:rgba(30,79,163,.10);
+  border:1px solid rgba(30,79,163,.12);
+  flex:0 0 auto;
+}
+.card .icon.red{background:rgba(229,57,53,.08);border-color:rgba(229,57,53,.14);}
+.card h3{font-size:26px;margin-bottom:6px;position:relative;line-height:1.2}
 .card p{color:var(--muted);margin-bottom:18px;line-height:1.7;position:relative}
 .list{list-style:none;display:grid;gap:12px;position:relative}
-.list li{display:flex;gap:12px;align-items:flex-start;font-weight:650;color:#0f172a;}
+.list li{display:flex;gap:12px;align-items:flex-start;font-weight:720;color:#0f172a;}
 .check{
-  width:22px;height:22px;border-radius:6px;
+  width:22px;height:22px;border-radius:7px;
   background:rgba(30,79,163,.12);
   display:flex;align-items:center;justify-content:center;
   color:var(--blue);font-weight:950;
   flex:0 0 auto;
 }
-.card-graphic{
-  position:absolute;
-  right:18px; top:18px;
-  width:86px;height:86px;
-  border-radius:22px;
-  background:rgba(30,79,163,.08);
-  border:1px solid rgba(30,79,163,.10);
-  display:grid;place-items:center;
-}
-.card-graphic.red{
-  background:rgba(229,57,53,.07);
-  border-color:rgba(229,57,53,.12);
-}
-.spark{
+
+/* =========================
+   “Built for teams” strip with mini graphics
+========================= */
+.team-strip{
   margin-top:18px;
   border-radius:18px;
   border:1px solid rgba(15,23,42,.06);
   background:linear-gradient(90deg, rgba(30,79,163,.06), rgba(229,57,53,.05));
   padding:14px 14px;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:12px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
 }
-.spark b{font-size:13px}
-.spark small{color:var(--muted);font-weight:800}
+.team-strip b{font-size:13px}
+.team-strip small{color:var(--muted);font-weight:850}
 
-/* ---------- Workflow strip ---------- */
+/* =========================
+   How it works (step tiles + hover)
+========================= */
 .flowbar{
   background:#fff;
   border:1px solid rgba(15,23,42,.06);
   box-shadow:var(--soft-shadow);
-  border-radius:20px;
-  padding:16px 14px;
-  display:flex;flex-wrap:wrap;gap:10px;align-items:stretch;justify-content:space-between;
+  border-radius:22px;
+  padding:16px;
+  display:flex;flex-wrap:wrap;gap:12px;align-items:stretch;
   position:relative;
   overflow:hidden;
 }
 .flowbar::before{
   content:"";
   position:absolute;inset:-40px auto auto -40px;
-  width:220px;height:220px;border-radius:50%;
+  width:240px;height:240px;border-radius:50%;
   background:radial-gradient(circle, rgba(229,57,53,.10), transparent 60%);
 }
 .step{
-  flex:1 1 150px;
-  min-width:150px;
-  padding:14px 14px;
-  border-radius:16px;
+  flex:1 1 160px;
+  min-width:160px;
+  padding:16px 16px;
+  border-radius:18px;
   background:rgba(246,249,255,1);
   border:1px solid rgba(15,23,42,.06);
   position:relative;
   overflow:hidden;
-  transition:.25s ease;
 }
 .step::after{
   content:"";
   position:absolute;inset:0;
-  background:linear-gradient(90deg, transparent, rgba(30,79,163,.10), transparent);
+  background:linear-gradient(90deg, transparent, rgba(30,79,163,.12), transparent);
   transform:translateX(-120%);
   transition:.35s ease;
 }
-.step:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(2,10,30,.10)}
 .step:hover::after{transform:translateX(120%)}
 .step b{display:block;font-size:14px;position:relative}
 .step span{display:block;margin-top:5px;color:var(--muted);font-size:13.5px;line-height:1.55;position:relative}
-.step .tag2{
+.tag2{
   display:inline-block;
   margin-top:10px;
   font-size:11px;
@@ -473,18 +513,20 @@ img{max-width:100%;display:block;}
   padding:6px 10px;border-radius:999px;
 }
 
-/* ---------- Testimonials + visual frame ---------- */
-.testimonials{padding:90px 0;background:#fff;position:relative;overflow:hidden;}
+/* =========================
+   Testimonials
+========================= */
+.testimonials{padding:92px 0;background:#fff;position:relative;overflow:hidden;}
 .testimonials::before{
   content:"";
-  position:absolute;inset:-120px -120px auto auto;
-  width:420px;height:420px;border-radius:50%;
+  position:absolute;inset:-140px -140px auto auto;
+  width:520px;height:520px;border-radius:50%;
   background:radial-gradient(circle, rgba(30,79,163,.12), transparent 60%);
 }
 .testimonials::after{
   content:"";
-  position:absolute;inset:auto auto -160px -160px;
-  width:520px;height:520px;border-radius:50%;
+  position:absolute;inset:auto auto -180px -180px;
+  width:560px;height:560px;border-radius:50%;
   background:radial-gradient(circle, rgba(229,57,53,.10), transparent 60%);
 }
 .tgrid{
@@ -495,17 +537,17 @@ img{max-width:100%;display:block;}
 }
 .tcard{
   background:#f9fbff;
-  border-radius:20px;
-  padding:36px;
+  border-radius:22px;
+  padding:38px;
   border:1px solid rgba(15,23,42,.06);
-  box-shadow:0 20px 45px rgba(0,0,0,.08);
+  box-shadow:0 22px 55px rgba(0,0,0,.09);
   position:relative;
   overflow:hidden;
 }
 .tcard::before{
   content:"";
-  position:absolute;inset:-120px auto auto -120px;
-  width:240px;height:240px;border-radius:50%;
+  position:absolute;inset:-140px auto auto -140px;
+  width:280px;height:280px;border-radius:50%;
   background:radial-gradient(circle, rgba(229,57,53,.16), transparent 60%);
 }
 .quoteMark{
@@ -517,38 +559,9 @@ img{max-width:100%;display:block;}
 .role{font-weight:950;color:var(--blue);position:relative}
 .org{font-size:14px;color:#64748b;position:relative}
 
-/* ---------- Outcomes with icons ---------- */
-.outcomes{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:16px;
-}
-@media(max-width:920px){.outcomes{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:520px){.outcomes{grid-template-columns:1fr;}}
-.outcome{
-  background:#fff;
-  padding:22px;
-  border-radius:18px;
-  border:1px solid rgba(15,23,42,.06);
-  box-shadow:var(--soft-shadow);
-  transition:.25s ease;
-  position:relative;
-  overflow:hidden;
-}
-.outcome:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
-.ico{
-  width:44px;height:44px;border-radius:16px;
-  display:grid;place-items:center;
-  background:rgba(30,79,163,.10);
-  border:1px solid rgba(30,79,163,.12);
-  font-weight:950;
-  margin-bottom:12px;
-}
-.ico.red{background:rgba(229,57,53,.08);border-color:rgba(229,57,53,.12)}
-.outcome b{display:block;margin-bottom:8px;}
-.outcome p{color:var(--muted);line-height:1.65}
-
-/* ---------- Pricing with visual meter ---------- */
+/* =========================
+   Pricing
+========================= */
 .pricing{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -565,19 +578,11 @@ img{max-width:100%;display:block;}
 }
 .price-card::before{
   content:"";
-  position:absolute;inset:-100px auto auto -100px;
-  width:260px;height:260px;border-radius:50%;
+  position:absolute;inset:-120px auto auto -120px;
+  width:300px;height:300px;border-radius:50%;
   background:radial-gradient(circle, rgba(30,79,163,.10), transparent 60%);
 }
 .price-card.featured{border:2px solid var(--blue);}
-.meter{
-  position:absolute;right:18px;top:18px;
-  width:110px;height:110px;
-  border-radius:26px;
-  background:linear-gradient(135deg, rgba(30,79,163,.10), rgba(229,57,53,.08));
-  border:1px solid rgba(15,23,42,.06);
-  display:grid;place-items:center;
-}
 .plan{font-weight:950;color:var(--blue);letter-spacing:-.01em;position:relative}
 .price{
   font-size:42px;font-weight:950;
@@ -589,14 +594,16 @@ img{max-width:100%;display:block;}
 .mini{color:var(--muted);line-height:1.7;position:relative}
 .btns{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;position:relative}
 .btn{
-  padding:14px 18px;border-radius:12px;
+  padding:14px 18px;border-radius:14px;
   font-weight:950;font-size:14px;
   display:inline-flex;align-items:center;gap:10px;
 }
 .btn.primary{background:var(--red);color:#fff;}
 .btn.ghost{background:rgba(30,79,163,.10);color:var(--blue);border:1px solid rgba(30,79,163,.10)}
 
-/* ---------- FAQ with side illustration ---------- */
+/* =========================
+   FAQ
+========================= */
 .faqWrap{
   display:grid;
   grid-template-columns: 1.3fr .7fr;
@@ -604,12 +611,10 @@ img{max-width:100%;display:block;}
   align-items:start;
 }
 @media(max-width:920px){.faqWrap{grid-template-columns:1fr;}}
-.faq{
-  display:grid;gap:12px;
-}
+.faq{display:grid;gap:12px;}
 .qa{
   border:1px solid rgba(15,23,42,.10);
-  border-radius:16px;
+  border-radius:18px;
   overflow:hidden;
   background:#fff;
   box-shadow:0 12px 28px rgba(2,10,30,.06);
@@ -629,6 +634,7 @@ img{max-width:100%;display:block;}
 }
 .qa.open .a{display:block;}
 .qa.open .q span{transform:rotate(45deg);}
+
 .faqArt{
   background:linear-gradient(135deg, rgba(30,79,163,.10), rgba(229,57,53,.08));
   border:1px solid rgba(15,23,42,.06);
@@ -640,17 +646,19 @@ img{max-width:100%;display:block;}
 }
 .faqArt::before{
   content:"";
-  position:absolute;inset:-120px auto auto -120px;
-  width:260px;height:260px;border-radius:50%;
+  position:absolute;inset:-140px auto auto -140px;
+  width:300px;height:300px;border-radius:50%;
   background:radial-gradient(circle, rgba(229,57,53,.12), transparent 60%);
 }
 .faqArt h4{position:relative;font-size:16px;font-weight:950;margin-bottom:10px}
 .faqArt p{position:relative;color:var(--muted);line-height:1.7;font-size:14px}
 
-/* ---------- Footer ---------- */
+/* =========================
+   Footer
+========================= */
 .footer{
   background:linear-gradient(180deg,#0b1b3f,#07122b);
-  color:#fff;padding:70px 0 26px;
+  color:#fff;padding:74px 0 26px;
 }
 .footer-grid{
   display:grid;
@@ -659,7 +667,12 @@ img{max-width:100%;display:block;}
 }
 @media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:520px){.footer-grid{grid-template-columns:1fr;}}
-.footer img{height:34px;filter:brightness(0) invert(1);}
+.footer .foot-logo{
+  height:34px;
+  filter: brightness(0) invert(1) contrast(1.05);
+  -webkit-filter: brightness(0) invert(1) contrast(1.05);
+  mix-blend-mode: screen;
+}
 .footer a{color:rgba(255,255,255,.82);display:block;margin:8px 0;}
 .footer a:hover{color:#fff}
 .footer p{color:rgba(255,255,255,.75);line-height:1.75;margin-top:12px}
@@ -676,8 +689,9 @@ img{max-width:100%;display:block;}
 
 <header class="header">
   <div class="brand">
-    <img src="Endpoint DLP Plus_with ME_Black.png" alt="Endpoint DLP Plus">
+    <img class="brand-logo" src="Endpoint DLP Plus_with ME_Black.png" alt="Endpoint DLP Plus">
   </div>
+
   <nav class="nav">
     <a href="https://www.manageengine.com/endpoint-dlp/features.html">Features</a>
     <a href="https://www.manageengine.com/endpoint-dlp/request-demo.html">Demo</a>
@@ -689,13 +703,15 @@ img{max-width:100%;display:block;}
 </header>
 
 <section class="hero">
-  <div class="wrap hero-grid">
+  <div class="bg-blobs"></div>
+  <div class="grid-dots"></div>
 
-    <div>
-      <h1>Stop data leaks <br><span>without slowing your workforce</span></h1>
+  <div class="wrap hero-grid">
+    <div style="position:relative; z-index:2;">
+      <h1>Prevent data leaks <br><span>without slowing people down</span></h1>
       <p>
-        Discover sensitive data, classify it intelligently, and control its movement across cloud apps,
-        email, USB devices, and screen capture—without disrupting daily work.
+        Discover sensitive data, classify it intelligently, and control how it moves across cloud apps,
+        email, USB devices, and screen capture—with a smooth audit-to-enforce rollout.
       </p>
 
       <div class="hero-actions">
@@ -710,105 +726,112 @@ img{max-width:100%;display:block;}
       <div class="hero-note">30-day free trial • No credit card required • Free forever for up to 25 devices</div>
     </div>
 
-    <div class="map" aria-label="EDLP data movement map">
-      <div class="gridbg"></div>
+    <!-- Hero graphic: abstract + premium motion -->
+    <div class="hero-art" aria-label="EDLP hero graphic">
+      <div class="orbit"></div>
 
-      <div class="chip c1">
-        <div class="ic">🧠</div>
-        <div><b>Smart classification</b><br><small>Templates + custom rules</small></div>
+      <div class="float-chip f1">
+        <div class="ic">🔎</div>
+        <div><b>Discover</b><br><small>Find sensitive files</small></div>
       </div>
 
-      <div class="chip c2">
+      <div class="float-chip f2">
         <div class="ic">🛡️</div>
-        <div><b>Enterprise boundary</b><br><small>Audit → Enforce</small></div>
+        <div><b>Control</b><br><small>Apply boundaries</small></div>
       </div>
 
-      <div class="map-inner">
-        <div class="map-top">
+      <div class="inner">
+        <div class="topbar">
           <div class="dots">
             <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
           </div>
-          <div class="map-title">Protection map • Endpoint DLP Plus</div>
+          <div class="title">Endpoint DLP Plus • Protection overview</div>
           <div class="pill" id="modePill">AUDIT MODE</div>
         </div>
 
-        <div class="svgwrap">
-          <svg viewBox="0 0 760 420" width="100%" height="auto" role="img" aria-label="Animated data flow">
+        <div style="margin-top:14px;">
+          <!-- Big Zoho-like illustration -->
+          <svg viewBox="0 0 820 420" width="100%" height="auto" role="img" aria-label="Abstract security illustration">
             <defs>
-              <linearGradient id="lineBlue" x1="0" y1="0" x2="1" y2="1">
+              <linearGradient id="lgBlue" x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0" stop-color="rgba(188,212,255,.95)"/>
-                <stop offset="1" stop-color="rgba(43,102,217,.95)"/>
+                <stop offset="1" stop-color="rgba(43,102,217,.75)"/>
               </linearGradient>
-              <linearGradient id="lineRed" x1="0" y1="0" x2="1" y2="1">
+              <linearGradient id="lgRed" x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0" stop-color="rgba(255,190,190,.95)"/>
-                <stop offset="1" stop-color="rgba(229,57,53,.95)"/>
+                <stop offset="1" stop-color="rgba(229,57,53,.75)"/>
               </linearGradient>
               <filter id="glow">
-                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                <feGaussianBlur stdDeviation="3" result="blur"/>
                 <feMerge>
-                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="blur"/>
                   <feMergeNode in="SourceGraphic"/>
                 </feMerge>
               </filter>
             </defs>
 
-            <circle cx="380" cy="210" r="120" fill="rgba(255,255,255,.04)"/>
-            <circle cx="380" cy="210" r="78"  fill="rgba(255,255,255,.05)"/>
+            <!-- Blobs -->
+            <circle cx="210" cy="150" r="110" fill="rgba(229,57,53,.14)"/>
+            <circle cx="600" cy="120" r="130" fill="rgba(188,212,255,.16)"/>
+            <circle cx="520" cy="310" r="140" fill="rgba(30,79,163,.14)"/>
 
-            <path d="M 380 210 C 305 170, 260 140, 160 110" stroke="url(#lineBlue)" stroke-width="3" fill="none" opacity=".55"/>
-            <path d="M 380 210 C 455 170, 520 145, 620 120" stroke="url(#lineBlue)" stroke-width="3" fill="none" opacity=".55"/>
-            <path d="M 380 210 C 320 255, 260 300, 170 330" stroke="url(#lineRed)"  stroke-width="3" fill="none" opacity=".55"/>
-            <path d="M 380 210 C 450 260, 520 300, 620 330" stroke="url(#lineRed)"  stroke-width="3" fill="none" opacity=".55"/>
+            <!-- Orbit rings -->
+            <ellipse cx="410" cy="210" rx="260" ry="140" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="2"/>
+            <ellipse cx="410" cy="210" rx="190" ry="102" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="2"/>
 
+            <!-- Center shield -->
+            <path d="M410 120 C 460 145, 500 140, 500 190 C 500 260, 440 310, 410 325 C 380 310, 320 260, 320 190 C 320 140, 360 145, 410 120 Z"
+                  fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.18)" stroke-width="2"/>
+            <path d="M410 140 C 450 158, 478 156, 478 192 C 478 248, 432 288, 410 300 C 388 288, 342 248, 342 192 C 342 156, 370 158, 410 140 Z"
+                  fill="rgba(30,79,163,.20)" stroke="rgba(188,212,255,.18)" stroke-width="2"/>
+            <text x="410" y="218" text-anchor="middle" font-size="14" fill="rgba(255,255,255,.92)" font-weight="900">Sensitive data</text>
+            <text x="410" y="238" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.80)" font-weight="850">stays protected</text>
+
+            <!-- Nodes -->
+            <g filter="url(#glow)">
+              <circle cx="170" cy="170" r="28" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.16)"/>
+              <text x="170" y="176" text-anchor="middle" font-size="18">☁️</text>
+
+              <circle cx="650" cy="165" r="28" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.16)"/>
+              <text x="650" y="171" text-anchor="middle" font-size="18">✉️</text>
+
+              <circle cx="210" cy="320" r="28" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.16)"/>
+              <text x="210" y="326" text-anchor="middle" font-size="18">🔌</text>
+
+              <circle cx="635" cy="310" r="28" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.16)"/>
+              <text x="635" y="316" text-anchor="middle" font-size="18">📸</text>
+            </g>
+
+            <!-- Paths -->
+            <path d="M198 170 C 275 170, 300 160, 350 150" stroke="url(#lgBlue)" stroke-width="3" fill="none" opacity=".55"/>
+            <path d="M622 165 C 545 170, 520 160, 470 150" stroke="url(#lgBlue)" stroke-width="3" fill="none" opacity=".55"/>
+            <path d="M238 320 C 300 300, 312 285, 350 260" stroke="url(#lgRed)" stroke-width="3" fill="none" opacity=".55"/>
+            <path d="M607 310 C 545 295, 520 280, 470 260" stroke="url(#lgRed)" stroke-width="3" fill="none" opacity=".55"/>
+
+            <!-- Moving dots -->
             <circle r="5" fill="rgba(188,212,255,.95)" filter="url(#glow)">
-              <animateMotion dur="3.6s" repeatCount="indefinite" path="M 380 210 C 305 170, 260 140, 160 110" />
+              <animateMotion dur="3.4s" repeatCount="indefinite"
+                path="M198 170 C 275 170, 300 160, 350 150" />
             </circle>
             <circle r="5" fill="rgba(188,212,255,.95)" filter="url(#glow)">
-              <animateMotion dur="4.2s" repeatCount="indefinite" path="M 380 210 C 455 170, 520 145, 620 120" begin="0.6s"/>
+              <animateMotion dur="3.8s" repeatCount="indefinite" begin="0.6s"
+                path="M622 165 C 545 170, 520 160, 470 150" />
             </circle>
             <circle r="5" fill="rgba(255,190,190,.95)" filter="url(#glow)">
-              <animateMotion dur="3.8s" repeatCount="indefinite" path="M 380 210 C 320 255, 260 300, 170 330" begin="0.9s"/>
+              <animateMotion dur="3.6s" repeatCount="indefinite" begin="0.4s"
+                path="M238 320 C 300 300, 312 285, 350 260" />
             </circle>
             <circle r="5" fill="rgba(255,190,190,.95)" filter="url(#glow)">
-              <animateMotion dur="4.4s" repeatCount="indefinite" path="M 380 210 C 450 260, 520 300, 620 330" begin="0.2s"/>
+              <animateMotion dur="4.0s" repeatCount="indefinite" begin="0.2s"
+                path="M607 310 C 545 295, 520 280, 470 260" />
             </circle>
-
-            <g>
-              <circle cx="380" cy="210" r="46" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.20)" />
-              <circle cx="380" cy="210" r="32" fill="rgba(30,79,163,.22)" stroke="rgba(188,212,255,.20)" />
-              <text x="380" y="206" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.90)" font-weight="900">Sensitive</text>
-              <text x="380" y="223" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.90)" font-weight="900">data</text>
-            </g>
-
-            <g>
-              <circle cx="150" cy="105" r="34" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.16)"/>
-              <text x="150" y="110" text-anchor="middle" font-size="18">☁️</text>
-              <text x="150" y="150" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.78)" font-weight="800">Cloud apps</text>
-            </g>
-
-            <g>
-              <circle cx="630" cy="115" r="34" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.16)"/>
-              <text x="630" y="120" text-anchor="middle" font-size="18">✉️</text>
-              <text x="630" y="160" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.78)" font-weight="800">Email</text>
-            </g>
-
-            <g>
-              <circle cx="160" cy="335" r="34" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.16)"/>
-              <text x="160" y="340" text-anchor="middle" font-size="18">🔌</text>
-              <text x="160" y="380" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.78)" font-weight="800">USB</text>
-            </g>
-
-            <g>
-              <circle cx="630" cy="335" r="34" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.16)"/>
-              <text x="630" y="340" text-anchor="middle" font-size="18">📸</text>
-              <text x="630" y="380" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.78)" font-weight="800">Screen capture</text>
-            </g>
           </svg>
 
-          <div class="legend">
-            <span class="badge blue">Monitor</span>
-            <span class="badge red" id="legendRed">Audit</span>
-            <span class="badge">Apply boundary rules</span>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+            <span class="pill" style="background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.18)">Cloud</span>
+            <span class="pill" style="background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.18)">Email</span>
+            <span class="pill" style="background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.18)">USB</span>
+            <span class="pill" style="background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.18)">Screen capture</span>
           </div>
         </div>
       </div>
@@ -817,10 +840,9 @@ img{max-width:100%;display:block;}
   </div>
 </section>
 
-<!-- ✅ Graphics presence continues here (Zoho-like strip) -->
 <section class="ribbon" aria-label="Security ribbon">
   <div class="wrap" style="overflow:hidden">
-    <div class="track" id="ribbonTrack">
+    <div class="track">
       <div class="pillx"><i>🔎</i> Discover sensitive data</div>
       <div class="pillx"><i>🏷️</i> Classify with templates</div>
       <div class="pillx"><i>☁️</i> Control cloud uploads</div>
@@ -830,7 +852,7 @@ img{max-width:100%;display:block;}
       <div class="pillx"><i>📊</i> Reports & audit trail</div>
       <div class="pillx"><i>🛡️</i> Enforce confidently</div>
 
-      <!-- duplicate for smooth marquee -->
+      <!-- duplicate for smooth loop -->
       <div class="pillx"><i>🔎</i> Discover sensitive data</div>
       <div class="pillx"><i>🏷️</i> Classify with templates</div>
       <div class="pillx"><i>☁️</i> Control cloud uploads</div>
@@ -847,27 +869,22 @@ img{max-width:100%;display:block;}
   <div class="wrap">
     <h3>TRUSTED BY LEADING BRANDS</h3>
 
-    <!-- ✅ Use real logo images (with fallback text if they don’t load) -->
+    <!-- ✅ Real logos from EDLP page links, made BIG -->
     <div class="logo-strip">
-      <div class="logo-card">
-        <img src="https://www.manageengine.com/ems/images/logo/melita-logo.png" alt="Brand logo"
-             onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'logo-fallback',textContent:'Trusted brand'}))">
+      <div class="logo-card emboss">
+        <img src="https://www.manageengine.com/ems/images/logo/melita-logo.png" alt="Melita" loading="lazy">
       </div>
-      <div class="logo-card">
-        <img src="https://www.manageengine.com/ems/images/logo/unisys-logo.png" alt="Brand logo"
-             onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'logo-fallback',textContent:'Trusted brand'}))">
+      <div class="logo-card emboss">
+        <img src="https://www.manageengine.com/ems/images/logo/unisys-logo.png" alt="Unisys" loading="lazy">
       </div>
-      <div class="logo-card">
-        <img src="https://www.manageengine.com/ems/images/logo/willseye-logo.png" alt="Brand logo"
-             onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'logo-fallback',textContent:'Trusted brand'}))">
+      <div class="logo-card emboss">
+        <img src="https://www.manageengine.com/ems/images/logo/willseye-logo.png" alt="WillsEye Physicians" loading="lazy">
       </div>
-      <div class="logo-card">
-        <img src="https://www.manageengine.com/ems/images/logo/shireffs-logo.png" alt="Brand logo"
-             onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'logo-fallback',textContent:'Trusted brand'}))">
+      <div class="logo-card emboss">
+        <img src="https://www.manageengine.com/ems/images/logo/shireffs-logo.png" alt="Sheriff's Office" loading="lazy">
       </div>
-      <div class="logo-card">
-        <img src="https://www.manageengine.com/ems/images/logo/qafac-logo.png" alt="Brand logo"
-             onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'logo-fallback',textContent:'Trusted brand'}))">
+      <div class="logo-card emboss">
+        <img src="https://www.manageengine.com/ems/images/logo/qafac-logo.png" alt="QAFAC" loading="lazy">
       </div>
     </div>
   </div>
@@ -875,19 +892,19 @@ img{max-width:100%;display:block;}
 
 <section class="stats">
   <div class="wrap stats-grid">
-    <div class="stat">
+    <div class="stat emboss">
       <div class="num" data-count="5000000" data-suffix="+">0</div>
       <p>endpoints protected</p>
     </div>
-    <div class="stat">
+    <div class="stat emboss">
       <div class="num" data-count="6" data-suffix="+">0</div>
       <p>years in the industry</p>
     </div>
-    <div class="stat">
+    <div class="stat emboss">
       <div class="num" data-count="100" data-suffix="+">0</div>
       <p>countries served</p>
     </div>
-    <div class="stat">
+    <div class="stat emboss">
       <div class="num" data-count="5000" data-suffix="+">0</div>
       <p>organizations worldwide</p>
     </div>
@@ -904,42 +921,45 @@ img{max-width:100%;display:block;}
 
   <div class="wrap">
     <div class="kicker">Key capabilities</div>
-    <h2 class="title"><span>Discover</span> sensitive data, then <span>control</span> its movement</h2>
+    <h2 class="h2"><span>Discover</span> sensitive data, then <span>control</span> its movement</h2>
     <p class="sub">
-      Endpoint DLP Plus helps you start with visibility and progress confidently toward enforcement—without disrupting daily work.
+      Two core building blocks—visibility and boundary control—designed to help you roll out DLP without friction.
     </p>
 
     <div class="split">
+      <div class="card emboss">
+        <div class="head">
+          <div>
+            <h3>Data discovery & classification</h3>
+          </div>
 
-      <div class="card">
-        <div class="card-graphic" aria-hidden="true">
-          <!-- Inline SVG illustration -->
-          <svg width="56" height="56" viewBox="0 0 56 56">
-            <defs>
-              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="rgba(30,79,163,.95)"/>
-                <stop offset="1" stop-color="rgba(43,102,217,.65)"/>
-              </linearGradient>
-            </defs>
-            <circle cx="28" cy="28" r="22" fill="url(#g1)" opacity=".22"/>
-            <path d="M18 18h14l6 6v14a2 2 0 0 1-2 2H18a2 2 0 0 1-2-2V20a2 2 0 0 1 2-2z" fill="rgba(30,79,163,.35)"/>
-            <path d="M32 18v8h8" fill="none" stroke="rgba(30,79,163,.6)" stroke-width="2" stroke-linecap="round"/>
-            <path d="M20 32h16M20 36h12" stroke="rgba(11,18,32,.50)" stroke-width="2" stroke-linecap="round"/>
-          </svg>
+          <div class="icon" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 56 56">
+              <defs>
+                <linearGradient id="gA" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="rgba(30,79,163,.95)"/>
+                  <stop offset="1" stop-color="rgba(43,102,217,.55)"/>
+                </linearGradient>
+              </defs>
+              <circle cx="28" cy="28" r="22" fill="url(#gA)" opacity=".24"/>
+              <path d="M18 18h14l6 6v14a2 2 0 0 1-2 2H18a2 2 0 0 1-2-2V20a2 2 0 0 1 2-2z" fill="rgba(30,79,163,.30)"/>
+              <path d="M32 18v8h8" fill="none" stroke="rgba(30,79,163,.65)" stroke-width="2" stroke-linecap="round"/>
+              <path d="M20 32h16M20 36h12" stroke="rgba(11,18,32,.50)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
         </div>
 
-        <h3>Data discovery & classification</h3>
-        <p>Identify and label sensitive files using predefined templates or custom rules for your organization.</p>
+        <p>Identify and label sensitive files using predefined templates or custom rules.</p>
         <ul class="list">
           <li><span class="check">✓</span>Organization-wide endpoint scans</li>
-          <li><span class="check">✓</span>RegEx, keyword matching, fingerprinting, and document matching</li>
+          <li><span class="check">✓</span>RegEx, fingerprinting, keyword search, document matching</li>
           <li><span class="check">✓</span>Classify structured and unstructured data</li>
         </ul>
 
-        <div class="spark">
+        <div class="team-strip">
           <div>
-            <b>Discovery signal</b><br>
-            <small>Track data hotspots</small>
+            <b>Start with visibility</b><br>
+            <small>Low disruption rollout</small>
           </div>
           <svg width="120" height="32" viewBox="0 0 120 32" aria-hidden="true">
             <path d="M2 24 C 18 10, 28 26, 44 16 C 58 7, 68 22, 84 12 C 98 4, 108 16, 118 8"
@@ -948,36 +968,38 @@ img{max-width:100%;display:block;}
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-graphic red" aria-hidden="true">
-          <!-- Inline SVG illustration -->
-          <svg width="56" height="56" viewBox="0 0 56 56">
-            <defs>
-              <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="rgba(229,57,53,.95)"/>
-                <stop offset="1" stop-color="rgba(30,79,163,.55)"/>
-              </linearGradient>
-            </defs>
-            <circle cx="28" cy="28" r="22" fill="url(#g2)" opacity=".22"/>
-            <path d="M18 26c0-5.5 4.5-10 10-10s10 4.5 10 10v6h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H16a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2v-6z"
-                  fill="rgba(229,57,53,.20)" stroke="rgba(229,57,53,.35)" stroke-width="2"/>
-            <path d="M24 26c0-2.2 1.8-4 4-4s4 1.8 4 4"
-                  fill="none" stroke="rgba(229,57,53,.55)" stroke-width="2" stroke-linecap="round"/>
-            <circle cx="28" cy="38" r="2.5" fill="rgba(11,18,32,.55)"/>
-          </svg>
+      <div class="card emboss">
+        <div class="head">
+          <div>
+            <h3>Data transfer & boundary control</h3>
+          </div>
+
+          <div class="icon red" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 56 56">
+              <defs>
+                <linearGradient id="gB" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="rgba(229,57,53,.95)"/>
+                  <stop offset="1" stop-color="rgba(30,79,163,.45)"/>
+                </linearGradient>
+              </defs>
+              <circle cx="28" cy="28" r="22" fill="url(#gB)" opacity=".24"/>
+              <path d="M18 26c0-5.5 4.5-10 10-10s10 4.5 10 10v6h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H16a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2v-6z"
+                    fill="rgba(229,57,53,.18)" stroke="rgba(229,57,53,.35)" stroke-width="2"/>
+              <circle cx="28" cy="38" r="2.5" fill="rgba(11,18,32,.55)"/>
+            </svg>
+          </div>
         </div>
 
-        <h3>Data transfer & boundary control</h3>
         <p>Control how sensitive data moves across cloud uploads, email, removable devices, and screen capture.</p>
         <ul class="list">
-          <li><span class="check">✓</span>Cloud upload protection and browser monitoring</li>
-          <li><span class="check">✓</span>Email attachment control with trusted domain boundaries</li>
-          <li><span class="check">✓</span>USB/device control and screen capture restrictions</li>
+          <li><span class="check">✓</span>Cloud upload monitoring & restrictions</li>
+          <li><span class="check">✓</span>Email attachment protection using trusted boundaries</li>
+          <li><span class="check">✓</span>USB/device control and screenshot restrictions</li>
         </ul>
 
-        <div class="spark">
+        <div class="team-strip">
           <div>
-            <b>Boundary health</b><br>
+            <b>Enforce with confidence</b><br>
             <small>Audit → Enforce</small>
           </div>
           <svg width="120" height="32" viewBox="0 0 120 32" aria-hidden="true">
@@ -986,7 +1008,6 @@ img{max-width:100%;display:block;}
           </svg>
         </div>
       </div>
-
     </div>
   </div>
 
@@ -1001,35 +1022,35 @@ img{max-width:100%;display:block;}
 <section class="section">
   <div class="wrap">
     <div class="kicker">How it works</div>
-    <h2 class="title">A clean flow from <span>visibility</span> to <span>enforcement</span></h2>
+    <h2 class="h2">A smooth flow from <span>audit</span> to <span>enforce</span></h2>
     <p class="sub">
-      Start with discovery, refine policies in audit mode, and switch to enforcement once you’re confident—no surprises for users.
+      Start with discovery, validate with audit reports, then move to enforcement once your rules are tuned.
     </p>
 
     <div class="flowbar">
-      <div class="step">
+      <div class="step emboss">
         <b>Discover</b>
         <span>Locate sensitive data across endpoints.</span>
         <span class="tag2">Templates + custom rules</span>
       </div>
-      <div class="step">
+      <div class="step emboss">
         <b>Classify</b>
         <span>Label data based on content or context.</span>
         <span class="tag2">Accurate categorization</span>
       </div>
-      <div class="step">
+      <div class="step emboss">
         <b>Monitor</b>
-        <span>Track movement via cloud, email, USB, printing, and more.</span>
+        <span>Track movement via cloud, email, USB, and screen capture.</span>
         <span class="tag2">Full visibility</span>
       </div>
-      <div class="step">
-        <b>Block</b>
-        <span>Prevent risky transfers with fine-grained boundaries.</span>
-        <span class="tag2">Least disruption</span>
+      <div class="step emboss">
+        <b>Control</b>
+        <span>Allow trusted transfers and block risky behavior.</span>
+        <span class="tag2">Boundary-based rules</span>
       </div>
-      <div class="step">
-        <b>Audit</b>
-        <span>Reports and alerts help refine policies confidently.</span>
+      <div class="step emboss">
+        <b>Report</b>
+        <span>Use audit trails to reduce false positives fast.</span>
         <span class="tag2">Compliance-ready</span>
       </div>
     </div>
@@ -1037,82 +1058,48 @@ img{max-width:100%;display:block;}
 </section>
 
 <section class="testimonials">
-  <div class="wrap">
+  <div class="wrap" style="position:relative; z-index:2;">
     <div class="kicker">What customers say</div>
-    <h2 class="title">Built for security teams, loved by <span>IT operations</span></h2>
-    <p class="sub">Sample testimonials in ACP format (no names or company identifiers).</p>
+    <h2 class="h2">Designed for security teams, built for <span>everyday work</span></h2>
+    <p class="sub">Sample testimonials (no names or company identifiers), matching ACP style.</p>
 
     <div class="tgrid">
-      <div class="tcard">
+      <div class="tcard emboss">
         <div class="quoteMark">“</div>
-        <p>“We started in audit mode, tuned the rules, then switched to enforcement. The rollout was smooth and predictable.”</p>
+        <p>“We started in audit mode, tuned the policies, then switched to enforcement. The transition felt predictable and safe.”</p>
         <div class="role">IT Security Lead</div>
-        <div class="org">Global organization</div>
-      </div>
-      <div class="tcard">
-        <div class="quoteMark">“</div>
-        <p>“Cloud uploads and removable media were our biggest risks. Endpoint DLP gave us control without stopping teams from working.”</p>
-        <div class="role">Endpoint Management Manager</div>
         <div class="org">Enterprise environment</div>
       </div>
-      <div class="tcard">
+
+      <div class="tcard emboss">
         <div class="quoteMark">“</div>
-        <p>“The reports and alerts helped us reduce false positives quickly. That balance mattered for user adoption.”</p>
-        <div class="role">Compliance & Risk Team</div>
-        <div class="org">Regulated industry</div>
+        <p>“Cloud uploads and removable media were our biggest risks. Now we can control transfers without blocking legitimate workflows.”</p>
+        <div class="role">Endpoint Management Manager</div>
+        <div class="org">Distributed workforce</div>
+      </div>
+
+      <div class="tcard emboss">
+        <div class="quoteMark">“</div>
+        <p>“The reporting helped us quickly identify where sensitive data was moving—and refine rules to reduce false positives.”</p>
+        <div class="role">Compliance Team</div>
+        <div class="org">Regulated org</div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- ✅ Removed outcomes section completely (as requested) -->
 
 <section class="section soft">
   <div class="wrap">
-    <div class="kicker">Impact</div>
-    <h2 class="title">Security outcomes you can <span>prove</span></h2>
-    <p class="sub">Measurable results—visibility, control, and audit readiness—without productivity loss.</p>
-
-    <div class="outcomes">
-      <div class="outcome">
-        <div class="ico">👁️</div>
-        <b>Data visibility</b>
-        <p>Know where sensitive data resides and how it’s used across endpoints.</p>
-      </div>
-      <div class="outcome">
-        <div class="ico red">⛔</div>
-        <b>Reduced leakage</b>
-        <p>Stop risky transfers across cloud, email, USB, and screen capture.</p>
-      </div>
-      <div class="outcome">
-        <div class="ico">🎯</div>
-        <b>Higher accuracy</b>
-        <p>Improve detection precision using templates and custom classification methods.</p>
-      </div>
-      <div class="outcome">
-        <div class="ico red">📑</div>
-        <b>Audit readiness</b>
-        <p>Generate reports and alerts to support compliance and internal reviews.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
     <div class="kicker">Pricing</div>
-    <h2 class="title">Simple pricing that scales with your <span>endpoints</span></h2>
+    <h2 class="h2">Flexible pricing that scales with your <span>endpoints</span></h2>
     <p class="sub">
-      Free supports up to 25 devices. Professional is priced at <b>$795/year for 100 computers (single technician)</b>.
+      Endpoint DLP is available with Endpoint Central Cloud. Below is a simple snapshot to match ACP-style clarity.
     </p>
 
     <div class="pricing">
-      <div class="price-card">
-        <div class="meter" aria-hidden="true">
-          <svg width="76" height="76" viewBox="0 0 76 76">
-            <circle cx="38" cy="38" r="28" fill="none" stroke="rgba(30,79,163,.18)" stroke-width="8"/>
-            <path d="M38 10 A 28 28 0 1 1 20 62" fill="none" stroke="rgba(30,79,163,.60)" stroke-width="8" stroke-linecap="round"/>
-          </svg>
-        </div>
-
+      <div class="price-card emboss">
         <div class="plan">Free</div>
         <div class="price">$0 <small>/ year</small></div>
         <p class="mini">Free forever for up to 25 devices.</p>
@@ -1121,17 +1108,12 @@ img{max-width:100%;display:block;}
         </div>
       </div>
 
-      <div class="price-card featured">
-        <div class="meter" aria-hidden="true">
-          <svg width="76" height="76" viewBox="0 0 76 76">
-            <circle cx="38" cy="38" r="28" fill="none" stroke="rgba(229,57,53,.16)" stroke-width="8"/>
-            <path d="M38 10 A 28 28 0 1 1 12 40" fill="none" stroke="rgba(229,57,53,.62)" stroke-width="8" stroke-linecap="round"/>
-          </svg>
-        </div>
-
-        <div class="plan">Professional</div>
-        <div class="price">$795 <small>/ year</small></div>
-        <p class="mini">Annual subscription price for 100 computers, single technician.</p>
+      <div class="price-card featured emboss">
+        <div class="plan">Endpoint Central Cloud + Endpoint DLP</div>
+        <div class="price">From $104 <small>/ month</small></div>
+        <p class="mini">
+          Example starting point for 50 endpoints (cloud). Pricing varies by endpoint range.
+        </p>
         <div class="btns">
           <a class="btn primary" href="https://www.manageengine.com/products/desktop-central/cloud">Get started</a>
           <a class="btn ghost" href="https://www.manageengine.com/endpoint-dlp/get-quote.html">Get quote</a>
@@ -1145,51 +1127,54 @@ img{max-width:100%;display:block;}
 <section class="section soft">
   <div class="wrap">
     <div class="kicker">FAQ</div>
-    <h2 class="title">Frequently asked questions</h2>
-    <p class="sub">4 simple, important questions (based on the official FAQ).</p>
+    <h2 class="h2">Frequently asked questions</h2>
+    <p class="sub">Improved questions: practical, simple, and useful (ACP-style).</p>
 
     <div class="faqWrap">
       <div class="faq">
-        <div class="qa">
-          <div class="q">What is endpoint data loss prevention? <span>+</span></div>
-          <div class="a">Endpoint data loss prevention is a set of strategies that help prevent the theft or disclosure of sensitive data stored on endpoint computers.</div>
+        <div class="qa emboss">
+          <div class="q">What are data rules, and what do they do? <span>+</span></div>
+          <div class="a">Data rules define the criteria used to detect sensitive data (for example: templates, RegEx patterns, fingerprinting, keyword search, or document matching).</div>
         </div>
 
-        <div class="qa">
-          <div class="q">What is data classification? <span>+</span></div>
-          <div class="a">Data classification is the process of labeling corporate data to understand which information is sensitive and what protections should be applied.</div>
+        <div class="qa emboss">
+          <div class="q">When should I use pre-defined templates instead of custom rules? <span>+</span></div>
+          <div class="a">Use pre-defined templates when you want faster, standard detection for common data types. Move to custom rules when you need organization-specific patterns or formats.</div>
         </div>
 
-        <div class="qa">
-          <div class="q">What are enterprise boundaries and how are they defined? <span>+</span></div>
-          <div class="a">Boundaries are restrictions that define where sensitive data can be processed and transferred—such as cloud apps, email, and removable devices.</div>
+        <div class="qa emboss">
+          <div class="q">What happens if multiple policies are deployed to the same endpoint? <span>+</span></div>
+          <div class="a">The last deployed policy takes effect for that endpoint. You can verify the currently active policy from the endpoint’s view in the console.</div>
         </div>
 
-        <div class="qa">
-          <div class="q">What does “Audit Only” mean in a DLP policy? <span>+</span></div>
-          <div class="a">Audit mode allows transfers while recording events outside the enterprise boundary—helping you refine policies without affecting productivity.</div>
+        <div class="qa emboss">
+          <div class="q">When should I use RegEx-based detection? <span>+</span></div>
+          <div class="a">Use RegEx when sensitive data follows a predictable pattern or string format (like IDs, codes, or structured identifiers) that can be matched reliably.</div>
         </div>
       </div>
 
-      <div class="faqArt">
-        <h4>Quick guidance</h4>
+      <div class="faqArt emboss">
+        <h4>Quick rollout tip</h4>
         <p>
-          Start in <b>Audit mode</b> to measure real-world activity. Then gradually move to <b>Enforce mode</b>
+          Start in <b>Audit mode</b> to capture real-world activity. Then move to <b>Enforce mode</b>
           for high-risk transfers—cloud uploads, external email, USB devices, and screen capture.
         </p>
+
         <div style="height:12px"></div>
-        <svg width="100%" height="160" viewBox="0 0 420 160" aria-hidden="true">
+
+        <svg width="100%" height="180" viewBox="0 0 420 180" aria-hidden="true">
           <defs>
             <linearGradient id="faqg" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0" stop-color="rgba(30,79,163,.65)"/>
               <stop offset="1" stop-color="rgba(229,57,53,.55)"/>
             </linearGradient>
           </defs>
-          <rect x="12" y="18" width="396" height="124" rx="18" fill="rgba(255,255,255,.55)" opacity=".55"/>
-          <path d="M56 110 C 120 62, 170 132, 240 86 C 288 54, 324 102, 370 62" fill="none" stroke="url(#faqg)" stroke-width="6" stroke-linecap="round"/>
-          <circle cx="56" cy="110" r="8" fill="rgba(30,79,163,.55)"/>
-          <circle cx="240" cy="86" r="8" fill="rgba(229,57,53,.50)"/>
-          <circle cx="370" cy="62" r="8" fill="rgba(30,79,163,.55)"/>
+          <rect x="12" y="22" width="396" height="136" rx="18" fill="rgba(255,255,255,.55)" opacity=".55"/>
+          <path d="M56 124 C 120 76, 170 146, 240 100 C 288 68, 324 116, 370 76"
+                fill="none" stroke="url(#faqg)" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="56" cy="124" r="8" fill="rgba(30,79,163,.55)"/>
+          <circle cx="240" cy="100" r="8" fill="rgba(229,57,53,.50)"/>
+          <circle cx="370" cy="76" r="8" fill="rgba(30,79,163,.55)"/>
         </svg>
       </div>
     </div>
@@ -1199,8 +1184,8 @@ img{max-width:100%;display:block;}
 <footer class="footer">
   <div class="wrap footer-grid">
     <div>
-      <img src="Endpoint DLP Plus_with ME_Black.png" alt="Endpoint DLP Plus" />
-      <p>Protect sensitive data on endpoints with discovery, classification, and boundary-based controls.</p>
+      <img class="foot-logo" src="Endpoint DLP Plus_with ME_Black.png" alt="Endpoint DLP Plus" />
+      <p>Protect sensitive endpoint data with discovery, classification, and boundary-based controls.</p>
     </div>
 
     <div>
@@ -1271,26 +1256,20 @@ const io = new IntersectionObserver((entries) => {
 }, {threshold: 0.35});
 counters.forEach(c => io.observe(c));
 
-/* Hero mode text swap */
+/* Hero mode label swap */
 const modePill = document.getElementById("modePill");
-const legendRed = document.getElementById("legendRed");
 let state = 0;
 setInterval(() => {
   state = (state + 1) % 3;
   if(state === 0){
     modePill.textContent = "AUDIT MODE";
     modePill.style.background = "rgba(30,79,163,.38)";
-    legendRed.textContent = "Audit";
-    legendRed.className = "badge red";
-    legendRed.style.background = "rgba(229,57,53,.14)";
   } else if(state === 1){
     modePill.textContent = "ENFORCE MODE";
     modePill.style.background = "rgba(229,57,53,.18)";
-    legendRed.textContent = "Block";
   } else {
     modePill.textContent = "SMART AUDIT";
     modePill.style.background = "rgba(188,212,255,.16)";
-    legendRed.textContent = "Warn";
   }
 }, 2400);
 </script>
