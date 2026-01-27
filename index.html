@@ -329,31 +329,41 @@ img{max-width:100%;display:block;}
 }
 .logo-strip{
   position:relative;
-  display:flex;flex-wrap:wrap;gap:22px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:18px;
   justify-content:center;
-  align-items:stretch;
+  align-items:center;
 }
 .logo-card{
   background:#fff;
   border:1px solid rgba(15,23,42,.08);
-  box-shadow:0 16px 40px rgba(0,0,0,.08);
-  border-radius:20px;
-  padding:18px 22px;
-  height:110px;
-  width:min(320px, 92vw);
-  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 12px 30px rgba(0,0,0,.07);
+  border-radius:18px;
+
+  /* normal size */
+  padding:14px 16px;
+  height:86px;
+  width:min(240px, 88vw);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  transition:.25s ease;
 }
 .logo-card img{
-  max-height:78px;
+  /* normal logo height */
+  max-height:52px;
   width:auto;
-  filter:none;
   opacity:1;
+  filter:none;
+  transition:.25s ease;
 }
 @media(max-width:520px){
-  .logo-card{height:104px}
-  .logo-card img{max-height:70px}
+  .logo-card{height:80px}
+  .logo-card img{max-height:46px}
 }
-
 /* =========================
    Stats
 ========================= */
