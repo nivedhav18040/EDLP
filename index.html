@@ -1,1372 +1,928 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ManageEngine Endpoint DLP Plus</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Endpoint DLP Plus</title>
 
-<style>
-:root{
-  --blue:#1e4fa3;
-  --blue2:#2b66d9;
-  --blue-dark:#071b45;
-  --red:#e53935;
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  --ink:#0b1220;
-  --muted:#5b6b84;
-  --bg:#f6f9ff;
+  <style>
+    :root {
+      --blue: #0a66c2;
+      --red: #e53935;
+      --dark: #0f172a;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --bg-light: #f8fafc;
+    }
 
-  --card:#ffffff;
-  --shadow:0 26px 80px rgba(2,10,30,.16);
-  --soft-shadow:0 18px 55px rgba(2,10,30,.10);
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  --radius:22px;
-}
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--dark);
+      background: #ffffff;
+      line-height: 1.6;
+    }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
-body{background:#fff;color:var(--ink);overflow-x:hidden;}
-a{text-decoration:none;color:inherit;}
-.wrap{width:min(1180px,92%);margin:auto;}
-img{max-width:100%;display:block;}
-::selection{background:rgba(30,79,163,.18);}
+    /* ---------- GLOBAL ---------- */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
 
-/* =========================
-   Header
-========================= */
-.header{
-  position:absolute;top:0;left:0;width:100%;
-  padding:18px 52px;
-  display:flex;justify-content:space-between;align-items:center;
-  z-index:50;
-  gap:14px;
-}
-.brand{display:flex;align-items:center;gap:12px;min-width:160px;}
-/* white logo on dark bg */
-.brand-logo{
-  height:42px;width:auto;
-  filter: brightness(0) invert(1) contrast(1.08);
-  -webkit-filter: brightness(0) invert(1) contrast(1.08);
-  mix-blend-mode: screen;
-  drop-shadow: 0 12px 22px rgba(0,0,0,.35);
-}
-.nav{display:flex;gap:18px;align-items:center;flex-wrap:wrap;justify-content:flex-end;}
-.nav a{color:#fff;font-size:14px;font-weight:750;opacity:.92;white-space:nowrap}
-.nav a:hover{opacity:1}
-.nav a.cta{
-  background:var(--red);
-  padding:10px 16px;border-radius:12px;
-  box-shadow:0 16px 34px rgba(229,57,53,.28);
-  opacity:1;
-}
+    /* ---------- HEADER ---------- */
+    header {
+      padding: 14px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      gap: 16px;
+    }
 
-/* hamburger + mobile menu */
-.hamburger{
-  display:none;
-  border:0;
-  background:rgba(255,255,255,.12);
-  border:1px solid rgba(255,255,255,.22);
-  color:#fff;
-  border-radius:12px;
-  padding:10px 12px;
-  font-size:18px;
-  font-weight:900;
-  cursor:pointer;
-  backdrop-filter: blur(10px);
-}
-.mobileMenu{
-  position:absolute;
-  top:66px;
-  right:16px;
-  width:min(320px, 92vw);
-  background:rgba(10,18,42,.82);
-  border:1px solid rgba(255,255,255,.16);
-  border-radius:16px;
-  padding:12px;
-  box-shadow:0 30px 80px rgba(0,0,0,.35);
-  backdrop-filter: blur(12px);
-  display:none;
-  z-index:60;
-}
-.mobileMenu a{
-  display:flex;
-  padding:12px 12px;
-  border-radius:12px;
-  color:#fff;
-  font-weight:850;
-  opacity:.92;
-}
-.mobileMenu a:hover{background:rgba(255,255,255,.10);opacity:1}
-.mobileMenu a.cta{
-  background:var(--red);
-  margin-top:8px;
-  justify-content:center;
-  box-shadow:0 14px 30px rgba(229,57,53,.25);
-  opacity:1;
-}
+    nav a {
+      margin-left: 24px;
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      white-space: nowrap;
+    }
 
-/* =========================
-   Zoho-like visual language helpers
-========================= */
-.bg-blobs{
-  position:absolute; inset:0; pointer-events:none; z-index:0;
-  background:
-    radial-gradient(900px 520px at 18% 12%, rgba(255,255,255,.14), transparent 62%),
-    radial-gradient(860px 520px at 82% 26%, rgba(229,57,53,.20), transparent 60%),
-    radial-gradient(880px 640px at 55% 92%, rgba(43,102,217,.26), transparent 62%);
-  opacity:1;
-}
-.grid-dots{
-  position:absolute; inset:0; pointer-events:none;
-  background:
-    radial-gradient(circle at 1px 1px, rgba(255,255,255,.12) 1px, transparent 1px);
-  background-size: 26px 26px;
-  opacity:.08;
-  mask-image: radial-gradient(60% 50% at 50% 40%, #000 55%, transparent 80%);
-}
-.wave{
-  position:absolute;left:0;right:0;top:-1px;height:96px;
-  pointer-events:none;opacity:.95;
-}
-.wave.bottom{top:auto;bottom:-1px;transform:scaleY(-1);opacity:.62;}
-.wave svg{width:100%;height:100%}
+    .logo { display: flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+    .logo img { height: 36px; width: auto; display: block; }
 
-/* =========================
-   Emboss hover
-========================= */
-.emboss{
-  transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
-  will-change: transform, box-shadow;
-}
-.emboss *{
-  transition: transform .28s ease, text-shadow .28s ease, opacity .28s ease;
-}
-.emboss:hover{
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: var(--shadow);
-  border-color: rgba(30,79,163,.22);
-}
-.emboss:hover h3,
-.emboss:hover b,
-.emboss:hover .plan{
-  transform: translateY(-2px);
-  text-shadow: 0 10px 18px rgba(2,10,30,.18);
-}
-.emboss:hover p,
-.emboss:hover li,
-.emboss:hover .mini,
-.emboss:hover span{
-  transform: translateY(-1px);
-}
+    /* ---------- HERO ---------- */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0f2a44, #1e4f91, #2563eb);
+      padding: 56px 32px 60px;
+      text-align: center;
+    }
 
-/* =========================
-   Hero
-========================= */
-.hero{
-  position:relative;
-  min-height:100vh;
-  background:linear-gradient(135deg,var(--blue-dark),var(--blue));
-  color:#fff;
-  padding:120px 0 72px;
-  overflow:hidden;
-}
-.hero::after{
-  content:"";
-  position:absolute;inset:0;
-  background:linear-gradient(to bottom, rgba(0,0,0,.06), rgba(0,0,0,.22));
-  pointer-events:none;
-  z-index:1;
-}
-.hero-grid{
-  position:relative;
-  display:grid;
-  grid-template-columns: 1.05fr .95fr;
-  gap:34px;
-  align-items:center;
-  z-index:5;
-}
-.hero h1{
-  font-size:56px;
-  font-weight:950;
-  line-height:1.08;
-  letter-spacing:-.02em;
-}
-.hero h1 span{color:#bcd4ff}
-.hero p{
-  margin-top:18px;
-  font-size:18px;
-  line-height:1.7;
-  color:rgba(255,255,255,.92);
-  max-width:680px;
-}
-.hero-actions{
-  margin-top:28px;
-  display:flex;gap:14px;flex-wrap:wrap;
-}
-.hero-actions a{
-  padding:14px 22px;
-  border-radius:14px;
-  font-weight:900;
-  font-size:15px;
-  display:inline-flex;align-items:center;gap:10px;
-}
-.primary{background:var(--red);color:#fff;}
-.secondary{
-  background:rgba(255,255,255,.14);
-  border:1px solid rgba(255,255,255,.32);
-  color:#fff;
-}
-.hero-note{
-  margin-top:16px;
-  font-size:13.5px;
-  color:rgba(255,255,255,.82);
-}
+    .hero h1 {
+      font-size: 44px;
+      line-height: 1.12;
+      max-width: 1100px;
+      padding: 0 24px;
+      margin: 0 auto 18px;
+      letter-spacing: -0.035em;
+    }
 
-/* Hero illustration */
-.hero-art{
-  position:relative;
-  border-radius:30px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.18);
-  box-shadow:0 30px 90px rgba(0,0,0,.28);
-  overflow:hidden;
-  padding:18px;
-}
-.hero-art .inner{
-  position:relative;
-  border-radius:24px;
-  background:rgba(8,14,28,.62);
-  border:1px solid rgba(255,255,255,.12);
-  backdrop-filter: blur(10px);
-  overflow:hidden;
-  padding:18px;
-}
-.hero-art .topbar{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:10px;
-  padding:10px 12px;
-  border-radius:16px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.10);
-}
-.dots{display:flex;gap:7px;align-items:center}
-.dot{width:10px;height:10px;border-radius:50%;}
-.dot.red{background:#ff5f56}
-.dot.yellow{background:#ffbd2e}
-.dot.green{background:#27c93f}
-.hero-art .title{
-  font-size:12px;
-  color:rgba(255,255,255,.82);
-  font-weight:900;
-  letter-spacing:-.01em;
-}
-.pill{
-  font-size:11px;
-  color:#eaf2ff;
-  background:rgba(30,79,163,.38);
-  border:1px solid rgba(188,212,255,.22);
-  padding:6px 10px;border-radius:999px;
-  font-weight:950;
-  white-space:nowrap;
-}
-.orbit{
-  position:absolute; inset:-20px;
-  background:
-    radial-gradient(circle at 20% 18%, rgba(229,57,53,.18), transparent 55%),
-    radial-gradient(circle at 78% 28%, rgba(188,212,255,.22), transparent 58%),
-    repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0, rgba(255,255,255,.05) 1px, transparent 1px, transparent 24px),
-    repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0, rgba(255,255,255,.05) 1px, transparent 1px, transparent 24px);
-  opacity:.55;
-  pointer-events:none;
-}
-.float-chip{
-  position:absolute;
-  display:flex;align-items:center;gap:10px;
-  padding:10px 12px;border-radius:16px;
-  background:rgba(255,255,255,.10);
-  border:1px solid rgba(255,255,255,.16);
-  box-shadow:0 18px 45px rgba(0,0,0,.18);
-  backdrop-filter: blur(8px);
-  animation: floaty 6.6s ease-in-out infinite;
-}
-@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-.float-chip .ic{
-  width:32px;height:32px;border-radius:12px;
-  display:grid;place-items:center;
-  background:rgba(30,79,163,.22);
-  border:1px solid rgba(188,212,255,.22);
-  color:#eaf2ff;font-weight:950;
-}
-.float-chip b{color:#fff;font-size:12.5px}
-.float-chip small{color:rgba(255,255,255,.72);font-weight:850;font-size:11px}
-.f1{top:18px;right:18px;animation-delay:.2s}
-.f2{bottom:18px;left:18px;animation-delay:1.2s}
+    .hero-title-main { color: #ffffff; font-weight: 700; }
+    .hero-title-sub { display: block; margin-top: 6px; color: #b6dcff; font-weight: 600; }
 
-/* =========================
-   Ribbon
-========================= */
-.ribbon{
-  position:relative;
-  background:linear-gradient(90deg, #ffffff, #f4f9ff, #ffffff);
-  border-top:1px solid rgba(15,23,42,.06);
-  border-bottom:1px solid rgba(15,23,42,.06);
-  overflow:hidden;
-}
-.ribbon .track{
-  display:flex;gap:16px;
-  padding:14px 0;
-  width:max-content;
-  animation: marquee 26s linear infinite;
-}
-@keyframes marquee{
-  0%{transform:translateX(0)}
-  100%{transform:translateX(-50%)}
-}
-.pillx{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 14px;border-radius:999px;
-  background:#fff;
-  border:1px solid rgba(15,23,42,.08);
-  box-shadow:0 10px 22px rgba(2,10,30,.06);
-  font-weight:950;
-  color:#0f172a;
-  white-space:nowrap;
-}
-.pillx i{
-  width:28px;height:28px;border-radius:10px;
-  display:grid;place-items:center;
-  background:rgba(30,79,163,.10);
-  border:1px solid rgba(30,79,163,.12);
-  font-style:normal;
-}
+    .hero p {
+      max-width: 760px;
+      margin: 0 auto 34px;
+      color: #e0ecff;
+      font-size: 16px;
+    }
 
-/* =========================
-   Trusted Logos
-========================= */
-.trusted{
-  background:#f9fbff;
-  padding:70px 0 46px;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-}
-.trusted::before{
-  content:"";
-  position:absolute;inset:0;
-  background:
-    radial-gradient(760px 340px at 18% 18%, rgba(30,79,163,.08), transparent 60%),
-    radial-gradient(760px 340px at 82% 10%, rgba(229,57,53,.07), transparent 60%);
-  pointer-events:none;
-}
-.trusted h3{
-  position:relative;
-  font-size:14px;letter-spacing:1.8px;
-  color:#6b7280;margin-bottom:28px;
-}
-.logo-strip{
-  position:relative;
-  display:flex;
-  flex-wrap:wrap;
-  gap:18px;
-  justify-content:center;
-  align-items:center;
-}
-.logo-card{
-  background:#fff;
-  border:1px solid rgba(15,23,42,.08);
-  box-shadow:0 12px 30px rgba(0,0,0,.07);
-  border-radius:18px;
-  padding:14px 16px;
-  height:86px;
-  width:min(240px, 88vw);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.logo-card img{
-  max-height:52px;
-  width:auto;
-  opacity:1;
-  filter:none;
-}
-@media(max-width:520px){
-  .logo-card{height:80px}
-  .logo-card img{max-height:46px}
-}
+    /* ---------- CTA ---------- */
+    .hero-buttons { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; }
+    .hero-cta { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 
-/* =========================
-   Stats
-========================= */
-.stats{padding:60px 0 86px;background:#fff;}
-.stats-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:34px;
-  text-align:center;
-}
-.stat{
-  padding:28px;border-radius:18px;
-  background:#fff;border:1px solid rgba(15,23,42,.06);
-  box-shadow:var(--soft-shadow);
-  position:relative;overflow:hidden;
-}
-.stat::before{
-  content:"";
-  position:absolute;inset:-80px auto auto -80px;
-  width:180px;height:180px;border-radius:50%;
-  background:radial-gradient(circle, rgba(30,79,163,.12), transparent 60%);
-}
-.stat .num{font-size:46px;color:var(--blue);font-weight:950;letter-spacing:-.02em;position:relative}
-.stat p{margin-top:10px;color:#475569;font-size:15px;position:relative}
+    .btn {
+      min-width: 190px;
+      padding: 14px 28px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      display: inline-block;
+      text-align: center;
+    }
 
-/* =========================
-   Sections (common)
-========================= */
-.section{padding:90px 0;position:relative;overflow:hidden;}
-.section.soft{background:var(--bg);}
-.kicker{
-  font-size:12.5px;font-weight:950;
-  letter-spacing:.12em;text-transform:uppercase;
-  color:var(--blue);
-}
-.h2{
-  font-size:42px;font-weight:950;margin:14px 0 12px;
-  letter-spacing:-.02em;
-}
-.h2 span{color:var(--blue);}
-.sub{
-  max-width:920px;
-  font-size:17px;
-  color:var(--muted);
-  line-height:1.75;
-  margin-bottom:34px;
-}
-@media(max-width:680px){.h2{font-size:34px}}
+    .btn-primary { background: var(--red); color: #ffffff; box-shadow: 0 10px 24px rgba(229,57,53,0.35); }
+    .btn-secondary { border: 2px solid #ffffff; color: #ffffff; }
 
-/* =========================
-   Feature Cards
-========================= */
-.split{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
-@media(max-width:920px){.split{grid-template-columns:1fr;}}
-.card{
-  background:#fff;border-radius:var(--radius);
-  padding:34px;
-  border:1px solid rgba(15,23,42,.06);
-  box-shadow:var(--soft-shadow);
-  position:relative;
-  overflow:hidden;
-}
-.card::before{
-  content:"";
-  position:absolute;inset:-60px -80px auto auto;
-  width:260px;height:260px;border-radius:50%;
-  background:radial-gradient(circle, rgba(30,79,163,.14), transparent 60%);
-  transform:translate(40px,-40px);
-}
-.card .head{
-  display:flex;align-items:flex-start;justify-content:space-between;
-  gap:18px;
-  margin-bottom:10px;
-  position:relative;
-}
-.card .icon{
-  width:64px;height:64px;border-radius:20px;
-  display:grid;place-items:center;
-  background:rgba(30,79,163,.10);
-  border:1px solid rgba(30,79,163,.12);
-  flex:0 0 auto;
-}
-.card .icon.red{background:rgba(229,57,53,.08);border-color:rgba(229,57,53,.14);}
-.card h3{font-size:26px;margin-bottom:6px;position:relative;line-height:1.2}
-.card p{color:var(--muted);margin-bottom:18px;line-height:1.7;position:relative}
-.list{list-style:none;display:grid;gap:12px;position:relative}
-.list li{display:flex;gap:12px;align-items:flex-start;font-weight:720;color:#0f172a;}
-.check{
-  width:22px;height:22px;border-radius:7px;
-  background:rgba(30,79,163,.12);
-  display:flex;align-items:center;justify-content:center;
-  color:var(--blue);font-weight:950;
-  flex:0 0 auto;
-}
+    .btn:hover { transform: scale(1.06); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
 
-/* =========================
-   “Built for teams” strip with mini graphics
-========================= */
-.team-strip{
-  margin-top:18px;
-  border-radius:18px;
-  border:1px solid rgba(15,23,42,.06);
-  background:linear-gradient(90deg, rgba(30,79,163,.06), rgba(229,57,53,.05));
-  padding:14px 14px;
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
-}
-.team-strip b{font-size:13px}
-.team-strip small{color:var(--muted);font-weight:850}
+    .cta-note { font-size: 14px; font-weight: 500; color: #ffffff; }
 
-/* =========================
-   How it works (step tiles)
-========================= */
-.flowbar{
-  background:#fff;
-  border:1px solid rgba(15,23,42,.06);
-  box-shadow:var(--soft-shadow);
-  border-radius:22px;
-  padding:16px;
-  display:flex;flex-wrap:wrap;gap:12px;align-items:stretch;
-  position:relative;
-  overflow:hidden;
-}
-.flowbar::before{
-  content:"";
-  position:absolute;inset:-40px auto auto -40px;
-  width:240px;height:240px;border-radius:50%;
-  background:radial-gradient(circle, rgba(229,57,53,.10), transparent 60%);
-}
-.step{
-  flex:1 1 160px;
-  min-width:160px;
-  padding:16px 16px;
-  border-radius:18px;
-  background:rgba(246,249,255,1);
-  border:1px solid rgba(15,23,42,.06);
-  position:relative;
-  overflow:hidden;
-}
-.step::after{
-  content:"";
-  position:absolute;inset:0;
-  background:linear-gradient(90deg, transparent, rgba(30,79,163,.12), transparent);
-  transform:translateX(-120%);
-  transition:.35s ease;
-}
-.step:hover::after{transform:translateX(120%)}
-.step b{display:block;font-size:14px;position:relative}
-.step span{display:block;margin-top:5px;color:var(--muted);font-size:13.5px;line-height:1.55;position:relative}
-.tag2{
-  display:inline-block;
-  margin-top:10px;
-  font-size:11px;
-  font-weight:950;
-  color:#103b86;
-  background:rgba(30,79,163,.12);
-  border:1px solid rgba(30,79,163,.14);
-  padding:6px 10px;border-radius:999px;
-}
+    .hero small { display: block; margin-top: 26px; color: #dbeafe; font-size: 14px; }
 
-/* =========================
-   Testimonials
-========================= */
-.testimonials{padding:92px 0;background:#fff;position:relative;overflow:hidden;}
-.testimonials::before{
-  content:"";
-  position:absolute;inset:-140px -140px auto auto;
-  width:520px;height:520px;border-radius:50%;
-  background:radial-gradient(circle, rgba(30,79,163,.12), transparent 60%);
-}
-.testimonials::after{
-  content:"";
-  position:absolute;inset:auto auto -180px -180px;
-  width:560px;height:560px;border-radius:50%;
-  background:radial-gradient(circle, rgba(229,57,53,.10), transparent 60%);
-}
-.tgrid{
-  position:relative;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:24px;
-}
-.tcard{
-  background:#f9fbff;
-  border-radius:22px;
-  padding:38px;
-  border:1px solid rgba(15,23,42,.06);
-  box-shadow:0 22px 55px rgba(0,0,0,.09);
-  position:relative;
-  overflow:hidden;
-}
-.tcard::before{
-  content:"";
-  position:absolute;inset:-140px auto auto -140px;
-  width:280px;height:280px;border-radius:50%;
-  background:radial-gradient(circle, rgba(229,57,53,.16), transparent 60%);
-}
-.quoteMark{
-  position:absolute;right:18px;top:16px;
-  font-size:52px;font-weight:950;
-  color:rgba(30,79,163,.18);
-}
-.tcard p{font-size:17px;line-height:1.75;margin-bottom:22px;position:relative}
-.role{font-weight:950;color:var(--blue);position:relative}
-.org{font-size:14px;color:#64748b;position:relative}
+    /* ---------- TRUST + CREDIBILITY (COMBINED) ---------- */
+    .trust-proof {
+      position: relative;
+      padding: 56px 0;
+      background: linear-gradient(180deg, #ffffff 0%, #f9fbff 55%, #ffffff 100%);
+      border-bottom: 1px solid var(--border);
+    }
 
-/* =========================
-   Pricing
-========================= */
-.pricing{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:22px;
-}
-@media(max-width:900px){.pricing{grid-template-columns:1fr;}}
-.price-card{
-  background:#fff;
-  padding:34px;border-radius:var(--radius);
-  border:1px solid rgba(15,23,42,.06);
-  box-shadow:var(--soft-shadow);
-  position:relative;
-  overflow:hidden;
-}
-.price-card::before{
-  content:"";
-  position:absolute;inset:-120px auto auto -120px;
-  width:300px;height:300px;border-radius:50%;
-  background:radial-gradient(circle, rgba(30,79,163,.10), transparent 60%);
-}
-.price-card.featured{border:2px solid var(--blue);}
-.plan{font-weight:950;color:var(--blue);letter-spacing:-.01em;position:relative}
-.price{
-  font-size:42px;font-weight:950;
-  margin:10px 0 6px;
-  letter-spacing:-.02em;
-  position:relative;
-}
-.price small{font-size:14px;color:var(--muted);font-weight:750}
-.mini{color:var(--muted);line-height:1.7;position:relative}
-.btns{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;position:relative}
-.btn{
-  padding:14px 18px;border-radius:14px;
-  font-weight:950;font-size:14px;
-  display:inline-flex;align-items:center;gap:10px;
-}
-.btn.primary{background:var(--red);color:#fff;}
-.btn.ghost{background:rgba(30,79,163,.10);color:var(--blue);border:1px solid rgba(30,79,163,.10)}
+    /* World map watermark */
+    .trust-proof::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("images/worldmap.png");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center center;
+      opacity: 0.27;
+      filter: grayscale(100%) contrast(90%);
+      pointer-events: none;
+    }
+    .trust-proof::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: radial-gradient(ellipse at center,
+        rgba(255,255,255,0.0) 35%,
+        rgba(255,255,255,0.75) 85%
+      );
+      pointer-events:none;
+    }
 
-/* =========================
-   FAQ
-========================= */
-.faqWrap{
-  display:grid;
-  grid-template-columns: 1.3fr .7fr;
-  gap:22px;
-  align-items:start;
-}
-@media(max-width:920px){.faqWrap{grid-template-columns:1fr;}}
-.faq{display:grid;gap:12px;}
-.qa{
-  border:1px solid rgba(15,23,42,.10);
-  border-radius:18px;
-  overflow:hidden;
-  background:#fff;
-  box-shadow:0 12px 28px rgba(2,10,30,.06);
-}
-.q{
-  padding:18px;
-  font-weight:950;
-  cursor:pointer;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.q span{color:var(--muted);font-weight:950;transform:rotate(0deg);transition:.2s ease}
-.a{
-  padding:0 18px 18px;
-  color:var(--muted);
-  display:none;
-  line-height:1.75;
-}
-.qa.open .a{display:block;}
-.qa.open .q span{transform:rotate(45deg);}
+    .trust-proof > .container { position: relative; z-index: 1; }
 
-.faqArt{
-  background:linear-gradient(135deg, rgba(30,79,163,.10), rgba(229,57,53,.08));
-  border:1px solid rgba(15,23,42,.06);
-  border-radius:22px;
-  padding:18px;
-  box-shadow:var(--soft-shadow);
-  position:relative;
-  overflow:hidden;
-}
-.faqArt::before{
-  content:"";
-  position:absolute;inset:-140px auto auto -140px;
-  width:300px;height:300px;border-radius:50%;
-  background:radial-gradient(circle, rgba(229,57,53,.12), transparent 60%);
-}
-.faqArt h4{position:relative;font-size:16px;font-weight:950;margin-bottom:10px}
-.faqArt p{position:relative;color:var(--muted);line-height:1.7;font-size:14px}
+    /* Header */
+    .trust-head { text-align: center; margin-bottom: 36px; }
+    .trust-kicker {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
 
-/* =========================
-   Footer
-========================= */
-.footer{
-  background:linear-gradient(180deg,#0b1b3f,#07122b);
-  color:#fff;padding:74px 0 26px;
-}
-.footer-grid{
-  display:grid;
-  grid-template-columns:1.4fr 1fr 1fr 1fr;
-  gap:28px;
-}
-@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;}}
-@media(max-width:520px){.footer-grid{grid-template-columns:1fr;}}
-.footer .foot-logo{
-  height:34px;
-  filter: brightness(0) invert(1) contrast(1.08);
-  -webkit-filter: brightness(0) invert(1) contrast(1.08);
-  mix-blend-mode: screen;
-}
-.footer a{color:rgba(255,255,255,.82);display:block;margin:8px 0;}
-.footer a:hover{color:#fff}
-.footer p{color:rgba(255,255,255,.75);line-height:1.75;margin-top:12px}
-.footer-bottom{
-  border-top:1px solid rgba(255,255,255,.15);
-  margin-top:28px;padding-top:18px;
-  font-size:13px;color:rgba(255,255,255,.7);
-  display:flex;justify-content:space-between;flex-wrap:wrap;
-}
+    /* Logos */
+    .trust-logos {
+      max-width: 1100px;
+      margin: 40px auto 0;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      align-items: center;
+      gap: 40px;
+    }
 
-/* =========================
-   MOBILE HEADER FIX (cramped header)
-========================= */
-@media (max-width: 980px){
-  .hero-grid{grid-template-columns:1fr;gap:28px;text-align:center;}
-  .hero p{margin-left:auto;margin-right:auto}
-  .hero-actions{justify-content:center}
-}
-@media (max-width: 768px){
-  .header{
-    padding:14px 16px;
-    align-items:center;
-  }
-  .brand{min-width:auto}
-  .brand-logo{height:32px;}
-  .hamburger{display:inline-flex;align-items:center;justify-content:center;}
-  /* hide desktop nav links on mobile to avoid cramped header */
-  .nav a:not(.cta){display:none;}
-  .nav a.cta{
-    padding:8px 14px;
-    font-size:13px;
-    border-radius:10px;
-  }
-  .hero h1{font-size:38px;line-height:1.15;}
-  .hero p{font-size:15.5px;line-height:1.6;}
-  .hero-actions{gap:10px;}
-}
-</style>
+    /* Logo tiles (uniform white rectangles) */
+    .logo-tile{
+      height: 72px;
+      padding: 12px 18px;
+      border-radius: 14px;
+      background: #ffffff;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-tile img{
+      max-height: 32px;
+      max-width: 100%;
+      object-fit: contain;
+      display: block;
+      opacity: 0.9;
+    }
+
+    /* Divider */
+    .trust-spacer { height: 56px; }
+
+    /* Metrics */
+    .trust-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      text-align: center;
+    }
+
+    .metric { padding: 16px 12px; }
+
+    .metric strong {
+      display: inline-block;
+      font-weight: 900;
+      font-size: clamp(34px, 3.6vw, 44px);
+      letter-spacing: -0.05em;
+      background: linear-gradient(180deg, #0b1220, #2563eb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+                  text-shadow 0.32s ease;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #64748b;
+    }
+
+    /* Hover enlarge (controlled) */
+    .metric:hover strong {
+      transform: scale(1.26);
+      text-shadow: 0 18px 36px rgba(37,99,235,0.35);
+    }
+
+    /* ---------- TESTIMONIALS ---------- */
+    .testimonials { padding: 56px 20px; background: var(--bg-light); }
+
+    .testimonial-grid {
+      max-width: 1100px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 40px;
+    }
+
+    .testimonial {
+      background: #ffffff;
+      padding: 22px;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    }
+    .testimonial p { font-size: 18px; line-height: 1.6; margin-bottom: 24px; color: var(--dark); }
+    .testimonial footer strong { display: block; font-weight: 600; }
+    .testimonial footer span { font-size: 14px; color: var(--muted); }
+
+    /* ---------- FEATURES ---------- */
+    .features { padding: 64px 16px; background: var(--bg-light); text-align: center; }
+
+    .feature-heading {
+      font-size: 32px;
+      line-height: 1.35;
+      max-width: 900px;
+      margin: 0 auto 48px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #000;
+    }
+
+    .feature-heading .highlight { color: var(--blue); font-weight: 700; }
+
+    .feature-grid {
+      max-width: 1100px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      text-align: left;
+      transition: box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .card:hover {
+      background-color: #f0f7ff;
+      border-color: var(--blue);
+      box-shadow: 0 28px 60px rgba(10,102,194,0.25);
+      transform: scale(1.02);
+    }
+
+    /* IMPORTANT: as per instruction, we are NOT using sub-heading paragraphs under the two feature cards.
+       So we keep .card p styling for other sections, but we won't include those <p> under the EDLP cards. */
+    .card p { margin-bottom: 24px; color: var(--muted); font-size: 16px; }
+
+    .card h3 { margin-bottom: 20px; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+
+    .feature-list { list-style: none; }
+
+    .feature-list li { margin-bottom: 18px; position: relative; padding-left: 24px; }
+
+    .feature-list li::before { content: "✓"; position: absolute; left: 0; color: var(--blue); font-weight: 700; }
+
+    .feature-list strong { display: block; font-weight: 600; color: var(--dark); }
+
+    .feature-list span {
+      display: block;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      font-size: 14px;
+      color: var(--muted);
+      transition: max-height 0.35s ease, opacity 0.3s ease;
+    }
+
+    .card:hover .feature-list span { max-height: 140px; opacity: 1; }
+
+    .feature-list a, .feature-list a:visited { color: inherit !important; text-decoration: none; }
+    .feature-list a:hover { color: var(--blue); text-decoration: underline; cursor: pointer; }
+
+    /* ---------- HOW IT WORKS (kept from EDLP concept, styled to match ACP page) ---------- */
+    .howitworks {
+      padding: 64px 16px;
+      background: #ffffff;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .howitworks h2 {
+      font-size: 32px;
+      line-height: 1.35;
+      max-width: 900px;
+      margin: 0 auto 14px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #000;
+    }
+
+    .howitworks p.lead {
+      max-width: 720px;
+      margin: 0 auto 42px;
+      color: #64748b;
+      font-size: 16px;
+    }
+
+    .how-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .how-step {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      text-align: left;
+      box-shadow: 0 18px 38px rgba(0,0,0,0.06);
+      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .how-step:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 60px rgba(10,102,194,0.18);
+      border-color: rgba(10,102,194,0.35);
+    }
+
+    .how-step strong {
+      display: block;
+      font-weight: 800;
+      color: #0b1220;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+      font-size: 15px;
+    }
+
+    .how-step span {
+      display: block;
+      color: #64748b;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .how-tag {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #2563eb;
+      background: rgba(37,99,235,0.10);
+      border: 1px solid rgba(37,99,235,0.18);
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+
+    /* ---------- OUTCOMES ---------- */
+    .outcomes { padding: 64px 16px; background: #f8fafc; text-align: center; }
+    .outcomes-heading { font-size: 28px; font-weight: 700; margin-bottom: 60px; color: var(--dark); }
+
+    .outcomes-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .outcome-card {
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: left;
+    }
+
+    .outcome-card:hover { transform: translateY(-4px); box-shadow: 0 28px 60px rgba(0,0,0,0.08); }
+    .outcome-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 20px; color: var(--dark); }
+    .outcome-card ul { list-style: none; padding: 0; }
+    .outcome-card ul li { position: relative; padding-left: 24px; margin-bottom: 12px; color: var(--muted); font-size: 16px; }
+    .outcome-card ul li::before { content: "✔"; position: absolute; left: 0; color: var(--blue); font-weight: 700; }
+
+    /* ---------- EVALUATE SECTION (PRICING) ---------- */
+    .eval-soft { padding: 64px 16px; background: linear-gradient(180deg, #f7faff 0%, #ffffff 60%); }
+
+    .eval-wrap { max-width: 1100px; margin: 0 auto; text-align: center; }
+
+    .eval-soft h2 { font-size: 40px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+
+    .eval-lead { font-size: 18px; color: #64748b; margin: 12px auto 64px; max-width: 680px; }
+
+    .eval-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; align-items: stretch; }
+
+    .eval-panel {
+      padding: 36px; border-radius: 20px;
+      background: #ffffff;
+      box-shadow: 0 32px 72px rgba(15, 23, 42, 0.08);
+      text-align: left;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .eval-panel.primary { background: linear-gradient(180deg, #ffffff, #eef5ff); box-shadow: 0 50px 110px rgba(37, 99, 235, 0.18); }
+
+    .eval-panel:hover { transform: translateY(-8px); box-shadow: 0 70px 140px rgba(15, 23, 42, 0.16); }
+
+    .eval-panel h3 { font-size: 22px; font-weight: 600; margin-bottom: 12px; }
+
+    .eval-price { display: block; font-size: 42px; font-weight: 800; letter-spacing: -0.02em; }
+    .eval-price small { font-size: 22px; font-weight: 500; color: #64748b; margin-left: 6px; letter-spacing: 0; }
+
+    .eval-meta { color: #64748b; margin: 12px 0 36px; }
+
+    .eval-cta {
+      display: inline-block;
+      padding: 14px 34px;
+      border-radius: 999px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    .eval-cta.subtle { background: #f1f5f9; color: #0f172a; }
+    .eval-cta.strong { background: #2563eb; color: #ffffff; }
+
+    .eval-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(37, 99, 235, 0.25); }
+
+    .eval-inner-center { height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+    .eval-inner-center.left { align-items: flex-start; text-align: left; }
+
+    /* ---------- FAQ SECTION ---------- */
+    .faq-section { padding: 64px 0; background: #f8fafc; text-align: center; }
+
+    .faq-section h2 { font-size: 36px; font-weight: 700; margin-bottom: 8px; }
+    .faq-subtext { font-size: 16px; color: #64748b; margin-bottom: 48px; }
+
+    .faq-carousel { max-width: 760px; margin: auto; position: relative; display: flex; align-items: center; }
+
+    .faq-track { width: 100%; min-height: 220px; position: relative; }
+
+    .faq-item {
+      position: relative;
+      inset: 0;
+      opacity: 1;
+      pointer-events: auto;
+      background: #ffffff;
+      padding: 28px;
+      border-radius: 16px;
+      text-align: left;
+      box-shadow: 0 20px 44px rgba(15, 23, 42, 0.06);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      transform: translateY(6px);
+      display: none;
+    }
+
+    .faq-item.active { opacity: 1; pointer-events: auto; transform: translateY(0); display: block; }
+
+    .faq-item h3 { font-size: 20px; font-weight: 600; margin-bottom: 12px; }
+    .faq-item p { font-size: 16px; line-height: 1.6; color: #475569; }
+
+    .faq-nav {
+      border: none;
+      background: #ffffff;
+      font-size: 24px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      color: #64748b;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+      transition: transform 0.25s ease, color 0.25s ease;
+    }
+
+    .faq-nav:hover { color: #2563eb; transform: scale(1.1); }
+    .faq-nav.prev { margin-right: 16px; }
+    .faq-nav.next { margin-left: 16px; }
+
+    @media (max-width: 640px) {
+      .faq-item { padding: 32px; }
+      .faq-section h2 { font-size: 28px; }
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      padding: 24px;
+      text-align: center;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+      background: #ffffff;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .trust-logos { grid-template-columns: repeat(3, 1fr); }
+      .trust-metrics { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+      .how-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 820px) {
+      .hero h1 { font-size: 42px; }
+      header { padding: 18px 24px; }
+    }
+
+    @media (max-width: 768px) {
+      .outcomes-grid { grid-template-columns: 1fr; }
+      .trust-logos { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    }
+
+    @media (max-width: 640px) {
+      nav { display: none; } /* matches ACP simplicity; can be replaced with hamburger later */
+      .trust-logos { grid-template-columns: repeat(2, 1fr); }
+      .trust-metrics { grid-template-columns: 1fr; }
+      .trust-proof::before { display: none; }
+      .how-grid { grid-template-columns: 1fr; }
+      .testimonial-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 
 <body>
 
-<header class="header">
-  <div class="brand">
-    <img class="brand-logo" src="Endpoint DLP Plus_with ME_Black.png" alt="Endpoint DLP Plus">
+<header>
+  <div class="logo">
+    <!-- Replace file name/path as needed in your repo -->
+    <img src="images/Endpoint DLP Plus_with ME_Black.png" alt="Endpoint DLP Plus logo">
   </div>
 
-  <nav class="nav">
-    <a href="https://www.manageengine.com/endpoint-dlp/features.html">Features</a>
-    <a href="https://www.manageengine.com/endpoint-dlp/request-demo.html">Demo</a>
-    <a href="https://www.manageengine.com/endpoint-dlp/help.html">Resources</a>
-    <a href="https://www.manageengine.com/endpoint-dlp/support.html">Support</a>
-    <a href="https://www.manageengine.com/endpoint-dlp/get-quote.html">Get quote</a>
-    <a class="cta" href="https://www.manageengine.com/endpoint-dlp/download.html">Download</a>
+  <nav>
+    <a target="_blank" rel="noopener noreferrer" href="https://www.manageengine.com/endpoint-dlp/features.html">Features</a>
+    <a target="_blank" rel="noopener noreferrer" href="https://www.manageengine.com/endpoint-dlp/request-demo.html">Demo</a>
+    <a target="_blank" rel="noopener noreferrer" href="https://www.manageengine.com/endpoint-dlp/help.html">Documents</a>
+    <a target="_blank" rel="noopener noreferrer" href="https://www.manageengine.com/endpoint-dlp/get-quote.html">Get Quote</a>
+    <a target="_blank" rel="noopener noreferrer" href="https://www.manageengine.com/endpoint-dlp/support.html">Support</a>
   </nav>
-
-  <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">☰</button>
-
-  <div class="mobileMenu" id="mobileMenu" aria-label="Mobile menu">
-    <a href="https://www.manageengine.com/endpoint-dlp/features.html">Features</a>
-    <a href="https://www.manageengine.com/endpoint-dlp/request-demo.html">Demo</a>
-    <a href="https://www.manageengine.com/endpoint-dlp/help.html">Resources</a>
-    <a href="https://www.manageengine.com/endpoint-dlp/support.html">Support</a>
-    <a href="https://www.manageengine.com/endpoint-dlp/get-quote.html">Get quote</a>
-    <a class="cta" href="https://www.manageengine.com/endpoint-dlp/download.html">Download</a>
-  </div>
 </header>
 
 <section class="hero">
-  <div class="bg-blobs"></div>
-  <div class="grid-dots"></div>
+  <h1>
+    <span class="hero-title-main">Stop sensitive data leaks</span>
+    <span class="hero-title-sub">without slowing down day-to-day work</span>
+  </h1>
 
-  <div class="wrap hero-grid">
-    <div style="position:relative; z-index:2;">
-      <h1>Prevent data leaks <br><span>without slowing people down</span></h1>
-      <p>
-        Discover sensitive data, classify it intelligently, and control how it moves across cloud apps, email,
-        printing workflows, and screen capture—with a smooth audit-to-enforce rollout.
-      </p>
+  <p>
+    Find sensitive data on endpoints, label it automatically, and control how it moves to browsers, cloud apps,
+    USB devices, printers, and clipboard—starting safely in audit mode.
+  </p>
 
-      <div class="hero-actions">
-        <a class="primary" href="https://www.manageengine.com/products/desktop-central/cloud">
-          Get started <span style="opacity:.9">→</span>
-        </a>
-        <a class="secondary" href="https://www.manageengine.com/endpoint-dlp/request-demo.html">
-          Request demo
-        </a>
-      </div>
-
-      <div class="hero-note">30-day free trial • No credit card required • Free forever for up to 25 devices</div>
+  <div class="hero-buttons">
+    <div class="hero-cta">
+      <a target="_blank" rel="noopener noreferrer"
+         href="https://www.manageengine.com/endpoint-dlp/download.html"
+         class="btn btn-primary">Download</a>
+      <span class="cta-note">On-premises</span>
     </div>
 
-    <div class="hero-art" aria-label="EDLP hero graphic">
-      <div class="orbit"></div>
-
-      <div class="float-chip f1">
-        <div class="ic">🔎</div>
-        <div><b>Discover</b><br><small>Find sensitive files</small></div>
-      </div>
-
-      <div class="float-chip f2">
-        <div class="ic">🛡️</div>
-        <div><b>Control</b><br><small>Apply boundaries</small></div>
-      </div>
-
-      <div class="inner">
-        <div class="topbar">
-          <div class="dots">
-            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-          </div>
-          <div class="title">Endpoint DLP Plus • Protection overview</div>
-          <div class="pill" id="modePill">AUDIT MODE</div>
-        </div>
-
-        <div style="margin-top:14px;">
-          <svg viewBox="0 0 820 420" width="100%" height="auto" role="img" aria-label="Abstract security illustration">
-            <defs>
-              <linearGradient id="lgBlue" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="rgba(188,212,255,.95)"/>
-                <stop offset="1" stop-color="rgba(43,102,217,.75)"/>
-              </linearGradient>
-              <linearGradient id="lgRed" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="rgba(255,190,190,.95)"/>
-                <stop offset="1" stop-color="rgba(229,57,53,.75)"/>
-              </linearGradient>
-              <filter id="glow">
-                <feGaussianBlur stdDeviation="3" result="blur"/>
-                <feMerge>
-                  <feMergeNode in="blur"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
-
-            <circle cx="210" cy="150" r="110" fill="rgba(229,57,53,.14)"/>
-            <circle cx="600" cy="120" r="130" fill="rgba(188,212,255,.16)"/>
-            <circle cx="520" cy="310" r="140" fill="rgba(30,79,163,.14)"/>
-
-            <ellipse cx="410" cy="210" rx="260" ry="140" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="2"/>
-            <ellipse cx="410" cy="210" rx="190" ry="102" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="2"/>
-
-            <path d="M410 120 C 460 145, 500 140, 500 190 C 500 260, 440 310, 410 325 C 380 310, 320 260, 320 190 C 320 140, 360 145, 410 120 Z"
-                  fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.18)" stroke-width="2"/>
-            <path d="M410 140 C 450 158, 478 156, 478 192 C 478 248, 432 288, 410 300 C 388 288, 342 248, 342 192 C 342 156, 370 158, 410 140 Z"
-                  fill="rgba(30,79,163,.20)" stroke="rgba(188,212,255,.18)" stroke-width="2"/>
-            <text x="410" y="218" text-anchor="middle" font-size="14" fill="rgba(255,255,255,.92)" font-weight="900">Sensitive data</text>
-            <text x="410" y="238" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.80)" font-weight="850">stays protected</text>
-
-            <g filter="url(#glow)">
-              <circle cx="170" cy="170" r="28" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.16)"/>
-              <text x="170" y="176" text-anchor="middle" font-size="18">☁️</text>
-
-              <circle cx="650" cy="165" r="28" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.16)"/>
-              <text x="650" y="171" text-anchor="middle" font-size="18">✉️</text>
-
-              <circle cx="210" cy="320" r="28" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.16)"/>
-              <text x="210" y="326" text-anchor="middle" font-size="18">🖨️</text>
-
-              <circle cx="635" cy="310" r="28" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.16)"/>
-              <text x="635" y="316" text-anchor="middle" font-size="18">📸</text>
-            </g>
-
-            <path d="M198 170 C 275 170, 300 160, 350 150" stroke="url(#lgBlue)" stroke-width="3" fill="none" opacity=".55"/>
-            <path d="M622 165 C 545 170, 520 160, 470 150" stroke="url(#lgBlue)" stroke-width="3" fill="none" opacity=".55"/>
-            <path d="M238 320 C 300 300, 312 285, 350 260" stroke="url(#lgRed)" stroke-width="3" fill="none" opacity=".55"/>
-            <path d="M607 310 C 545 295, 520 280, 470 260" stroke="url(#lgRed)" stroke-width="3" fill="none" opacity=".55"/>
-
-            <circle r="5" fill="rgba(188,212,255,.95)" filter="url(#glow)">
-              <animateMotion dur="3.4s" repeatCount="indefinite"
-                path="M198 170 C 275 170, 300 160, 350 150" />
-            </circle>
-            <circle r="5" fill="rgba(188,212,255,.95)" filter="url(#glow)">
-              <animateMotion dur="3.8s" repeatCount="indefinite" begin="0.6s"
-                path="M622 165 C 545 170, 520 160, 470 150" />
-            </circle>
-            <circle r="5" fill="rgba(255,190,190,.95)" filter="url(#glow)">
-              <animateMotion dur="3.6s" repeatCount="indefinite" begin="0.4s"
-                path="M238 320 C 300 300, 312 285, 350 260" />
-            </circle>
-            <circle r="5" fill="rgba(255,190,190,.95)" filter="url(#glow)">
-              <animateMotion dur="4.0s" repeatCount="indefinite" begin="0.2s"
-                path="M607 310 C 545 295, 520 280, 470 260" />
-            </circle>
-          </svg>
-
-          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
-            <span class="pill" style="background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.18)">Cloud</span>
-            <span class="pill" style="background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.18)">Email</span>
-            <span class="pill" style="background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.18)">Printing</span>
-            <span class="pill" style="background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.18)">Screen capture</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section class="ribbon" aria-label="Security ribbon">
-  <div class="wrap" style="overflow:hidden">
-    <div class="track">
-      <div class="pillx"><i>🔎</i> Discover sensitive data</div>
-      <div class="pillx"><i>🏷️</i> Classify with data rules</div>
-      <div class="pillx"><i>☁️</i> Control cloud uploads</div>
-      <div class="pillx"><i>✉️</i> Protect email transfers</div>
-      <div class="pillx"><i>🖨️</i> Printing restrictions</div>
-      <div class="pillx"><i>💧</i> Watermarking</div>
-      <div class="pillx"><i>📸</i> Screen capture control</div>
-      <div class="pillx"><i>📊</i> Reports & audit trail</div>
-
-      <div class="pillx"><i>🔎</i> Discover sensitive data</div>
-      <div class="pillx"><i>🏷️</i> Classify with data rules</div>
-      <div class="pillx"><i>☁️</i> Control cloud uploads</div>
-      <div class="pillx"><i>✉️</i> Protect email transfers</div>
-      <div class="pillx"><i>🖨️</i> Printing restrictions</div>
-      <div class="pillx"><i>💧</i> Watermarking</div>
-      <div class="pillx"><i>📸</i> Screen capture control</div>
-      <div class="pillx"><i>📊</i> Reports & audit trail</div>
+    <div class="hero-cta">
+      <a target="_blank" rel="noopener noreferrer"
+         href="https://www.manageengine.com/products/desktop-central/cloud/"
+         class="btn btn-primary">Sign up</a>
+      <span class="cta-note">Cloud via Endpoint Central</span>
     </div>
   </div>
+
+  <small>30-day free trial · No credit card required · Free up to 25 endpoints forever</small>
 </section>
 
-<section class="trusted">
-  <div class="wrap">
-    <h3>TRUSTED BY LEADING BRANDS</h3>
-    <div class="logo-strip">
-      <div class="logo-card emboss">
-        <img src="https://www.manageengine.com/ems/images/logo/melita-logo.png" alt="Melita" loading="lazy">
+<section class="trust-proof" aria-label="Global trust and credibility">
+  <div class="container">
+    <div class="trust-head">
+      <p class="trust-kicker">Trusted by leading brands worldwide</p>
+    </div>
+
+    <!-- Replace logo images with the same set you use in EDLP/your repo -->
+    <div class="trust-logos" aria-label="Customer logos">
+      <div class="logo-tile"><img src="images/metropole-logo.png" alt="Metropole"></div>
+      <div class="logo-tile"><img src="images/meshed-groups-logo.png" alt="Meshed Groups"></div>
+      <div class="logo-tile"><img src="images/granicus-logo.png" alt="Granicus"></div>
+      <div class="logo-tile"><img src="images/clear-dynamics.png" alt="Clear Dynamics"></div>
+      <div class="logo-tile"><img src="images/boing-logo.png" alt="Boeing"></div>
+      <div class="logo-tile"><img src="images/memphis-logo.png" alt="Memphis"></div>
+    </div>
+
+    <div class="trust-spacer" aria-hidden="true"></div>
+
+    <!-- As requested: EDLP numbers same as ACP -->
+    <div class="trust-metrics">
+      <div class="metric">
+        <strong>1M+</strong>
+        <span>endpoints secured</span>
       </div>
-      <div class="logo-card emboss">
-        <img src="https://www.manageengine.com/ems/images/logo/unisys-logo.png" alt="Unisys" loading="lazy">
+      <div class="metric">
+        <strong>10+ years</strong>
+        <span>in the industry</span>
       </div>
-      <div class="logo-card emboss">
-        <img src="https://www.manageengine.com/ems/images/logo/willseye-logo.png" alt="WillsEye Physicians" loading="lazy">
+      <div class="metric">
+        <strong>100+</strong>
+        <span>countries served</span>
       </div>
-      <div class="logo-card emboss">
-        <img src="https://www.manageengine.com/ems/images/logo/shireffs-logo.png" alt="Sheriff's Office" loading="lazy">
-      </div>
-      <div class="logo-card emboss">
-        <img src="https://www.manageengine.com/ems/images/logo/qafac-logo.png" alt="QAFAC" loading="lazy">
+      <div class="metric">
+        <strong>2000+</strong>
+        <span>organizations worldwide</span>
       </div>
     </div>
   </div>
 </section>
 
-<section class="stats">
-  <div class="wrap stats-grid">
-    <div class="stat emboss">
-      <div class="num" data-count="5000000" data-suffix="+">0</div>
-      <p>endpoints protected</p>
+<section class="features">
+  <h2 class="feature-heading">
+    <span class="highlight">Data discovery</span> finds sensitive data, and <span class="highlight">data controls</span> stop it from leaving your endpoints.
+  </h2>
+
+  <div class="feature-grid">
+    <div class="card">
+      <h3>Data discovery & classification</h3>
+
+      <!-- NOTE: sub-heading paragraph removed as requested -->
+
+      <ul class="feature-list">
+        <li>
+          <strong>AI-based detection</strong>
+          <span>Automatically identifies sensitive content patterns to reduce manual effort.</span>
+        </li>
+        <li>
+          <strong>Rule-based detection (RegEx, keyword, file extension)</strong>
+          <span>Use simple rules for quick coverage across common file types and formats.</span>
+        </li>
+        <li>
+          <strong>Context-based (source-aware) classification</strong>
+          <span>If a file comes from a known business source (for example, a CRM download), it can be tagged as sensitive right away.</span>
+        </li>
+      </ul>
     </div>
-    <div class="stat emboss">
-      <div class="num" data-count="6" data-suffix="+">0</div>
-      <p>years in the industry</p>
-    </div>
-    <div class="stat emboss">
-      <div class="num" data-count="100" data-suffix="+">0</div>
-      <p>countries served</p>
-    </div>
-    <div class="stat emboss">
-      <div class="num" data-count="5000" data-suffix="+">0</div>
-      <p>organizations worldwide</p>
+
+    <div class="card">
+      <h3>Data transfer, audit & control</h3>
+
+      <!-- NOTE: sub-heading paragraph removed as requested -->
+
+      <ul class="feature-list">
+        <li>
+          <strong>Audit sensitive file movement</strong>
+          <span>See where sensitive files are going before you enforce rules.</span>
+        </li>
+        <li>
+          <strong>Limit which apps can open sensitive files</strong>
+          <span>Prevent sensitive files from being opened by untrusted desktop apps.</span>
+        </li>
+        <li>
+          <strong>Prevent uploads to web apps</strong>
+          <span>Stop sensitive files from being uploaded to browsers and cloud services.</span>
+        </li>
+        <li>
+          <strong>Printing restrictions</strong>
+          <span>Control printing of sensitive files and reduce accidental sharing.</span>
+        </li>
+        <li>
+          <strong>Control USB, screen capture/recording, and clipboard</strong>
+          <span>Block copying sensitive content to USB drives, screenshots/recordings, and clipboard paste actions.</span>
+        </li>
+      </ul>
     </div>
   </div>
 </section>
 
-<section class="section soft">
-  <div class="wave">
-    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-      <path d="M0,40 C180,100 360,0 540,50 C720,100 900,10 1080,55 C1260,100 1350,45 1440,70 L1440,0 L0,0 Z" fill="rgba(30,79,163,.08)"></path>
-      <path d="M0,70 C220,20 420,120 640,65 C860,10 1000,100 1200,60 C1320,35 1400,55 1440,45 L1440,0 L0,0 Z" fill="rgba(229,57,53,.06)"></path>
-    </svg>
-  </div>
+<!-- REMOVED: moving carousel section completely (as requested) -->
 
-  <div class="wrap">
-    <div class="kicker">Key capabilities</div>
-    <h2 class="h2"><span>Discover</span> sensitive data, then <span>control</span> its movement</h2>
-    <p class="sub">
-      Two core building blocks—visibility and boundary control—designed to help you roll out DLP without friction.
+<section class="howitworks">
+  <div class="container">
+    <h2>How it works (audit first, enforce next)</h2>
+    <p class="lead">
+      A simple flow to roll out endpoint DLP safely—gain visibility first, then lock down what matters.
     </p>
 
-    <div class="split">
-      <div class="card emboss">
-        <div class="head">
-          <div>
-            <h3>Data discovery & classification</h3>
-          </div>
-
-          <div class="icon" aria-hidden="true">
-            <svg width="40" height="40" viewBox="0 0 56 56">
-              <defs>
-                <linearGradient id="gA" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="rgba(30,79,163,.95)"/>
-                  <stop offset="1" stop-color="rgba(43,102,217,.55)"/>
-                </linearGradient>
-              </defs>
-              <circle cx="28" cy="28" r="22" fill="url(#gA)" opacity=".24"/>
-              <path d="M18 18h14l6 6v14a2 2 0 0 1-2 2H18a2 2 0 0 1-2-2V20a2 2 0 0 1 2-2z" fill="rgba(30,79,163,.30)"/>
-              <path d="M32 18v8h8" fill="none" stroke="rgba(30,79,163,.65)" stroke-width="2" stroke-linecap="round"/>
-              <path d="M20 32h16M20 36h12" stroke="rgba(11,18,32,.50)" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </div>
-        </div>
-
-        <p>Identify and label sensitive files using inbuilt data rules or custom rules.</p>
-        <ul class="list">
-          <li><span class="check">✓</span>Organization-wide endpoint scans</li>
-          <li><span class="check">✓</span>RegEx, fingerprinting, keyword, and file-extension based rules</li>
-          <li><span class="check">✓</span>Classify structured and unstructured data</li>
-        </ul>
-
-        <div class="team-strip">
-          <div>
-            <b>Start with visibility</b><br>
-            <small>Low disruption rollout</small>
-          </div>
-          <svg width="120" height="32" viewBox="0 0 120 32" aria-hidden="true">
-            <path d="M2 24 C 18 10, 28 26, 44 16 C 58 7, 68 22, 84 12 C 98 4, 108 16, 118 8"
-                  fill="none" stroke="rgba(30,79,163,.85)" stroke-width="3" stroke-linecap="round"/>
-          </svg>
-        </div>
+    <div class="how-grid">
+      <div class="how-step">
+        <strong>Discover</strong>
+        <span>Find sensitive data across endpoints.</span>
+        <span class="how-tag">AI + Rules</span>
       </div>
 
-      <div class="card emboss">
-        <div class="head">
-          <div>
-            <h3>Data transfer & boundary control</h3>
-          </div>
+      <div class="how-step">
+        <strong>Classify</strong>
+        <span>Label files using content and context.</span>
+        <span class="how-tag">Auto tagging</span>
+      </div>
 
-          <div class="icon red" aria-hidden="true">
-            <svg width="40" height="40" viewBox="0 0 56 56">
-              <defs>
-                <linearGradient id="gB" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="rgba(229,57,53,.95)"/>
-                  <stop offset="1" stop-color="rgba(30,79,163,.45)"/>
-                </linearGradient>
-              </defs>
-              <circle cx="28" cy="28" r="22" fill="url(#gB)" opacity=".24"/>
-              <path d="M18 26c0-5.5 4.5-10 10-10s10 4.5 10 10v6h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H16a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2v-6z"
-                    fill="rgba(229,57,53,.18)" stroke="rgba(229,57,53,.35)" stroke-width="2"/>
-              <circle cx="28" cy="38" r="2.5" fill="rgba(11,18,32,.55)"/>
-            </svg>
-          </div>
-        </div>
+      <div class="how-step">
+        <strong>Monitor</strong>
+        <span>Track movement to browsers, cloud apps, USB, printing, clipboard, and screen capture.</span>
+        <span class="how-tag">Full visibility</span>
+      </div>
 
-        <p>Control how sensitive data moves across cloud uploads, email, printing workflows, and screen capture.</p>
-        <ul class="list">
-          <li><span class="check">✓</span>Cloud upload monitoring & restrictions</li>
-          <li><span class="check">✓</span>Email attachment protection using trusted boundaries</li>
-          <li><span class="check">✓</span>Printing restrictions with watermarking and screen capture control</li>
-        </ul>
+      <div class="how-step">
+        <strong>Control</strong>
+        <span>Block risky actions and allow trusted use cases.</span>
+        <span class="how-tag">Policy driven</span>
+      </div>
 
-        <div class="team-strip">
-          <div>
-            <b>Enforce with confidence</b><br>
-            <small>Audit → Enforce</small>
-          </div>
-          <svg width="120" height="32" viewBox="0 0 120 32" aria-hidden="true">
-            <path d="M2 18 L20 18 L30 12 L44 22 L58 10 L74 20 L90 8 L118 8"
-                  fill="none" stroke="rgba(229,57,53,.85)" stroke-width="3" stroke-linecap="round"/>
-          </svg>
-        </div>
+      <div class="how-step">
+        <strong>Report</strong>
+        <span>Out-of-the-box, compliance-ready reports for audits and review.</span>
+        <span class="how-tag">Ready to export</span>
       </div>
     </div>
   </div>
-
-  <div class="wave bottom">
-    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-      <path d="M0,40 C180,100 360,0 540,50 C720,100 900,10 1080,55 C1260,100 1350,45 1440,70 L1440,0 L0,0 Z" fill="rgba(30,79,163,.08)"></path>
-      <path d="M0,70 C220,20 420,120 640,65 C860,10 1000,100 1200,60 C1320,35 1400,55 1440,45 L1440,0 L0,0 Z" fill="rgba(229,57,53,.06)"></path>
-    </svg>
-  </div>
 </section>
 
-<section class="section">
-  <div class="wrap">
-    <div class="kicker">How it works</div>
-    <h2 class="h2">A smooth flow from <span>audit</span> to <span>enforce</span></h2>
-    <p class="sub">
-      Start with discovery, validate with audit reports, then move to enforcement once your rules are tuned.
-    </p>
+<section class="outcomes">
+  <div class="container">
+    <h2 class="outcomes-heading">When endpoint DLP controls are in place</h2>
 
-    <div class="flowbar">
-      <div class="step emboss">
-        <b>Discover</b>
-        <span>Locate sensitive data across endpoints.</span>
-        <span class="tag2">Rules-based discovery</span>
+    <div class="outcomes-grid">
+      <div class="outcome-card">
+        <h3>Fewer data leaks</h3>
+        <ul>
+          <li>Stop risky uploads to web apps and cloud services</li>
+          <li>Control copying through USB, clipboard, and screen capture</li>
+        </ul>
       </div>
-      <div class="step emboss">
-        <b>Classify</b>
-        <span>Label data based on content or context.</span>
-        <span class="tag2">Consistent policies</span>
+
+      <div class="outcome-card">
+        <h3>Safer day-to-day work</h3>
+        <ul>
+          <li>Start with audit mode to avoid breaking workflows</li>
+          <li>Enforce only after you confirm what’s truly sensitive</li>
+        </ul>
       </div>
-      <div class="step emboss">
-        <b>Monitor</b>
-        <span>Track movement via cloud, email, printing, and screen capture.</span>
-        <span class="tag2">Full visibility</span>
+
+      <div class="outcome-card">
+        <h3>Better compliance readiness</h3>
+        <ul>
+          <li>Use compliance-ready reports out of the box</li>
+          <li>Maintain clear audit trails for sensitive file handling</li>
+        </ul>
       </div>
-      <div class="step emboss">
-        <b>Control</b>
-        <span>Allow trusted transfers and block risky behavior.</span>
-        <span class="tag2">Boundary-based rules</span>
-      </div>
-      <div class="step emboss">
-        <b>Report</b>
-        <span>Use audit trails to reduce false positives fast.</span>
-        <span class="tag2">Compliance-ready</span>
+
+      <div class="outcome-card">
+        <h3>Stronger control on endpoints</h3>
+        <ul>
+          <li>Limit which apps can access sensitive files</li>
+          <li>Reduce accidental sharing through printing and file movement</li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
 
 <section class="testimonials">
-  <div class="wrap" style="position:relative; z-index:2;">
-    <div class="kicker">What customers say</div>
-    <h2 class="h2">Designed for security teams, built for <span>everyday work</span></h2>
+  <div class="testimonial-grid">
+    <blockquote class="testimonial">
+      <p>
+        “We started in audit mode and quickly understood where sensitive files were moving.
+        Enforcing controls became easy once the rules were tuned.”
+      </p>
+      <footer>
+        <strong>Security Team</strong>
+        <span>Enterprise environment</span>
+      </footer>
+    </blockquote>
 
-    <div class="tgrid">
-      <div class="tcard emboss">
-        <div class="quoteMark">“</div>
-        <p>“We started in audit mode, tuned the policies, then switched to enforcement. The transition felt predictable and safe.”</p>
-        <div class="role">IT Security Lead</div>
-        <div class="org">Enterprise environment</div>
-      </div>
-
-      <div class="tcard emboss">
-        <div class="quoteMark">“</div>
-        <p>“Cloud uploads and printing workflows were our biggest risks. Now we can control movement without breaking legitimate work.”</p>
-        <div class="role">Endpoint Management Manager</div>
-        <div class="org">Distributed workforce</div>
-      </div>
-
-      <div class="tcard emboss">
-        <div class="quoteMark">“</div>
-        <p>“The reporting helped us quickly identify where sensitive data was moving—and refine rules to reduce false positives.”</p>
-        <div class="role">Compliance Team</div>
-        <div class="org">Regulated org</div>
-      </div>
-    </div>
+    <blockquote class="testimonial">
+      <p>
+        “Upload prevention and clipboard control reduced accidental sharing immediately.
+        The policies were simple for our team to manage.”
+      </p>
+      <footer>
+        <strong>IT Operations</strong>
+        <span>Distributed workforce</span>
+      </footer>
+    </blockquote>
   </div>
 </section>
 
-<section class="section soft">
-  <div class="wrap">
-    <div class="kicker">Pricing</div>
-    <h2 class="h2">Flexible pricing that scales with your <span>endpoints</span></h2>
-    <p class="sub">
-      Endpoint DLP is available with Endpoint Central Cloud. Below is a simple snapshot for clarity.
+<section class="eval-soft">
+  <div class="eval-wrap">
+    <h2>Choose what fits</h2>
+    <p class="eval-lead">
+      Start free for up to 25 devices, then scale with per-device pricing.
     </p>
 
-    <div class="pricing">
-      <div class="price-card emboss">
-        <div class="plan">Free</div>
-        <div class="price">$0 <small>/ year</small></div>
-        <p class="mini">Free forever for up to 25 devices.</p>
-        <div class="btns">
-          <a class="btn ghost" href="https://www.manageengine.com/products/desktop-central/cloud">Get started</a>
+    <div class="eval-layout">
+      <div class="eval-panel">
+        <div class="eval-inner-center left">
+          <h3>Free Edition</h3>
+          <span class="eval-price">$0</span>
+          <p class="eval-meta">Up to 25 devices</p>
+          <a target="_blank" rel="noopener noreferrer"
+             href="https://www.manageengine.com/endpoint-dlp/download.html"
+             class="eval-cta subtle">Get started</a>
         </div>
       </div>
 
-      <div class="price-card featured emboss">
-        <div class="plan">Endpoint Central Cloud + Endpoint DLP</div>
-        <div class="price">From $104 <small>/ month</small></div>
-        <p class="mini">
-          Example starting point for 50 endpoints (cloud). Pricing varies by endpoint range.
-        </p>
-        <div class="btns">
-          <a class="btn primary" href="https://www.manageengine.com/products/desktop-central/cloud">Get started</a>
-          <a class="btn ghost" href="https://www.manageengine.com/endpoint-dlp/get-quote.html">Get quote</a>
-        </div>
+      <div class="eval-panel primary">
+        <h3>Endpoint DLP Plus</h3>
+        <span class="eval-price">$7.9 <small>per device per year</small></span>
+        <p class="eval-meta">As the number of devices increases, the price per device decreases</p>
+
+        <a target="_blank" rel="noopener noreferrer"
+           href="https://www.manageengine.com/endpoint-dlp/download.html"
+           class="eval-cta strong">Start free trial</a>
+
+        <small style="display:block; margin-top:8px; color:#64748b; font-size:12px;">
+          Need cloud? Sign up via
+          <a target="_blank" rel="noopener noreferrer"
+             href="https://www.manageengine.com/products/desktop-central/cloud/"
+             style="color:var(--blue); text-decoration:underline;">Endpoint Central Cloud</a>
+        </small>
       </div>
     </div>
+  </div>
 
+  <p style="text-align:center; font-size:12px; color:#64748b; margin-top:16px;">
+    For complete endpoint management and security,
+    <a target="_blank" rel="noopener noreferrer"
+       href="https://www.manageengine.com/products/desktop-central/"
+       style="color:var(--blue); text-decoration:underline;">ManageEngine Endpoint Central</a>
+    is the recommended solution.
+  </p>
+</section>
+
+<section class="faq-section">
+  <div class="container">
+    <h2>Frequently Asked Questions</h2>
+    <p class="faq-subtext">Answers to common evaluation questions</p>
+
+    <div class="faq-carousel">
+      <button class="faq-nav prev" aria-label="Previous FAQ">‹</button>
+
+      <div class="faq-track">
+        <div class="faq-item active">
+          <h3>Can I get a demo of ManageEngine Endpoint DLP Plus?</h3>
+          <p>
+            Yes, you can request a
+            <a target="_blank" rel="noopener noreferrer"
+               href="https://www.manageengine.com/endpoint-dlp/request-demo.html">personalized demo</a>
+            to see how endpoint data discovery and data controls work in your environment.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Does ManageEngine Endpoint DLP Plus have a free plan?</h3>
+          <p>Yes. Endpoint DLP Plus offers a lifetime Free Edition that supports up to 25 devices.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Is support available for the Free Edition?</h3>
+          <p>
+            Yes, ManageEngine provides technical support for the Free Edition,
+            along with documentation and knowledge base resources.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Is Endpoint DLP Plus the right choice if I need full endpoint management too?</h3>
+          <p>
+            Endpoint DLP Plus is designed for endpoint data discovery and preventing data leaks.
+            If your requirement includes patching, software deployment, asset tracking, and broader endpoint administration,
+            <a target="_blank" rel="noopener noreferrer"
+               href="https://www.manageengine.com/products/desktop-central/">ManageEngine Endpoint Central</a>
+            would be the more suitable choice.
+          </p>
+        </div>
+      </div>
+
+      <button class="faq-nav next" aria-label="Next FAQ">›</button>
+    </div>
   </div>
 </section>
 
-<section class="section soft">
-  <div class="wrap">
-    <div class="kicker">FAQ</div>
-    <h2 class="h2">Frequently asked questions</h2>
-    <p class="sub">Short, practical questions for quick clarity.</p>
-
-    <div class="faqWrap">
-      <div class="faq">
-        <div class="qa emboss">
-          <div class="q">What are data rules, and what do they do? <span>+</span></div>
-          <div class="a">
-            Data rules define how Endpoint DLP detects sensitive data. Inbuilt template data rules support four types:
-            <b>RegEx</b>, <b>Fingerprinting</b>, <b>Keyword</b>, and <b>File Extension</b> based rules.
-          </div>
-        </div>
-
-        <div class="qa emboss">
-          <div class="q">When should I use inbuilt rule types vs custom rules? <span>+</span></div>
-          <div class="a">
-            Use inbuilt rule types when you need faster setup for common detection patterns. Use custom rules when you need
-            organization-specific patterns, formats, or logic tailored to your workflows.
-          </div>
-        </div>
-
-        <div class="qa emboss">
-          <div class="q">What happens if multiple policies apply to the same endpoint? <span>+</span></div>
-          <div class="a">
-            Policies are <b>merged and applied by precedence</b>:
-            <br><br>
-            <b>Block</b> (Highest) → <b>Allow within trusted</b> (Lower) → <b>Audit</b> (Lowest)
-            <br><br>
-            Example: If any one policy has <b>Block</b> for a control like File Upload, it will override other policies that
-            are set to Audit or Allow within trusted for the same control.
-          </div>
-        </div>
-      </div>
-
-      <div class="faqArt emboss">
-        <h4>Quick rollout tip</h4>
-        <p>
-          Start in <b>Audit mode</b> to observe real behavior. Then move to <b>Enforce mode</b> for high-risk actions like
-          cloud uploads, external email attachments, and printing workflows.
-        </p>
-
-        <div style="height:12px"></div>
-
-        <svg width="100%" height="180" viewBox="0 0 420 180" aria-hidden="true">
-          <defs>
-            <linearGradient id="faqg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="rgba(30,79,163,.65)"/>
-              <stop offset="1" stop-color="rgba(229,57,53,.55)"/>
-            </linearGradient>
-          </defs>
-          <rect x="12" y="22" width="396" height="136" rx="18" fill="rgba(255,255,255,.55)" opacity=".55"/>
-          <path d="M56 124 C 120 76, 170 146, 240 100 C 288 68, 324 116, 370 76"
-                fill="none" stroke="url(#faqg)" stroke-width="6" stroke-linecap="round"/>
-          <circle cx="56" cy="124" r="8" fill="rgba(30,79,163,.55)"/>
-          <circle cx="240" cy="100" r="8" fill="rgba(229,57,53,.50)"/>
-          <circle cx="370" cy="76" r="8" fill="rgba(30,79,163,.55)"/>
-        </svg>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer class="footer">
-  <div class="wrap footer-grid">
-    <div>
-      <img class="foot-logo" src="Endpoint DLP Plus_with ME_Black.png" alt="Endpoint DLP Plus" />
-      <p>Protect sensitive endpoint data with discovery, classification, and boundary-based controls.</p>
-    </div>
-
-    <div>
-      <strong>Product</strong>
-      <a href="https://www.manageengine.com/endpoint-dlp/">Overview</a>
-      <a href="https://www.manageengine.com/endpoint-dlp/features.html">Features</a>
-      <a href="https://www.manageengine.com/endpoint-dlp/download.html">Download</a>
-    </div>
-
-    <div>
-      <strong>Resources</strong>
-      <a href="https://www.manageengine.com/endpoint-dlp/help.html">Help</a>
-      <a href="https://www.manageengine.com/endpoint-dlp/help/faq.html">FAQ</a>
-      <a href="https://www.manageengine.com/endpoint-dlp/request-demo.html">Demo</a>
-    </div>
-
-    <div>
-      <strong>Support</strong>
-      <a href="https://www.manageengine.com/endpoint-dlp/support.html">Support</a>
-      <a href="https://www.manageengine.com/endpoint-dlp/get-quote.html">Contact sales</a>
-    </div>
-  </div>
-
-  <div class="wrap footer-bottom">
-    <div>© <span id="year"></span> ManageEngine</div>
-    <div style="opacity:.8">Endpoint DLP Plus</div>
-  </div>
+<footer>
+  © 2026 Endpoint DLP Plus. All rights reserved.
 </footer>
 
 <script>
-/* Footer year */
-document.getElementById("year").textContent = new Date().getFullYear();
+  /* ================= FAQ CAROUSEL (same as ACP template) ================= */
+  const faqItems = document.querySelectorAll(".faq-item");
+  const faqPrev = document.querySelector(".faq-nav.prev");
+  const faqNext = document.querySelector(".faq-nav.next");
+  let faqIndex = 0;
 
-/* FAQ accordion */
-document.querySelectorAll(".qa").forEach((qa) => {
-  const q = qa.querySelector(".q");
-  q.addEventListener("click", () => qa.classList.toggle("open"));
-});
-
-/* Count-up stats */
-function formatCount(n){
-  if(n >= 1000000) return (n/1000000).toFixed(0) + "M";
-  if(n >= 1000) return (n/1000).toFixed(0) + "K";
-  return String(n);
-}
-const counters = document.querySelectorAll(".num");
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(!entry.isIntersecting) return;
-    const el = entry.target;
-    if(el.dataset.done === "1") return;
-    el.dataset.done = "1";
-
-    const target = Number(el.dataset.count || 0);
-    const suffix = el.dataset.suffix || "";
-    const duration = 1200;
-    const start = performance.now();
-
-    function tick(now){
-      const t = Math.min((now - start) / duration, 1);
-      const val = Math.floor(target * (0.15 + 0.85*t));
-      el.textContent = formatCount(val) + suffix;
-      if(t < 1) requestAnimationFrame(tick);
-      else el.textContent = formatCount(target) + suffix;
-    }
-    requestAnimationFrame(tick);
-  });
-}, {threshold: 0.35});
-counters.forEach(c => io.observe(c));
-
-/* Hero mode label swap */
-const modePill = document.getElementById("modePill");
-let state = 0;
-setInterval(() => {
-  state = (state + 1) % 3;
-  if(state === 0){
-    modePill.textContent = "AUDIT MODE";
-    modePill.style.background = "rgba(30,79,163,.38)";
-  } else if(state === 1){
-    modePill.textContent = "ENFORCE MODE";
-    modePill.style.background = "rgba(229,57,53,.18)";
-  } else {
-    modePill.textContent = "SMART AUDIT";
-    modePill.style.background = "rgba(188,212,255,.16)";
+  function showFaq(index) {
+    faqIndex = (index + faqItems.length) % faqItems.length;
+    faqItems.forEach((item) => item.classList.remove("active"));
+    faqItems[faqIndex].classList.add("active");
   }
-}, 2400);
 
-/* Mobile menu */
-const hamburgerBtn = document.getElementById("hamburgerBtn");
-const mobileMenu = document.getElementById("mobileMenu");
-
-function closeMenu(){
-  mobileMenu.style.display = "none";
-  hamburgerBtn.setAttribute("aria-expanded","false");
-}
-
-hamburgerBtn.addEventListener("click", (e) => {
-  e.stopPropagation();
-  const open = mobileMenu.style.display === "block";
-  mobileMenu.style.display = open ? "none" : "block";
-  hamburgerBtn.setAttribute("aria-expanded", open ? "false" : "true");
-});
-
-document.addEventListener("click", () => closeMenu());
-mobileMenu.addEventListener("click", (e) => e.stopPropagation());
-
-window.addEventListener("resize", () => {
-  if(window.innerWidth > 768) closeMenu();
-});
+  faqNext.addEventListener("click", () => showFaq(faqIndex + 1));
+  faqPrev.addEventListener("click", () => showFaq(faqIndex - 1));
+  showFaq(0);
 </script>
 
 </body>
