@@ -818,91 +818,94 @@
     </div>
   </div>
 </section>
-
-<!-- ✅ UPDATED HOW IT WORKS (ACP-like graphics) -->
-<section class="howitworks" aria-label="How it works">
+  <section class="howitworks">
   <div class="container">
 
-    <div class="how-head">
-      <h2>How it works (audit first, enforce next)</h2>
-      <p class="lead">
-        A simple flow to roll out endpoint DLP safely—gain visibility first, then lock down what matters.
+    <div class="vtc-head">
+      <div class="vtc-title">From visibility to control</div>
+      <p class="vtc-sub">
+        Start in audit mode, assess real movement, and transition to controlled actions—without disrupting work.
       </p>
     </div>
 
-    <div class="how-layout">
-      <!-- Left: Visual panel -->
-      <div class="how-visual">
-        <div class="how-visual-inner">
-          <div class="how-visual-kicker">From visibility to control</div>
-          <div class="how-visual-title">See sensitive movement. Then stop it.</div>
-          <div class="how-visual-sub">
-            Start with monitoring to understand how sensitive files move. When you're confident,
-            enforce policies across web uploads, USB, printing, clipboard, and screen capture.
-          </div>
+    <div class="vtc-rows">
 
-          <div class="how-mini" aria-label="Mini flow">
-            <div class="how-chip"><span class="how-dot" aria-hidden="true"></span>Discover</div>
-            <div class="how-chip"><span class="how-dot" aria-hidden="true"></span>Classify</div>
-            <div class="how-chip"><span class="how-dot" aria-hidden="true"></span>Monitor</div>
-            <div class="how-chip"><span class="how-dot" aria-hidden="true"></span>Control</div>
-            <div class="how-chip"><span class="how-dot" aria-hidden="true"></span>Report</div>
+      <!-- Row 1 (4 steps) -->
+      <div class="vtc-row top">
+        <div class="vtc-step">
+          <div class="vtc-topline">
+            <div class="vtc-icon" aria-hidden="true">
+              <!-- Search / Discover -->
+              <svg viewBox="0 0 24 24"><path d="M10 2a8 8 0 1 1 5.29 14.02l4.35 4.35-1.42 1.42-4.35-4.35A8 8 0 0 1 10 2Zm0 2a6 6 0 1 0 .001 12.001A6 6 0 0 0 10 4Z"/></svg>
+            </div>
+            <div class="vtc-name">Discover</div>
           </div>
+          <div class="vtc-desc">Find sensitive data across endpoints and understand where it exists.</div>
+        </div>
+
+        <div class="vtc-step">
+          <div class="vtc-topline">
+            <div class="vtc-icon" aria-hidden="true">
+              <!-- Eye / Audit -->
+              <svg viewBox="0 0 24 24"><path d="M12 5c6.5 0 10 7 10 7s-3.5 7-10 7S2 12 2 12s3.5-7 10-7Zm0 2C7.2 7 4.3 11.3 4.1 12c.2.7 3.1 5 7.9 5s7.7-4.3 7.9-5c-.2-.7-3.1-5-7.9-5Zm0 2.5A2.5 2.5 0 1 1 12 14a2.5 2.5 0 0 1 0-5Z"/></svg>
+            </div>
+            <div class="vtc-name">Audit</div>
+          </div>
+          <div class="vtc-desc">Monitor movement first so you can validate impact without blocking users.</div>
+        </div>
+
+        <div class="vtc-step">
+          <div class="vtc-topline">
+            <div class="vtc-icon" aria-hidden="true">
+              <!-- Decision / Check -->
+              <svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+            </div>
+            <div class="vtc-name">Decide</div>
+          </div>
+          <div class="vtc-desc">Define what’s allowed vs. risky based on real usage and sensitivity.</div>
+        </div>
+
+        <div class="vtc-step">
+          <div class="vtc-topline">
+            <div class="vtc-icon" aria-hidden="true">
+              <!-- Shield / Enforce -->
+              <svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.6 8 11 4.6-1.4 8-6 8-11V5l-8-3Zm0 18.9C8.3 19.6 6 15.9 6 11.6V6.3l6-2.2 6 2.2v5.3c0 4.3-2.3 8-6 9.3Z"/></svg>
+            </div>
+            <div class="vtc-name">Enforce</div>
+          </div>
+          <div class="vtc-desc">Apply policies to block risky actions and allow trusted workflows.</div>
         </div>
       </div>
 
-      <!-- Right: Connected steps -->
-      <div class="how-flow" aria-label="How it works steps">
-        <div class="how-step">
-          <div class="how-badge">1</div>
-          <div class="how-content">
-            <strong>Discover</strong>
-            <span>Find sensitive data across endpoints.</span>
-            <span class="muted">Use built-in detection to surface what matters first.</span>
+      <!-- Row 2 (2 steps) -->
+      <div class="vtc-row bottom">
+        <div class="vtc-step">
+          <div class="vtc-topline">
+            <div class="vtc-icon" aria-hidden="true">
+              <!-- Key / Elevate -->
+              <svg viewBox="0 0 24 24"><path d="M7 14a5 5 0 1 1 4.9-6H22v4h-2v2h-2v2h-3.1A5 5 0 0 1 7 14Zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg>
+            </div>
+            <div class="vtc-name">Elevate</div>
           </div>
+          <div class="vtc-desc">Allow approved actions securely (exceptions, approvals) without opening gaps.</div>
         </div>
 
-        <div class="how-step">
-          <div class="how-badge">2</div>
-          <div class="how-content">
-            <strong>Classify</strong>
-            <span>Label files using content and context.</span>
-            <span class="muted">Organize sensitive data so policies can act precisely.</span>
+        <div class="vtc-step">
+          <div class="vtc-topline">
+            <div class="vtc-icon" aria-hidden="true">
+              <!-- Chart / Monitor -->
+              <svg viewBox="0 0 24 24"><path d="M4 19h16v2H2V3h2v16Zm3-2V9h3v8H7Zm5 0V5h3v12h-3Zm5 0v-6h3v6h-3Z"/></svg>
+            </div>
+            <div class="vtc-name">Monitor</div>
           </div>
-        </div>
-
-        <div class="how-step">
-          <div class="how-badge">3</div>
-          <div class="how-content">
-            <strong>Monitor</strong>
-            <span>Track movement to browsers, cloud apps, USB, printing, clipboard, and screen capture.</span>
-            <span class="muted">Get visibility before enforcing anything.</span>
-          </div>
-        </div>
-
-        <div class="how-step">
-          <div class="how-badge">4</div>
-          <div class="how-content">
-            <strong>Control</strong>
-            <span>Block risky actions and allow trusted use cases.</span>
-            <span class="muted">Shift from audit to enforcement when you’re ready.</span>
-          </div>
-        </div>
-
-        <div class="how-step">
-          <div class="how-badge">5</div>
-          <div class="how-content">
-            <strong>Report</strong>
-            <span>Out-of-the-box, compliance-ready reports for audits and review.</span>
-            <span class="muted">Export what you need for internal and external audits.</span>
-          </div>
+          <div class="vtc-desc">Track violations and outcomes continuously with audit-ready reporting.</div>
         </div>
       </div>
+
     </div>
-
   </div>
 </section>
-
+<!-- ✅ UPDATED HOW IT WORKS (ACP-like graphics) -->
 <section class="outcomes">
   <div class="container">
     <h2 class="outcomes-heading">When endpoint DLP controls are in place</h2>
