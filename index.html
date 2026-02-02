@@ -116,7 +116,6 @@
       border-bottom:1px solid var(--border);
     }
 
-    /* World map watermark */
     .trust-proof::before{
       content:"";
       position:absolute;
@@ -191,7 +190,6 @@
 
     .metric{ padding:16px 12px; }
 
-    /* ✅ CLEAN, NON-BROKEN CSS (this was breaking earlier) */
     .metric strong{
       display:inline-block;
       font-weight:900;
@@ -282,71 +280,216 @@
 
     .card:hover .feature-list span{ max-height:140px; opacity:1; }
 
-    /* ---------- HOW IT WORKS (NO BLUE PILLS) ---------- */
+    /* ================= HOW IT WORKS (ACP-like "visibility → control" graphics) ================= */
     .howitworks{
-      padding:64px 16px;
-      background:#fff;
-      text-align:center;
-      border-top:1px solid var(--border);
-      border-bottom:1px solid var(--border);
+      position: relative;
+      padding: 72px 16px;
+      background:
+        radial-gradient(1200px 520px at 15% 10%, rgba(37,99,235,0.12), transparent 62%),
+        radial-gradient(900px 420px at 85% 15%, rgba(10,102,194,0.10), transparent 60%),
+        linear-gradient(180deg, #ffffff 0%, #f8fbff 55%, #ffffff 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .howitworks .container{ position: relative; z-index: 1; }
+
+    .how-head{
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto 44px;
     }
 
     .howitworks h2{
-      font-size:32px;
-      line-height:1.35;
-      max-width:900px;
-      margin:0 auto 14px;
-      font-weight:700;
-      letter-spacing:-0.02em;
-      color:#000;
+      font-size: 32px;
+      line-height: 1.25;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #0b1220;
+      margin-bottom: 10px;
     }
 
-    .howitworks p.lead{
-      max-width:720px;
-      margin:0 auto 42px;
-      color:#64748b;
-      font-size:16px;
+    .howitworks .lead{
+      max-width: 720px;
+      margin: 0 auto;
+      color: #475569;
+      font-size: 16px;
     }
 
-    .how-grid{
-      max-width:1100px;
-      margin:0 auto;
-      display:grid;
-      grid-template-columns:repeat(5, 1fr);
-      gap:16px;
-      align-items:stretch;
+    .how-layout{
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .how-visual{
+      position: relative;
+      border-radius: 20px;
+      padding: 26px 22px;
+      background:
+        radial-gradient(800px 360px at 30% 20%, rgba(255,255,255,0.45), rgba(255,255,255,0.05) 60%),
+        linear-gradient(135deg, rgba(15,42,68,0.90), rgba(30,79,145,0.90), rgba(37,99,235,0.92));
+      box-shadow: 0 40px 90px rgba(15,23,42,0.18);
+      overflow: hidden;
+    }
+
+    .how-visual::before{
+      content:"";
+      position:absolute;
+      top:-120px;
+      left:-140px;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.16), transparent 68%);
+    }
+
+    .how-visual::after{
+      content:"";
+      position:absolute;
+      bottom:-140px;
+      right:-120px;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.12), transparent 70%);
+    }
+
+    .how-visual-inner{
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display:flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+      color: #ffffff;
+    }
+
+    .how-visual-kicker{
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(219,234,254,0.95);
+    }
+
+    .how-visual-title{
+      font-size: 26px;
+      line-height: 1.2;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .how-visual-sub{
+      color: rgba(224,236,255,0.92);
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 460px;
+    }
+
+    .how-mini{
+      margin-top: 10px;
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .how-chip{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.16);
+      color: rgba(255,255,255,0.95);
+      font-size: 13px;
+      font-weight: 650;
+    }
+    .how-dot{
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.9);
+      opacity: 0.9;
+    }
+
+    .how-flow{
+      position: relative;
+      background: rgba(255,255,255,0.75);
+      border: 1px solid rgba(226,232,240,0.9);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 24px 60px rgba(15,23,42,0.08);
+    }
+
+    .how-flow::before{
+      content:"";
+      position:absolute;
+      top: 30px;
+      bottom: 30px;
+      left: 34px;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(37,99,235,0.25), rgba(37,99,235,0.10));
     }
 
     .how-step{
-      background:#fff;
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:18px;
-      text-align:left;
-      box-shadow:0 18px 38px rgba(0,0,0,.06);
-      transition:transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+      position: relative;
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 14px;
+      padding: 14px 12px;
+      border-radius: 16px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
     }
 
     .how-step:hover{
-      transform:translateY(-6px);
-      box-shadow:0 28px 60px rgba(10,102,194,.18);
-      border-color:rgba(10,102,194,.35);
+      transform: translateY(-3px);
+      background: rgba(240,247,255,0.85);
+      box-shadow: 0 18px 44px rgba(10,102,194,0.16);
     }
 
-    .how-step strong{
-      display:block;
-      font-weight:800;
-      color:#0b1220;
-      margin-bottom:10px;
-      letter-spacing:-0.01em;
-      font-size:15px;
+    .how-badge{
+      position: relative;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #ffffff, #eef5ff);
+      border: 1px solid rgba(37,99,235,0.22);
+      box-shadow: 0 14px 34px rgba(37,99,235,0.10);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight: 900;
+      color: #2563eb;
+      letter-spacing: -0.02em;
+      margin-left: 4px;
     }
 
-    .how-step span{
+    .how-content strong{
       display:block;
-      color:#64748b;
-      font-size:14px;
-      line-height:1.55;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      color: #0b1220;
+      margin-bottom: 6px;
+    }
+
+    .how-content span{
+      display:block;
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .how-content .muted{
+      margin-top: 8px;
+      font-size: 13px;
+      color: #64748b;
     }
 
     /* ---------- OUTCOMES ---------- */
@@ -505,7 +648,8 @@
     @media (max-width:1024px){
       .trust-logos{ grid-template-columns:repeat(3, 1fr); }
       .trust-metrics{ grid-template-columns:repeat(2, 1fr); gap:32px; }
-      .how-grid{ grid-template-columns:repeat(2, 1fr); }
+      .how-layout{ grid-template-columns:1fr; }
+      .how-visual{ min-height:240px; }
     }
 
     @media (max-width:820px){
@@ -522,8 +666,12 @@
       nav{ display:none; }
       .trust-logos{ grid-template-columns:repeat(2, 1fr); }
       .trust-metrics{ grid-template-columns:1fr; }
-      .trust-proof::before{ display:block; opacity:0.18; } /* keep map visible */
-      .how-grid{ grid-template-columns:1fr; }
+      .trust-proof::before{ display:block; opacity:0.18; }
+      .howitworks{ padding:56px 16px; }
+      .how-flow{ padding:16px; }
+      .how-flow::before{ left:28px; }
+      .how-step{ grid-template-columns:56px 1fr; }
+      .how-badge{ width:40px; height:40px; }
       .testimonial-grid{ grid-template-columns:1fr; }
     }
   </style>
@@ -533,7 +681,7 @@
 
 <header>
   <div class="logo">
-    <!-- ✅ Uses your repo-root file; fallback to official EDLP logo if path breaks -->
+    <!-- Repo-root logo (your file) + fallback -->
     <img
       src="Endpoint DLP Plus_with ME_Black.png"
       alt="Endpoint DLP Plus logo"
@@ -586,7 +734,7 @@
       <p class="trust-kicker">Trusted by leading brands worldwide</p>
     </div>
 
-    <!-- ✅ EDLP trusted logos pulled from EDLP page -->
+    <!-- EDLP trusted logos (hotlinked; no local logos needed) -->
     <div class="trust-logos" aria-label="Customer logos">
       <div class="logo-tile"><img src="https://www.manageengine.com/ems/images/logo/melita-logo.png" alt="Melita"></div>
       <div class="logo-tile"><img src="https://www.manageengine.com/ems/images/logo/unisys-logo.png" alt="Unisys"></div>
@@ -597,7 +745,7 @@
 
     <div class="trust-spacer" aria-hidden="true"></div>
 
-    <!-- Metrics as per screenshot -->
+    <!-- Metrics -->
     <div class="trust-metrics">
       <div class="metric">
         <strong>1M+</strong>
@@ -671,39 +819,87 @@
   </div>
 </section>
 
-<section class="howitworks">
+<!-- ✅ UPDATED HOW IT WORKS (ACP-like graphics) -->
+<section class="howitworks" aria-label="How it works">
   <div class="container">
-    <h2>How it works (audit first, enforce next)</h2>
-    <p class="lead">
-      A simple flow to roll out endpoint DLP safely—gain visibility first, then lock down what matters.
-    </p>
 
-    <div class="how-grid">
-      <div class="how-step">
-        <strong>Discover</strong>
-        <span>Find sensitive data across endpoints.</span>
+    <div class="how-head">
+      <h2>How it works (audit first, enforce next)</h2>
+      <p class="lead">
+        A simple flow to roll out endpoint DLP safely—gain visibility first, then lock down what matters.
+      </p>
+    </div>
+
+    <div class="how-layout">
+      <!-- Left: Visual panel -->
+      <div class="how-visual">
+        <div class="how-visual-inner">
+          <div class="how-visual-kicker">From visibility to control</div>
+          <div class="how-visual-title">See sensitive movement. Then stop it.</div>
+          <div class="how-visual-sub">
+            Start with monitoring to understand how sensitive files move. When you're confident,
+            enforce policies across web uploads, USB, printing, clipboard, and screen capture.
+          </div>
+
+          <div class="how-mini" aria-label="Mini flow">
+            <div class="how-chip"><span class="how-dot" aria-hidden="true"></span>Discover</div>
+            <div class="how-chip"><span class="how-dot" aria-hidden="true"></span>Classify</div>
+            <div class="how-chip"><span class="how-dot" aria-hidden="true"></span>Monitor</div>
+            <div class="how-chip"><span class="how-dot" aria-hidden="true"></span>Control</div>
+            <div class="how-chip"><span class="how-dot" aria-hidden="true"></span>Report</div>
+          </div>
+        </div>
       </div>
 
-      <div class="how-step">
-        <strong>Classify</strong>
-        <span>Label files using content and context.</span>
-      </div>
+      <!-- Right: Connected steps -->
+      <div class="how-flow" aria-label="How it works steps">
+        <div class="how-step">
+          <div class="how-badge">1</div>
+          <div class="how-content">
+            <strong>Discover</strong>
+            <span>Find sensitive data across endpoints.</span>
+            <span class="muted">Use built-in detection to surface what matters first.</span>
+          </div>
+        </div>
 
-      <div class="how-step">
-        <strong>Monitor</strong>
-        <span>Track movement to browsers, cloud apps, USB, printing, clipboard, and screen capture.</span>
-      </div>
+        <div class="how-step">
+          <div class="how-badge">2</div>
+          <div class="how-content">
+            <strong>Classify</strong>
+            <span>Label files using content and context.</span>
+            <span class="muted">Organize sensitive data so policies can act precisely.</span>
+          </div>
+        </div>
 
-      <div class="how-step">
-        <strong>Control</strong>
-        <span>Block risky actions and allow trusted use cases.</span>
-      </div>
+        <div class="how-step">
+          <div class="how-badge">3</div>
+          <div class="how-content">
+            <strong>Monitor</strong>
+            <span>Track movement to browsers, cloud apps, USB, printing, clipboard, and screen capture.</span>
+            <span class="muted">Get visibility before enforcing anything.</span>
+          </div>
+        </div>
 
-      <div class="how-step">
-        <strong>Report</strong>
-        <span>Out-of-the-box, compliance-ready reports for audits and review.</span>
+        <div class="how-step">
+          <div class="how-badge">4</div>
+          <div class="how-content">
+            <strong>Control</strong>
+            <span>Block risky actions and allow trusted use cases.</span>
+            <span class="muted">Shift from audit to enforcement when you’re ready.</span>
+          </div>
+        </div>
+
+        <div class="how-step">
+          <div class="how-badge">5</div>
+          <div class="how-content">
+            <strong>Report</strong>
+            <span>Out-of-the-box, compliance-ready reports for audits and review.</span>
+            <span class="muted">Export what you need for internal and external audits.</span>
+          </div>
+        </div>
       </div>
     </div>
+
   </div>
 </section>
 
