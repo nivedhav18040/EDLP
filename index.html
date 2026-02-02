@@ -62,6 +62,32 @@
       text-align: center;
     }
 
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: -50px;
+      left: -50px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255,255,255,0.05), transparent 70%);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      bottom: -50px;
+      right: -50px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255,255,255,0.03), transparent 70%);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .hero > * { position: relative; z-index: 1; }
+
     .hero h1 {
       font-size: 44px;
       line-height: 1.12;
@@ -115,12 +141,14 @@
       overflow: hidden;
     }
 
-    /* World map watermark (MAKE SURE THIS FILE EXISTS IN YOUR REPO) */
+    /* World map watermark (local first, ACP fallback) */
     .trust-proof::before {
       content: "";
       position: absolute;
       inset: 0;
-      background-image: url("images/worldmap.png");
+      background-image:
+        url("images/worldmap.png"),
+        url("https://snehaa-p.github.io/acp-landing-page/images/worldmap.png");
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center center;
@@ -128,6 +156,7 @@
       filter: grayscale(100%) contrast(90%);
       pointer-events: none;
     }
+
     .trust-proof::after{
       content:"";
       position:absolute;
@@ -141,6 +170,7 @@
 
     .trust-proof > .container { position: relative; z-index: 1; }
 
+    /* Header */
     .trust-head { text-align: center; margin-bottom: 36px; }
     .trust-kicker {
       font-size: 14px;
@@ -150,15 +180,17 @@
       color: var(--muted);
     }
 
+    /* Logos */
     .trust-logos {
       max-width: 1100px;
       margin: 40px auto 0;
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       align-items: center;
-      gap: 40px;
+      gap: 28px;
     }
 
+    /* Logo tiles (uniform white rectangles) */
     .logo-tile{
       height: 72px;
       padding: 12px 18px;
@@ -171,15 +203,17 @@
     }
 
     .logo-tile img{
-      max-height: 32px;
+      max-height: 34px;
       max-width: 100%;
       object-fit: contain;
       display: block;
-      opacity: 0.9;
+      opacity: 0.92;
     }
 
+    /* Divider */
     .trust-spacer { height: 56px; }
 
+    /* Metrics */
     .trust-metrics {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -208,6 +242,7 @@
       color: #64748b;
     }
 
+    /* Hover enlarge (controlled) */
     .metric:hover strong {
       transform: scale(1.26);
       text-shadow: 0 18px 36px rgba(37,99,235,0.35);
@@ -275,15 +310,11 @@
     }
 
     .card p { margin-bottom: 24px; color: var(--muted); font-size: 16px; }
-
     .card h3 { margin-bottom: 20px; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
 
     .feature-list { list-style: none; }
-
     .feature-list li { margin-bottom: 18px; position: relative; padding-left: 24px; }
-
     .feature-list li::before { content: "✓"; position: absolute; left: 0; color: var(--blue); font-weight: 700; }
-
     .feature-list strong { display: block; font-weight: 600; color: var(--dark); }
 
     .feature-list span {
@@ -295,148 +326,78 @@
       color: var(--muted);
       transition: max-height 0.35s ease, opacity 0.3s ease;
     }
-
     .card:hover .feature-list span { max-height: 140px; opacity: 1; }
 
     .feature-list a, .feature-list a:visited { color: inherit !important; text-decoration: none; }
     .feature-list a:hover { color: var(--blue); text-decoration: underline; cursor: pointer; }
 
-    /* ================= HOW IT WORKS — ACP "From visibity to control" (NO SVG, NO PILL) ================= */
-    .howitworks{
-      position: relative;
-      padding: 72px 16px;
-      background:
-        radial-gradient(1200px 520px at 15% 10%, rgba(37,99,235,0.12), transparent 62%),
-        radial-gradient(900px 420px at 85% 15%, rgba(10,102,194,0.10), transparent 60%),
-        linear-gradient(180deg, #ffffff 0%, #f8fbff 55%, #ffffff 100%);
+    /* ---------- HOW IT WORKS ---------- */
+    .howitworks {
+      padding: 64px 16px;
+      background: #ffffff;
+      text-align: center;
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      overflow: hidden;
     }
 
-    .howitworks .container{ position: relative; z-index: 1; }
-
-    .vtc-head{
-      text-align:center;
-      max-width: 920px;
-      margin: 0 auto 34px;
+    .howitworks h2 {
+      font-size: 32px;
+      line-height: 1.35;
+      max-width: 900px;
+      margin: 0 auto 14px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #000;
     }
 
-    .vtc-title{
-      font-size: 34px;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      color: #0b1220;
-      margin-bottom: 10px;
-    }
-
-    .vtc-sub{
-      max-width: 740px;
-      margin: 0 auto;
-      color: #475569;
+    .howitworks p.lead {
+      max-width: 720px;
+      margin: 0 auto 42px;
+      color: #64748b;
       font-size: 16px;
     }
 
-    .vtc-rows{
+    .how-grid {
       max-width: 1100px;
       margin: 0 auto;
       display: grid;
-      gap: 22px;
-    }
-
-    .vtc-row{
-      position: relative;
-      display: grid;
+      grid-template-columns: repeat(5, 1fr);
       gap: 16px;
       align-items: stretch;
     }
 
-    .vtc-row.top{ grid-template-columns: repeat(4, 1fr); }
-    .vtc-row.bottom{
-      grid-template-columns: repeat(2, minmax(280px, 1fr));
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
-    .vtc-row::before{
-      content:"";
-      position:absolute;
-      left: 52px;
-      right: 52px;
-      top: 30px;
-      height: 2px;
-      background: linear-gradient(90deg,
-        rgba(37,99,235,0.18),
-        rgba(37,99,235,0.10)
-      );
-      pointer-events:none;
-    }
-
-    .vtc-step{
+    .how-step {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      text-align: left;
+      box-shadow: 0 18px 38px rgba(0,0,0,0.06);
+      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
       position: relative;
-      background: rgba(255,255,255,0.86);
-      border: 1px solid rgba(226,232,240,0.95);
-      border-radius: 18px;
-      padding: 18px 16px 18px;
-      box-shadow: 0 18px 44px rgba(15,23,42,0.06);
-      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
       overflow: hidden;
     }
 
-    .vtc-step:hover{
-      transform: translateY(-4px);
-      border-color: rgba(37,99,235,0.30);
-      box-shadow: 0 28px 60px rgba(10,102,194,0.14);
+    .how-step:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 60px rgba(10,102,194,0.18);
+      border-color: rgba(10,102,194,0.35);
     }
 
-    .vtc-topline{
-      display:flex;
-      align-items:center;
-      gap: 12px;
-      margin-bottom: 10px;
-    }
-
-    .vtc-badge{
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: linear-gradient(180deg, #ffffff, #eef5ff);
-      border: 1px solid rgba(37,99,235,0.20);
-      box-shadow: 0 14px 30px rgba(37,99,235,0.10);
-      flex: 0 0 44px;
-      position: relative;
-      z-index: 1;
-      color: #2563eb;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-    }
-
-    .vtc-name{
-      font-size: 16px;
-      font-weight: 900;
-      letter-spacing: -0.01em;
+    .how-step strong {
+      display: block;
+      font-weight: 800;
       color: #0b1220;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+      font-size: 15px;
     }
 
-    .vtc-desc{
-      color:#475569;
+    .how-step span {
+      display: block;
+      color: #64748b;
       font-size: 14px;
       line-height: 1.55;
-    }
-
-    .vtc-step::after{
-      content:"";
-      position:absolute;
-      right:-42px;
-      bottom:-42px;
-      width: 170px;
-      height: 170px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(37,99,235,0.16), transparent 62%);
-      opacity: 0.55;
     }
 
     /* ---------- OUTCOMES ---------- */
@@ -468,13 +429,9 @@
 
     /* ---------- EVALUATE SECTION (PRICING) ---------- */
     .eval-soft { padding: 64px 16px; background: linear-gradient(180deg, #f7faff 0%, #ffffff 60%); }
-
     .eval-wrap { max-width: 1100px; margin: 0 auto; text-align: center; }
-
     .eval-soft h2 { font-size: 40px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
-
     .eval-lead { font-size: 18px; color: #64748b; margin: 12px auto 64px; max-width: 680px; }
-
     .eval-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; align-items: stretch; }
 
     .eval-panel {
@@ -486,14 +443,11 @@
     }
 
     .eval-panel.primary { background: linear-gradient(180deg, #ffffff, #eef5ff); box-shadow: 0 50px 110px rgba(37, 99, 235, 0.18); }
-
     .eval-panel:hover { transform: translateY(-8px); box-shadow: 0 70px 140px rgba(15, 23, 42, 0.16); }
-
     .eval-panel h3 { font-size: 22px; font-weight: 600; margin-bottom: 12px; }
 
     .eval-price { display: block; font-size: 42px; font-weight: 800; letter-spacing: -0.02em; }
     .eval-price small { font-size: 22px; font-weight: 500; color: #64748b; margin-left: 6px; letter-spacing: 0; }
-
     .eval-meta { color: #64748b; margin: 12px 0 36px; }
 
     .eval-cta {
@@ -507,7 +461,6 @@
 
     .eval-cta.subtle { background: #f1f5f9; color: #0f172a; }
     .eval-cta.strong { background: #2563eb; color: #ffffff; }
-
     .eval-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(37, 99, 235, 0.25); }
 
     .eval-inner-center { height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
@@ -515,12 +468,10 @@
 
     /* ---------- FAQ SECTION ---------- */
     .faq-section { padding: 64px 0; background: #f8fafc; text-align: center; }
-
     .faq-section h2 { font-size: 36px; font-weight: 700; margin-bottom: 8px; }
     .faq-subtext { font-size: 16px; color: #64748b; margin-bottom: 48px; }
 
     .faq-carousel { max-width: 760px; margin: auto; position: relative; display: flex; align-items: center; }
-
     .faq-track { width: 100%; min-height: 220px; position: relative; }
 
     .faq-item {
@@ -539,7 +490,6 @@
     }
 
     .faq-item.active { opacity: 1; pointer-events: auto; transform: translateY(0); display: block; }
-
     .faq-item h3 { font-size: 20px; font-weight: 600; margin-bottom: 12px; }
     .faq-item p { font-size: 16px; line-height: 1.6; color: #475569; }
 
@@ -560,11 +510,6 @@
     .faq-nav.prev { margin-right: 16px; }
     .faq-nav.next { margin-left: 16px; }
 
-    @media (max-width: 640px) {
-      .faq-item { padding: 32px; }
-      .faq-section h2 { font-size: 28px; }
-    }
-
     /* ---------- FOOTER ---------- */
     footer {
       padding: 24px;
@@ -579,9 +524,7 @@
     @media (max-width: 1024px) {
       .trust-logos { grid-template-columns: repeat(3, 1fr); }
       .trust-metrics { grid-template-columns: repeat(2, 1fr); gap: 32px; }
-      .vtc-row.top{ grid-template-columns: repeat(2, 1fr); }
-      .vtc-row.bottom{ grid-template-columns: 1fr; max-width: 560px; }
-      .outcomes-grid { grid-template-columns: 1fr; }
+      .how-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 820px) {
@@ -590,16 +533,16 @@
     }
 
     @media (max-width: 768px) {
-      .trust-logos { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .outcomes-grid { grid-template-columns: 1fr; }
+      .trust-logos { grid-template-columns: repeat(2, 1fr); gap: 18px; }
     }
 
     @media (max-width: 640px) {
       nav { display: none; }
-      .trust-logos { grid-template-columns: repeat(2, 1fr); }
       .trust-metrics { grid-template-columns: 1fr; }
       .trust-proof::before { display: none; }
-      .vtc-row.top{ grid-template-columns: 1fr; }
-      .vtc-row::before{ display:none; }
+      .how-grid { grid-template-columns: 1fr; }
+      .testimonial-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -608,7 +551,12 @@
 
 <header>
   <div class="logo">
-    <img src="images/Endpoint DLP Plus_with ME_Black.png" alt="Endpoint DLP Plus logo">
+    <!-- FIX: spaces URL-encoded + fallback to root if file isn't inside /images -->
+    <img
+      src="images/Endpoint%20DLP%20Plus_with%20ME_Black.png"
+      alt="Endpoint DLP Plus logo"
+      onerror="this.onerror=null; this.src='./Endpoint%20DLP%20Plus_with%20ME_Black.png';"
+    />
   </div>
 
   <nav>
@@ -656,19 +604,28 @@
       <p class="trust-kicker">Trusted by leading brands worldwide</p>
     </div>
 
-    <!-- Replace these with EDLP brand logos once you have them. -->
+    <!-- EDLP trusted logos (hotlinked) -->
     <div class="trust-logos" aria-label="Customer logos">
-      <div class="logo-tile"><img src="images/metropole-logo.png" alt="Metropole"></div>
-      <div class="logo-tile"><img src="images/meshed-groups-logo.png" alt="Meshed Groups"></div>
-      <div class="logo-tile"><img src="images/granicus-logo.png" alt="Granicus"></div>
-      <div class="logo-tile"><img src="images/clear-dynamics.png" alt="Clear Dynamics"></div>
-      <div class="logo-tile"><img src="images/boing-logo.png" alt="Boeing"></div>
-      <div class="logo-tile"><img src="images/memphis-logo.png" alt="Memphis"></div>
+      <div class="logo-tile">
+        <img src="https://www.manageengine.com/ems/images/logo/melita-logo.png" alt="Melita">
+      </div>
+      <div class="logo-tile">
+        <img src="https://www.manageengine.com/ems/images/logo/unisys-logo.png" alt="Unisys">
+      </div>
+      <div class="logo-tile">
+        <img src="https://www.manageengine.com/ems/images/logo/willseye-logo.png" alt="Will's Eye">
+      </div>
+      <div class="logo-tile">
+        <img src="https://www.manageengine.com/ems/images/logo/shireffs-logo.png" alt="Sheriff's Office">
+      </div>
+      <div class="logo-tile">
+        <img src="https://www.manageengine.com/ems/images/logo/qafac-logo.png" alt="QAFAC">
+      </div>
     </div>
 
     <div class="trust-spacer" aria-hidden="true"></div>
 
-    <!-- Update these numbers if your EDLP numbers differ -->
+    <!-- Metrics (same as your screenshot) -->
     <div class="trust-metrics">
       <div class="metric">
         <strong>1M+</strong>
@@ -698,6 +655,7 @@
   <div class="feature-grid">
     <div class="card">
       <h3>Data discovery & classification</h3>
+
       <ul class="feature-list">
         <li>
           <strong>AI-based detection</strong>
@@ -716,6 +674,7 @@
 
     <div class="card">
       <h3>Data transfer, audit & control</h3>
+
       <ul class="feature-list">
         <li>
           <strong>Audit sensitive file movement</strong>
@@ -742,77 +701,42 @@
   </div>
 </section>
 
-<!-- ================= HOW IT WORKS (UPDATED TO ACP GRAPHICS) ================= -->
 <section class="howitworks">
   <div class="container">
+    <h2>How it works (audit first, enforce next)</h2>
+    <p class="lead">
+      A simple flow to roll out endpoint DLP safely—gain visibility first, then lock down what matters.
+    </p>
 
-    <div class="vtc-head">
-      <div class="vtc-title">From visibity to control</div>
-      <p class="vtc-sub">
-        Start in audit mode, assess real movement, and transition to controlled actions—without disrupting work.
-      </p>
-    </div>
-
-    <div class="vtc-rows">
-
-      <!-- Row 1 (4 steps) -->
-      <div class="vtc-row top">
-        <div class="vtc-step">
-          <div class="vtc-topline">
-            <div class="vtc-badge">1</div>
-            <div class="vtc-name">Discover</div>
-          </div>
-          <div class="vtc-desc">Find sensitive data across endpoints and understand where it exists.</div>
-        </div>
-
-        <div class="vtc-step">
-          <div class="vtc-topline">
-            <div class="vtc-badge">2</div>
-            <div class="vtc-name">Audit</div>
-          </div>
-          <div class="vtc-desc">Monitor movement first so you can validate impact without blocking users.</div>
-        </div>
-
-        <div class="vtc-step">
-          <div class="vtc-topline">
-            <div class="vtc-badge">3</div>
-            <div class="vtc-name">Decide</div>
-          </div>
-          <div class="vtc-desc">Define what’s allowed vs. risky based on real usage and sensitivity.</div>
-        </div>
-
-        <div class="vtc-step">
-          <div class="vtc-topline">
-            <div class="vtc-badge">4</div>
-            <div class="vtc-name">Enforce</div>
-          </div>
-          <div class="vtc-desc">Apply policies to block risky actions and allow trusted workflows.</div>
-        </div>
+    <!-- Pills removed -->
+    <div class="how-grid">
+      <div class="how-step">
+        <strong>Discover</strong>
+        <span>Find sensitive data across endpoints.</span>
       </div>
 
-      <!-- Row 2 (2 steps) -->
-      <div class="vtc-row bottom">
-        <div class="vtc-step">
-          <div class="vtc-topline">
-            <div class="vtc-badge">5</div>
-            <div class="vtc-name">Elevate</div>
-          </div>
-          <div class="vtc-desc">Allow approved actions securely (exceptions, approvals) without opening gaps.</div>
-        </div>
-
-        <div class="vtc-step">
-          <div class="vtc-topline">
-            <div class="vtc-badge">6</div>
-            <div class="vtc-name">Monitor</div>
-          </div>
-          <div class="vtc-desc">Track violations and outcomes continuously with audit-ready reporting.</div>
-        </div>
+      <div class="how-step">
+        <strong>Classify</strong>
+        <span>Label files using content and context.</span>
       </div>
 
+      <div class="how-step">
+        <strong>Monitor</strong>
+        <span>Track movement to browsers, cloud apps, USB, printing, clipboard, and screen capture.</span>
+      </div>
+
+      <div class="how-step">
+        <strong>Control</strong>
+        <span>Block risky actions and allow trusted use cases.</span>
+      </div>
+
+      <div class="how-step">
+        <strong>Report</strong>
+        <span>Out-of-the-box, compliance-ready reports for audits and review.</span>
+      </div>
     </div>
   </div>
 </section>
-<!-- ================= /HOW IT WORKS ================= -->
 
 <section class="outcomes">
   <div class="container">
