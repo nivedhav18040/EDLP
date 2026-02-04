@@ -8,541 +8,737 @@
   <!-- Inter Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --blue: #0a66c2;
-      --red: #e53935;
-      --dark: #0f172a;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-      --bg-light: #f8fafc;
+    :root{
+      --blue:#0a66c2;
+      --blue2:#2563eb;
+      --red:#e53935;
+      --dark:#0f172a;
+      --muted:#64748b;
+      --border:#e5e7eb;
+      --bg:#ffffff;
+      --bg-soft:#f8fafc;
+      --card:#ffffff;
+      --shadow:0 20px 44px rgba(15,23,42,0.08);
+      --soft-shadow:0 10px 28px rgba(15,23,42,0.07);
+      --radius:18px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    body{
+      font-family:'Inter',system-ui,sans-serif;
+      color:var(--dark);
+      background:var(--bg);
+      line-height:1.6;
+    }
+    .container{ max-width:1100px; margin:0 auto; padding:0 16px; }
 
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      color: var(--dark);
-      background: #ffffff;
-      line-height: 1.6;
+    /* ================= HEADER (ACP-LIKE) ================= */
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(12px);
+      background:rgba(7,18,40,0.42);
+      border-bottom:1px solid rgba(255,255,255,0.14);
+    }
+    .header-wrap{
+      max-width:1200px;
+      margin:0 auto;
+      padding:12px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:180px;
+    }
+    .brand img{
+      height:36px;
+      width:auto;
+      display:block;
+      filter:brightness(0) invert(1); /* makes black logo appear white */
     }
 
-    /* ---------- GLOBAL ---------- */
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+    nav{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      white-space:nowrap;
+    }
+    nav a{
+      text-decoration:none;
+      font-weight:800;
+      color:rgba(255,255,255,0.92);
+      padding:8px 10px;
+      border-radius:12px;
+      transition:transform .2s ease, background .2s ease;
+    }
+    nav a:hover{ transform:translateY(-1px); background:rgba(255,255,255,0.10); }
 
-    /* ---------- HEADER ---------- */
-    header {
-      padding: 14px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border);
-      gap: 16px;
+    .menu-btn{
+      display:none;
+      border:1px solid rgba(255,255,255,0.25);
+      background:rgba(255,255,255,0.08);
+      color:#fff;
+      border-radius:12px;
+      padding:10px 12px;
+      cursor:pointer;
+      font-weight:900;
+      letter-spacing:-0.01em;
     }
 
-    nav a {
-      margin-left: 24px;
-      text-decoration: none;
-      color: var(--dark);
-      font-weight: 500;
-      white-space: nowrap;
+    .mobile-nav{
+      display:none;
+      padding:10px 14px 14px;
+      border-top:1px solid rgba(255,255,255,0.14);
+    }
+    .mobile-nav.open{ display:block; }
+    .mobile-nav a{
+      display:block;
+      padding:12px 12px;
+      border-radius:12px;
+      text-decoration:none;
+      color:rgba(255,255,255,0.94);
+      font-weight:850;
+      background:rgba(255,255,255,0.06);
+      margin-top:10px;
+    }
+    .mobile-nav a:hover{ background:rgba(255,255,255,0.12); }
+
+    @media (max-width: 900px){
+      nav{ display:none; }
+      .menu-btn{ display:inline-flex; }
+      .brand{ min-width:0; }
+      .brand img{ height:34px; }
     }
 
-    .logo { display: flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
-    .logo img { height: 36px; width: auto; display: block; }
-
-    /* ---------- HERO ---------- */
-    .hero {
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(135deg, #0f2a44, #1e4f91, #2563eb);
-      padding: 56px 32px 60px;
-      text-align: center;
+    /* ================= HERO (CENTERED) ================= */
+    .hero{
+      position:relative;
+      overflow:hidden;
+      background:linear-gradient(135deg,#0f2a44,#1e4f91,#2563eb);
+      padding:74px 16px 68px;
+      text-align:center;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:-80px;
+      background:
+        radial-gradient(700px 340px at 25% 15%, rgba(255,255,255,0.08), transparent 60%),
+        radial-gradient(650px 320px at 75% 22%, rgba(255,255,255,0.06), transparent 65%),
+        radial-gradient(550px 280px at 50% 90%, rgba(255,255,255,0.05), transparent 60%);
+      pointer-events:none;
+    }
+    .hero > *{ position:relative; z-index:1; }
+    .hero h1{
+      font-size:clamp(38px, 5.2vw, 58px);
+      line-height:1.06;
+      max-width:980px;
+      margin:0 auto 20px;
+      letter-spacing:-0.045em;
+    }
+    .hero-title-main{ color:#fff; font-weight:900; }
+    .hero-title-sub{
+      display:block;
+      margin-top:10px;
+      color:#b6dcff;
+      font-weight:850;
+    }
+    .hero p{
+      max-width:780px;
+      margin:0 auto 30px;
+      color:#e0ecff;
+      font-size:16px;
+    }
+    .hero-buttons{
+      display:flex;
+      justify-content:center;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .btn{
+      min-width:210px;
+      padding:14px 28px;
+      font-size:16px;
+      font-weight:900;
+      border-radius:14px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      transition:transform .22s ease, box-shadow .22s ease, background .22s ease;
+    }
+    .btn-primary{ background:var(--red); color:#fff; box-shadow:0 12px 28px rgba(229,57,53,0.34); }
+    .btn-secondary{
+      background:rgba(255,255,255,0.10);
+      color:#fff;
+      border:1px solid rgba(255,255,255,0.34);
+    }
+    .btn:hover{ transform:translateY(-2px) scale(1.03); box-shadow:0 18px 44px rgba(0,0,0,0.28); }
+    .hero small{
+      display:block;
+      margin-top:24px;
+      color:#dbeafe;
+      font-size:14px;
     }
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      top: -50px;
-      left: -50px;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(255,255,255,0.05), transparent 70%);
-      border-radius: 50%;
-      z-index: 0;
+    /* ================= TRUST + METRICS ================= */
+    .trust-proof{
+      position:relative;
+      padding:56px 0;
+      background:linear-gradient(180deg,#ffffff 0%,#f9fbff 55%,#ffffff 100%);
+      border-bottom:1px solid var(--border);
     }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      bottom: -50px;
-      right: -50px;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(255,255,255,0.03), transparent 70%);
-      border-radius: 50%;
-      z-index: 0;
-    }
-
-    .hero > * { position: relative; z-index: 1; }
-
-    .hero h1 {
-      font-size: 44px;
-      line-height: 1.12;
-      max-width: 1100px;
-      padding: 0 24px;
-      margin: 0 auto 18px;
-      letter-spacing: -0.035em;
-    }
-
-    .hero-title-main { color: #ffffff; font-weight: 700; }
-    .hero-title-sub { display: block; margin-top: 6px; color: #b6dcff; font-weight: 600; }
-
-    .hero p {
-      max-width: 760px;
-      margin: 0 auto 34px;
-      color: #e0ecff;
-      font-size: 16px;
-    }
-
-    /* ---------- CTA ---------- */
-    .hero-buttons { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; }
-    .hero-cta { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-
-    .btn {
-      min-width: 190px;
-      padding: 14px 28px;
-      font-size: 16px;
-      font-weight: 600;
-      border-radius: 10px;
-      text-decoration: none;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      display: inline-block;
-      text-align: center;
-    }
-
-    .btn-primary { background: var(--red); color: #ffffff; box-shadow: 0 10px 24px rgba(229,57,53,0.35); }
-    .btn-secondary { border: 2px solid #ffffff; color: #ffffff; }
-
-    .btn:hover { transform: scale(1.06); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
-
-    .cta-note { font-size: 14px; font-weight: 500; color: #ffffff; }
-
-    .hero small { display: block; margin-top: 26px; color: #dbeafe; font-size: 14px; }
-
-    /* ---------- TRUST + CREDIBILITY (COMBINED) ---------- */
-    .trust-proof {
-      position: relative;
-      padding: 56px 0;
-      background: linear-gradient(180deg, #ffffff 0%, #f9fbff 55%, #ffffff 100%);
-      border-bottom: 1px solid var(--border);
-      overflow: hidden;
-    }
-
-    /* World map watermark (local first, ACP fallback) */
-    .trust-proof::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        url("images/worldmap.png"),
-        url("https://snehaa-p.github.io/acp-landing-page/images/worldmap.png");
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-position: center center;
-      opacity: 0.27;
-      filter: grayscale(100%) contrast(90%);
-      pointer-events: none;
-    }
-
-    .trust-proof::after{
+    .trust-proof::before{
       content:"";
       position:absolute;
       inset:0;
-      background: radial-gradient(ellipse at center,
-        rgba(255,255,255,0.0) 35%,
-        rgba(255,255,255,0.75) 85%
-      );
+      background:
+        radial-gradient(ellipse at center, rgba(37,99,235,0.08), transparent 55%),
+        radial-gradient(ellipse at 20% 30%, rgba(10,102,194,0.06), transparent 55%);
       pointer-events:none;
     }
-
-    .trust-proof > .container { position: relative; z-index: 1; }
-
-    /* Header */
-    .trust-head { text-align: center; margin-bottom: 36px; }
-    .trust-kicker {
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
+    .trust-proof > .container{ position:relative; z-index:1; }
+    .trust-kicker{
+      text-align:center;
+      font-size:14px;
+      font-weight:900;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:26px;
     }
 
-    /* Logos */
-    .trust-logos {
-      max-width: 1100px;
-      margin: 40px auto 0;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      align-items: center;
-      gap: 28px;
+    .trust-logos{
+      max-width:1100px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:repeat(5, 1fr);
+      gap:18px;
+      align-items:stretch;
     }
-
-    /* Logo tiles (uniform white rectangles) */
     .logo-tile{
-      height: 72px;
-      padding: 12px 18px;
-      border-radius: 14px;
-      background: #ffffff;
-      box-shadow: 0 6px 18px rgba(15,23,42,0.05);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      height:92px;
+      background:#fff;
+      border-radius:18px;
+      box-shadow:0 10px 24px rgba(15,23,42,0.06);
+      border:1px solid rgba(226,232,240,0.95);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      padding:12px 14px;
+      transition:transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s ease;
+    }
+    .logo-tile:hover{
+      transform:translateY(-4px) scale(1.02);
+      box-shadow:0 20px 44px rgba(37,99,235,0.18);
+    }
+    .logo-mark{
+      width:36px;
+      height:36px;
+      border-radius:14px;
+      background:linear-gradient(135deg, rgba(37,99,235,0.18), rgba(229,57,53,0.16));
+      border:1px solid rgba(37,99,235,0.20);
+      flex:0 0 auto;
+    }
+    .logo-name{
+      font-weight:900;
+      letter-spacing:-0.02em;
+      color:#0b1220;
+      font-size:15px;
+      line-height:1.1;
+      text-align:left;
     }
 
-    .logo-tile img{
-      max-height: 34px;
-      max-width: 100%;
-      object-fit: contain;
-      display: block;
-      opacity: 0.92;
+    @media (max-width:1024px){ .trust-logos{ grid-template-columns:repeat(3,1fr); } }
+    @media (max-width:640px){ .trust-logos{ grid-template-columns:repeat(2,1fr); } }
+
+    .trust-spacer{ height:44px; }
+
+    .trust-metrics{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      text-align:center;
+      gap:0;
+    }
+    .metric{ padding:14px 10px; }
+    .metric strong{
+      display:inline-block;
+      font-weight:900;
+      font-size:clamp(34px,3.6vw,44px);
+      letter-spacing:-0.05em;
+      background:linear-gradient(180deg,#0b1220,#2563eb);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      transition:transform .32s cubic-bezier(.22,1,.36,1), text-shadow .32s ease;
+    }
+    .metric span{
+      display:block;
+      margin-top:10px;
+      font-size:14px;
+      color:var(--muted);
+    }
+    .metric:hover strong{
+      transform:scale(1.18);
+      text-shadow:0 18px 36px rgba(37,99,235,0.35);
+    }
+    @media (max-width:1024px){ .trust-metrics{ grid-template-columns:repeat(2,1fr); gap:18px; } }
+    @media (max-width:640px){ .trust-metrics{ grid-template-columns:1fr; } }
+
+    /* ================= FEATURES (2 CARDS) ================= */
+    .features{
+      padding:64px 16px;
+      background:var(--bg-soft);
+      text-align:center;
+    }
+    .feature-heading{
+      font-size:32px;
+      line-height:1.28;
+      max-width:980px;
+      margin:0 auto 46px;
+      font-weight:900;
+      letter-spacing:-0.02em;
+      color:#000;
+    }
+    .feature-heading .highlight{ color:var(--blue); font-weight:900; }
+
+    .feature-grid{
+      max-width:1100px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:24px;
+      text-align:left;
+    }
+    @media (max-width:900px){ .feature-grid{ grid-template-columns:1fr; } }
+
+    .card{
+      background:var(--card);
+      padding:26px;
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      border:2px solid transparent;
+      transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+      position:relative;
+      overflow:hidden;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:radial-gradient(700px 260px at 15% 18%, rgba(37,99,235,0.10), transparent 60%);
+      opacity:0;
+      transition:opacity .25s ease;
+      pointer-events:none;
+    }
+    .card:hover{
+      transform:translateY(-4px);
+      border-color:rgba(37,99,235,0.35);
+      box-shadow:0 34px 80px rgba(37,99,235,0.16);
+      background:#f4f8ff;
+    }
+    .card:hover::before{ opacity:1; }
+
+    .card h3{
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:-0.015em;
+      margin-bottom:10px;
+    }
+    .card .mini{
+      margin-bottom:18px;
+      color:var(--muted);
+      font-weight:700;
+    }
+    .card p{
+      margin-bottom:18px;
+      color:var(--muted);
+      font-size:15px;
+    }
+    .feature-list{ list-style:none; }
+    .feature-list li{
+      position:relative;
+      padding-left:24px;
+      margin-bottom:14px;
+      font-weight:800;
+      color:#0b1220;
+    }
+    .feature-list li::before{
+      content:"✓";
+      position:absolute;
+      left:0;
+      top:0;
+      color:var(--blue2);
+      font-weight:900;
+    }
+    .feature-list span{
+      display:block;
+      font-weight:650;
+      color:var(--muted);
+      margin-top:4px;
+      font-size:14px;
     }
 
-    /* Divider */
-    .trust-spacer { height: 56px; }
+    /* ================= CAROUSEL (ACP STYLE + PILL BUTTONS) ================= */
+    .carousel{
+      background:
+        radial-gradient(1200px 500px at 20% 10%, rgba(37,99,235,0.14), transparent 60%),
+        radial-gradient(900px 420px at 80% 20%, rgba(10,102,194,0.12), transparent 62%),
+        linear-gradient(135deg, #d0e3ed 0%, #eaf2ff 50%, #f8fafc 100%);
+      padding:64px 0 56px;
+    }
+    .carousel-shell{
+      max-width:1200px;
+      margin:0 auto;
+      padding:0 24px;
+      position:relative;
+    }
+    .carousel-viewport{ max-width:1100px; margin:0 auto; position:relative; }
+    .carousel-track{ width:100%; position:relative; min-height:520px; }
 
-    /* Metrics */
-    .trust-metrics {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      text-align: center;
+    .carousel-item{ display:none; flex-direction:column; align-items:center; text-align:center; }
+    .carousel-item.active{ display:flex; animation:fadeUp 280ms ease both; }
+
+    @keyframes fadeUp{
+      from{ opacity:0; transform:translateY(8px); }
+      to{ opacity:1; transform:translateY(0); }
     }
 
-    .metric { padding: 16px 12px; }
-
-    .metric strong {
-      display: inline-block;
-      font-weight: 900;
-      font-size: clamp(34px, 3.6vw, 44px);
-      letter-spacing: -0.05em;
-      background: linear-gradient(180deg, #0b1220, #2563eb);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
-                  text-shadow 0.32s ease;
+    .carousel-caption{ max-width:860px; margin-bottom:18px; }
+    .carousel-caption strong{
+      font-size:34px;
+      font-weight:900;
+      letter-spacing:-0.035em;
+      color:#0b1220;
+    }
+    .carousel-caption p{
+      margin-top:10px;
+      font-size:16px;
+      color:#475569;
+      font-weight:650;
     }
 
-    .metric span {
-      display: block;
-      margin-top: 10px;
-      font-size: 14px;
-      color: #64748b;
+    .carousel-item video{
+      width:100%;
+      max-width:980px;
+      height:420px;
+      object-fit:contain;
+      background:transparent;
+      filter:drop-shadow(0 18px 34px rgba(15,23,42,0.18));
+      border-radius:16px;
+      display:block;
+      margin:0 auto 28px;
     }
 
-    /* Hover enlarge (controlled) */
-    .metric:hover strong {
-      transform: scale(1.26);
-      text-shadow: 0 18px 36px rgba(37,99,235,0.35);
+    .carousel-btn{
+      position:absolute;
+      top:52%;
+      transform:translateY(-50%);
+      background:#ffffff;
+      border:none;
+      width:46px;
+      height:46px;
+      border-radius:50%;
+      font-size:22px;
+      color:#475569;
+      cursor:pointer;
+      box-shadow:0 18px 40px rgba(15,23,42,0.18);
+      transition:transform .2s ease, box-shadow .2s ease;
+      z-index:5;
+    }
+    .carousel-btn.prev{ left:8px; }
+    .carousel-btn.next{ right:8px; }
+    .carousel-btn:hover{ transform:translateY(-50%) scale(1.12); box-shadow:0 24px 60px rgba(15,23,42,0.22); }
+
+    .carousel-nav{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:0;
     }
 
-    /* ---------- TESTIMONIALS ---------- */
-    .testimonials { padding: 56px 20px; background: var(--bg-light); }
+    .carousel-dot{
+      padding:10px 18px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.70);
+      backdrop-filter:blur(10px);
+      border:1px solid rgba(148,163,184,0.55);
+      color:#0f172a;
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:-0.01em;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .carousel-dot:hover{ transform:translateY(-1px); background:rgba(255,255,255,0.92); border-color:rgba(37,99,235,0.55); }
 
-    .testimonial-grid {
-      max-width: 1100px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-      gap: 40px;
+    .carousel-dot.active{
+      background:#2563eb;
+      border-color:#2563eb;
+      color:#ffffff;
+      box-shadow:0 14px 34px rgba(37,99,235,0.28);
     }
 
-    .testimonial {
-      background: #ffffff;
-      padding: 22px;
-      border-radius: 16px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    .carousel-dot .pill{
+      width:9px;
+      height:9px;
+      border-radius:999px;
+      background:rgba(100,116,139,0.55);
+      display:inline-block;
     }
-    .testimonial p { font-size: 18px; line-height: 1.6; margin-bottom: 24px; color: var(--dark); }
-    .testimonial footer strong { display: block; font-weight: 600; }
-    .testimonial footer span { font-size: 14px; color: var(--muted); }
+    .carousel-dot.active .pill{ background:rgba(255,255,255,0.95); }
 
-    /* ---------- FEATURES ---------- */
-    .features { padding: 64px 16px; background: var(--bg-light); text-align: center; }
-
-    .feature-heading {
-      font-size: 32px;
-      line-height: 1.35;
-      max-width: 900px;
-      margin: 0 auto 48px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: #000;
+    @media (max-width: 900px){
+      .carousel-btn{ display:none; }
+      .carousel-item video{ height:300px; }
+      .carousel-track{ min-height:390px; }
+    }
+    .carousel-btn:focus, .carousel-dot:focus{
+      outline:3px solid rgba(37,99,235,0.35);
+      outline-offset:3px;
     }
 
-    .feature-heading .highlight { color: var(--blue); font-weight: 700; }
+    /* ================= HOW IT WORKS (NO BLUE PILL BUTTONS) ================= */
+    .how{
+      padding:64px 0;
+      background:#ffffff;
+    }
+    .how h2{
+      font-size:38px;
+      font-weight:900;
+      letter-spacing:-0.03em;
+      text-align:center;
+      margin-bottom:28px;
+    }
+    .how-grid{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0,1fr));
+      gap:18px;
+      margin-top:22px;
+    }
+    @media (max-width: 1024px){ .how-grid{ grid-template-columns:repeat(2,1fr); } }
+    @media (max-width: 640px){ .how-grid{ grid-template-columns:1fr; } }
 
-    .feature-grid {
-      max-width: 1100px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
+    .how-step{
+      background:linear-gradient(180deg,#ffffff,#f7fbff);
+      border:1px solid rgba(226,232,240,0.95);
+      border-radius:20px;
+      box-shadow:var(--soft-shadow);
+      padding:18px;
+      transition:transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s ease;
+      position:relative;
+      overflow:hidden;
+      min-height:170px;
+    }
+    .how-step:hover{
+      transform:translateY(-5px);
+      box-shadow:0 24px 54px rgba(37,99,235,0.14);
+    }
+    .how-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:40px;
+      height:40px;
+      border-radius:14px;
+      background:rgba(37,99,235,0.12);
+      border:1px solid rgba(37,99,235,0.22);
+      font-weight:900;
+      color:#0b1220;
+      margin-bottom:12px;
+    }
+    .how-step h3{
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:-0.01em;
+      margin-bottom:8px;
+    }
+    .how-step p{
+      color:var(--muted);
+      font-weight:650;
+      font-size:14px;
     }
 
-    .card {
-      background: #ffffff;
-      padding: 24px;
-      border-radius: 16px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-      text-align: left;
-      transition: box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-      border: 2px solid transparent;
+    /* ================= TESTIMONIALS (WITH HEADING, NO SUBHEADING) ================= */
+    .testimonials{
+      padding:66px 0;
+      background:var(--bg-soft);
+    }
+    .testimonials h2{
+      text-align:center;
+      font-size:44px;
+      font-weight:900;
+      letter-spacing:-0.04em;
+      margin-bottom:34px;
+    }
+    .testimonial-grid{
+      max-width:1100px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:22px;
+      padding:0 16px;
+    }
+    @media (max-width: 900px){ .testimonial-grid{ grid-template-columns:1fr; } }
+
+    .testimonial{
+      background:#ffffff;
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      padding:26px;
+    }
+    .testimonial p{
+      font-size:18px;
+      line-height:1.6;
+      margin-bottom:22px;
+      color:#0b1220;
+      font-weight:650;
+    }
+    .testimonial footer strong{ display:block; font-weight:900; }
+    .testimonial footer span{ font-size:14px; color:var(--muted); font-weight:650; }
+
+    /* ================= PRICING ================= */
+    .eval-soft{
+      padding:64px 16px;
+      background:linear-gradient(180deg,#f7faff 0%, #ffffff 60%);
+    }
+    .eval-wrap{ max-width:1100px; margin:0 auto; text-align:center; }
+    .eval-soft h2{
+      font-size:40px;
+      font-weight:900;
+      letter-spacing:-0.03em;
+      margin-bottom:10px;
+    }
+    .eval-lead{
+      font-size:16px;
+      color:var(--muted);
+      margin:10px auto 44px;
+      max-width:720px;
+      font-weight:650;
+    }
+    .eval-layout{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:22px;
+      align-items:stretch;
+    }
+    @media (max-width:900px){ .eval-layout{ grid-template-columns:1fr; } }
+
+    .eval-panel{
+      padding:34px;
+      border-radius:22px;
+      background:#ffffff;
+      box-shadow:0 32px 72px rgba(15,23,42,0.08);
+      text-align:left;
+      transition:transform .35s ease, box-shadow .35s ease;
+      position:relative;
+      overflow:hidden;
+    }
+    .eval-panel.primary{
+      background:linear-gradient(180deg,#ffffff,#eef5ff);
+      box-shadow:0 50px 110px rgba(37,99,235,0.18);
+    }
+    .eval-panel:hover{ transform:translateY(-7px); box-shadow:0 70px 140px rgba(15,23,42,0.14); }
+
+    .eval-panel h3{ font-size:22px; font-weight:900; margin-bottom:12px; }
+    .eval-price{ display:block; font-size:42px; font-weight:900; letter-spacing:-0.02em; }
+    .eval-price small{ font-size:20px; font-weight:700; color:var(--muted); margin-left:6px; letter-spacing:0; }
+    .eval-meta{ color:var(--muted); margin:12px 0 26px; font-weight:650; }
+
+    .eval-cta{
+      display:inline-block;
+      padding:14px 30px;
+      border-radius:999px;
+      font-weight:900;
+      text-decoration:none;
+      transition:box-shadow .3s ease, transform .3s ease;
+    }
+    .eval-cta.subtle{ background:#f1f5f9; color:#0f172a; }
+    .eval-cta.strong{ background:#2563eb; color:#ffffff; }
+    .eval-cta:hover{ transform:translateY(-2px); box-shadow:0 12px 30px rgba(37,99,235,0.25); }
+
+    /* ================= FAQ (ACP STYLE, SAME TEMPLATE) ================= */
+    .faq-section{
+      padding:64px 0;
+      background:#f8fafc;
+      text-align:center;
+    }
+    .faq-section h2{
+      font-size:36px;
+      font-weight:900;
+      margin-bottom:34px;
+      letter-spacing:-0.03em;
+    }
+    .faq-carousel{
+      max-width:760px;
+      margin:auto;
+      position:relative;
+      display:flex;
+      align-items:center;
+    }
+    .faq-track{ width:100%; min-height:220px; position:relative; }
+
+    .faq-item{
+      background:#ffffff;
+      padding:28px;
+      border-radius:18px;
+      text-align:left;
+      box-shadow:0 20px 44px rgba(15,23,42,0.06);
+      transition:opacity .35s ease, transform .35s ease;
+      transform:translateY(6px);
+      display:none;
+    }
+    .faq-item.active{ display:block; transform:translateY(0); }
+
+    .faq-item h3{ font-size:20px; font-weight:900; margin-bottom:12px; }
+    .faq-item p{ font-size:16px; line-height:1.6; color:#475569; font-weight:650; }
+    .faq-item a{ color:var(--blue); text-decoration:underline; font-weight:900; }
+
+    .faq-nav{
+      border:none;
+      background:#ffffff;
+      font-size:24px;
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      color:#64748b;
+      cursor:pointer;
+      box-shadow:0 8px 20px rgba(15,23,42,0.12);
+      transition:transform .25s ease, color .25s ease;
+    }
+    .faq-nav:hover{ color:#2563eb; transform:scale(1.1); }
+    .faq-nav.prev{ margin-right:16px; }
+    .faq-nav.next{ margin-left:16px; }
+
+    @media (max-width:640px){
+      .faq-item{ padding:22px; }
+      .faq-section h2{ font-size:28px; }
     }
 
-    .card:hover {
-      background-color: #f0f7ff;
-      border-color: var(--blue);
-      box-shadow: 0 28px 60px rgba(10,102,194,0.25);
-      transform: scale(1.02);
-    }
-
-    .card p { margin-bottom: 24px; color: var(--muted); font-size: 16px; }
-    .card h3 { margin-bottom: 20px; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
-
-    .feature-list { list-style: none; }
-    .feature-list li { margin-bottom: 18px; position: relative; padding-left: 24px; }
-    .feature-list li::before { content: "✓"; position: absolute; left: 0; color: var(--blue); font-weight: 700; }
-    .feature-list strong { display: block; font-weight: 600; color: var(--dark); }
-
-    .feature-list span {
-      display: block;
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      font-size: 14px;
-      color: var(--muted);
-      transition: max-height 0.35s ease, opacity 0.3s ease;
-    }
-    .card:hover .feature-list span { max-height: 140px; opacity: 1; }
-
-    .feature-list a, .feature-list a:visited { color: inherit !important; text-decoration: none; }
-    .feature-list a:hover { color: var(--blue); text-decoration: underline; cursor: pointer; }
-
-    /* ---------- HOW IT WORKS ---------- */
-    .howitworks {
-      padding: 64px 16px;
-      background: #ffffff;
-      text-align: center;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .howitworks h2 {
-      font-size: 32px;
-      line-height: 1.35;
-      max-width: 900px;
-      margin: 0 auto 14px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: #000;
-    }
-
-    .howitworks p.lead {
-      max-width: 720px;
-      margin: 0 auto 42px;
-      color: #64748b;
-      font-size: 16px;
-    }
-
-    .how-grid {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 16px;
-      align-items: stretch;
-    }
-
-    .how-step {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 18px;
-      text-align: left;
-      box-shadow: 0 18px 38px rgba(0,0,0,0.06);
-      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .how-step:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 28px 60px rgba(10,102,194,0.18);
-      border-color: rgba(10,102,194,0.35);
-    }
-
-    .how-step strong {
-      display: block;
-      font-weight: 800;
-      color: #0b1220;
-      margin-bottom: 10px;
-      letter-spacing: -0.01em;
-      font-size: 15px;
-    }
-
-    .how-step span {
-      display: block;
-      color: #64748b;
-      font-size: 14px;
-      line-height: 1.55;
-    }
-
-    /* ---------- OUTCOMES ---------- */
-    .outcomes { padding: 64px 16px; background: #f8fafc; text-align: center; }
-    .outcomes-heading { font-size: 28px; font-weight: 700; margin-bottom: 60px; color: var(--dark); }
-
-    .outcomes-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 32px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .outcome-card {
-      background: #ffffff;
-      padding: 24px;
-      border-radius: 16px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      text-align: left;
-    }
-
-    .outcome-card:hover { transform: translateY(-4px); box-shadow: 0 28px 60px rgba(0,0,0,0.08); }
-    .outcome-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 20px; color: var(--dark); }
-    .outcome-card ul { list-style: none; padding: 0; }
-    .outcome-card ul li { position: relative; padding-left: 24px; margin-bottom: 12px; color: var(--muted); font-size: 16px; }
-    .outcome-card ul li::before { content: "✔"; position: absolute; left: 0; color: var(--blue); font-weight: 700; }
-
-    /* ---------- EVALUATE SECTION (PRICING) ---------- */
-    .eval-soft { padding: 64px 16px; background: linear-gradient(180deg, #f7faff 0%, #ffffff 60%); }
-    .eval-wrap { max-width: 1100px; margin: 0 auto; text-align: center; }
-    .eval-soft h2 { font-size: 40px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
-    .eval-lead { font-size: 18px; color: #64748b; margin: 12px auto 64px; max-width: 680px; }
-    .eval-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; align-items: stretch; }
-
-    .eval-panel {
-      padding: 36px; border-radius: 20px;
-      background: #ffffff;
-      box-shadow: 0 32px 72px rgba(15, 23, 42, 0.08);
-      text-align: left;
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
-    }
-
-    .eval-panel.primary { background: linear-gradient(180deg, #ffffff, #eef5ff); box-shadow: 0 50px 110px rgba(37, 99, 235, 0.18); }
-    .eval-panel:hover { transform: translateY(-8px); box-shadow: 0 70px 140px rgba(15, 23, 42, 0.16); }
-    .eval-panel h3 { font-size: 22px; font-weight: 600; margin-bottom: 12px; }
-
-    .eval-price { display: block; font-size: 42px; font-weight: 800; letter-spacing: -0.02em; }
-    .eval-price small { font-size: 22px; font-weight: 500; color: #64748b; margin-left: 6px; letter-spacing: 0; }
-    .eval-meta { color: #64748b; margin: 12px 0 36px; }
-
-    .eval-cta {
-      display: inline-block;
-      padding: 14px 34px;
-      border-radius: 999px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
-    }
-
-    .eval-cta.subtle { background: #f1f5f9; color: #0f172a; }
-    .eval-cta.strong { background: #2563eb; color: #ffffff; }
-    .eval-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(37, 99, 235, 0.25); }
-
-    .eval-inner-center { height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-    .eval-inner-center.left { align-items: flex-start; text-align: left; }
-
-    /* ---------- FAQ SECTION ---------- */
-    .faq-section { padding: 64px 0; background: #f8fafc; text-align: center; }
-    .faq-section h2 { font-size: 36px; font-weight: 700; margin-bottom: 8px; }
-    .faq-subtext { font-size: 16px; color: #64748b; margin-bottom: 48px; }
-
-    .faq-carousel { max-width: 760px; margin: auto; position: relative; display: flex; align-items: center; }
-    .faq-track { width: 100%; min-height: 220px; position: relative; }
-
-    .faq-item {
-      position: relative;
-      inset: 0;
-      opacity: 1;
-      pointer-events: auto;
-      background: #ffffff;
-      padding: 28px;
-      border-radius: 16px;
-      text-align: left;
-      box-shadow: 0 20px 44px rgba(15, 23, 42, 0.06);
-      transition: opacity 0.35s ease, transform 0.35s ease;
-      transform: translateY(6px);
-      display: none;
-    }
-
-    .faq-item.active { opacity: 1; pointer-events: auto; transform: translateY(0); display: block; }
-    .faq-item h3 { font-size: 20px; font-weight: 600; margin-bottom: 12px; }
-    .faq-item p { font-size: 16px; line-height: 1.6; color: #475569; }
-
-    .faq-nav {
-      border: none;
-      background: #ffffff;
-      font-size: 24px;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      color: #64748b;
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
-      transition: transform 0.25s ease, color 0.25s ease;
-    }
-
-    .faq-nav:hover { color: #2563eb; transform: scale(1.1); }
-    .faq-nav.prev { margin-right: 16px; }
-    .faq-nav.next { margin-left: 16px; }
-
-    /* ---------- FOOTER ---------- */
-    footer {
-      padding: 24px;
-      text-align: center;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
-      font-size: 14px;
-      background: #ffffff;
-    }
-
-    /* ---------- RESPONSIVE ---------- */
-    @media (max-width: 1024px) {
-      .trust-logos { grid-template-columns: repeat(3, 1fr); }
-      .trust-metrics { grid-template-columns: repeat(2, 1fr); gap: 32px; }
-      .how-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 820px) {
-      .hero h1 { font-size: 42px; }
-      header { padding: 18px 24px; }
-    }
-
-    @media (max-width: 768px) {
-      .outcomes-grid { grid-template-columns: 1fr; }
-      .trust-logos { grid-template-columns: repeat(2, 1fr); gap: 18px; }
-    }
-
-    @media (max-width: 640px) {
-      nav { display: none; }
-      .trust-metrics { grid-template-columns: 1fr; }
-      .trust-proof::before { display: none; }
-      .how-grid { grid-template-columns: 1fr; }
-      .testimonial-grid { grid-template-columns: 1fr; }
+    /* ================= FOOTER ================= */
+    footer{
+      padding:26px 16px;
+      text-align:center;
+      color:var(--muted);
+      border-top:1px solid var(--border);
+      font-size:14px;
+      background:#ffffff;
+      font-weight:650;
     }
   </style>
 </head>
@@ -550,347 +746,320 @@
 <body>
 
 <header>
-  <div class="logo">
-    <!-- FIX: spaces URL-encoded + fallback to root if file isn't inside /images -->
-    <img
-      src="images/Endpoint%20DLP%20Plus_with%20ME_Black.png"
-      alt="Endpoint DLP Plus logo"
-      onerror="this.onerror=null; this.src='./Endpoint%20DLP%20Plus_with%20ME_Black.png';"
-    />
+  <div class="header-wrap">
+    <div class="brand">
+      <!-- Your repo root logo -->
+      <img src="Endpoint DLP Plus_with ME_Black.png" alt="Endpoint DLP Plus">
+    </div>
+
+    <nav aria-label="Primary navigation">
+      <a href="https://www.manageengine.com/endpoint-dlp/features.html" target="_blank" rel="noopener">Features</a>
+      <a href="https://www.manageengine.com/endpoint-dlp/request-demo.html" target="_blank" rel="noopener">Demo</a>
+      <a href="https://www.manageengine.com/endpoint-dlp/help.html" target="_blank" rel="noopener">Resources</a>
+      <a href="https://www.manageengine.com/endpoint-dlp/get-quote.html" target="_blank" rel="noopener">Get quote</a>
+      <a href="https://www.manageengine.com/endpoint-dlp/support.html" target="_blank" rel="noopener">Support</a>
+    </nav>
+
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu">Menu</button>
   </div>
 
-  <nav>
-    <a target="_blank" rel="noopener noreferrer" href="https://www.manageengine.com/endpoint-dlp/features.html">Features</a>
-    <a target="_blank" rel="noopener noreferrer" href="https://www.manageengine.com/endpoint-dlp/request-demo.html">Demo</a>
-    <a target="_blank" rel="noopener noreferrer" href="https://www.manageengine.com/endpoint-dlp/help.html">Documents</a>
-    <a target="_blank" rel="noopener noreferrer" href="https://www.manageengine.com/endpoint-dlp/get-quote.html">Get Quote</a>
-    <a target="_blank" rel="noopener noreferrer" href="https://www.manageengine.com/endpoint-dlp/support.html">Support</a>
-  </nav>
+  <!-- Mobile nav (prevents cramped header on phone) -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="https://www.manageengine.com/endpoint-dlp/features.html" target="_blank" rel="noopener">Features</a>
+    <a href="https://www.manageengine.com/endpoint-dlp/request-demo.html" target="_blank" rel="noopener">Demo</a>
+    <a href="https://www.manageengine.com/endpoint-dlp/help.html" target="_blank" rel="noopener">Resources</a>
+    <a href="https://www.manageengine.com/endpoint-dlp/get-quote.html" target="_blank" rel="noopener">Get quote</a>
+    <a href="https://www.manageengine.com/endpoint-dlp/support.html" target="_blank" rel="noopener">Support</a>
+  </div>
 </header>
 
 <section class="hero">
   <h1>
-    <span class="hero-title-main">Stop sensitive data leaks</span>
-    <span class="hero-title-sub">without slowing down day-to-day work</span>
+    <span class="hero-title-main">Prevent Data Leaks</span>
+    <span class="hero-title-sub">Without Slowing People Down</span>
   </h1>
 
   <p>
-    Find sensitive data on endpoints, label it automatically, and control how it moves to browsers, cloud apps,
-    USB devices, printers, and clipboard—starting safely in audit mode.
+    Discover sensitive data, label it automatically, and control how it moves across web apps, USB, printing,
+    screen capture, clipboard, and more—starting safely in audit mode.
   </p>
 
   <div class="hero-buttons">
-    <div class="hero-cta">
-      <a target="_blank" rel="noopener noreferrer"
-         href="https://www.manageengine.com/endpoint-dlp/download.html"
-         class="btn btn-primary">Download</a>
-      <span class="cta-note">On-premises</span>
-    </div>
-
-    <div class="hero-cta">
-      <a target="_blank" rel="noopener noreferrer"
-         href="https://www.manageengine.com/products/desktop-central/cloud/"
-         class="btn btn-primary">Sign up</a>
-      <span class="cta-note">Cloud via Endpoint Central</span>
-    </div>
+    <a class="btn btn-primary" href="https://www.manageengine.com/endpoint-dlp/download.html" target="_blank" rel="noopener">
+      Download
+    </a>
+    <a class="btn btn-secondary" href="https://www.manageengine.com/products/desktop-central/cloud/" target="_blank" rel="noopener">
+      Sign up
+    </a>
   </div>
 
-  <small>30-day free trial · No credit card required · Free up to 25 endpoints forever</small>
+  <small>30-day free trial · No credit card required · Free up to 25 devices forever</small>
 </section>
 
-<section class="trust-proof" aria-label="Global trust and credibility">
+<section class="trust-proof" aria-label="Trusted by leading brands">
   <div class="container">
-    <div class="trust-head">
-      <p class="trust-kicker">Trusted by leading brands worldwide</p>
-    </div>
+    <p class="trust-kicker">Trusted by leading brands worldwide</p>
 
-    <!-- EDLP trusted logos (hotlinked) -->
+    <!-- No blank spaces: clean “logo tiles” with hover emboss -->
     <div class="trust-logos" aria-label="Customer logos">
-      <div class="logo-tile">
-        <img src="https://www.manageengine.com/ems/images/logo/melita-logo.png" alt="Melita">
-      </div>
-      <div class="logo-tile">
-        <img src="https://www.manageengine.com/ems/images/logo/unisys-logo.png" alt="Unisys">
-      </div>
-      <div class="logo-tile">
-        <img src="https://www.manageengine.com/ems/images/logo/willseye-logo.png" alt="Will's Eye">
-      </div>
-      <div class="logo-tile">
-        <img src="https://www.manageengine.com/ems/images/logo/shireffs-logo.png" alt="Sheriff's Office">
-      </div>
-      <div class="logo-tile">
-        <img src="https://www.manageengine.com/ems/images/logo/qafac-logo.png" alt="QAFAC">
-      </div>
+      <div class="logo-tile"><span class="logo-mark" aria-hidden="true"></span><span class="logo-name">Melita</span></div>
+      <div class="logo-tile"><span class="logo-mark" aria-hidden="true"></span><span class="logo-name">Unisys</span></div>
+      <div class="logo-tile"><span class="logo-mark" aria-hidden="true"></span><span class="logo-name">WillsEye Physicians</span></div>
+      <div class="logo-tile"><span class="logo-mark" aria-hidden="true"></span><span class="logo-name">Clay County Sheriff’s Office</span></div>
+      <div class="logo-tile"><span class="logo-mark" aria-hidden="true"></span><span class="logo-name">GAFAC</span></div>
     </div>
 
     <div class="trust-spacer" aria-hidden="true"></div>
 
-    <!-- Metrics (same as your screenshot) -->
+    <!-- ACP numbers exactly -->
     <div class="trust-metrics">
-      <div class="metric">
-        <strong>1M+</strong>
-        <span>endpoints secured</span>
-      </div>
-      <div class="metric">
-        <strong>10+ years</strong>
-        <span>in the industry</span>
-      </div>
-      <div class="metric">
-        <strong>100+</strong>
-        <span>countries served</span>
-      </div>
-      <div class="metric">
-        <strong>2000+</strong>
-        <span>organizations worldwide</span>
-      </div>
+      <div class="metric"><strong>1M+</strong><span>endpoints secured</span></div>
+      <div class="metric"><strong>10+ years</strong><span>in the industry</span></div>
+      <div class="metric"><strong>100+</strong><span>countries served</span></div>
+      <div class="metric"><strong>2000+</strong><span>organizations worldwide</span></div>
     </div>
   </div>
 </section>
 
 <section class="features">
   <h2 class="feature-heading">
-    <span class="highlight">Data discovery</span> finds sensitive data, and <span class="highlight">data controls</span> stop it from leaving your endpoints.
+    <span class="highlight">Data Discovery &amp; Classification</span> finds sensitive data, while
+    <span class="highlight">Data Transfer, Audit And Control</span> prevents leaks.
   </h2>
 
   <div class="feature-grid">
     <div class="card">
-      <h3>Data discovery & classification</h3>
+      <h3>Data Discovery &amp; Classification</h3>
+      <div class="mini">Start in audit mode. Enforce when you’re confident.</div>
 
       <ul class="feature-list">
         <li>
-          <strong>AI-based detection</strong>
-          <span>Automatically identifies sensitive content patterns to reduce manual effort.</span>
+          AI-based detection
+          <span>Automatically finds sensitive information even when users don’t know it’s there.</span>
         </li>
         <li>
-          <strong>Rule-based detection (RegEx, keyword, file extension)</strong>
-          <span>Use simple rules for quick coverage across common file types and formats.</span>
+          Rule-based detection (Regex, keywords, file extensions)
+          <span>Use built-in rules to detect common sensitive patterns and file types.</span>
         </li>
         <li>
-          <strong>Context-based (source-aware) classification</strong>
-          <span>If a file comes from a known business source (for example, a CRM download), it can be tagged as sensitive right away.</span>
+          Context-based classification
+          <span>Automatically labels files based on where they come from (for example, a file downloaded from a CRM).</span>
         </li>
       </ul>
     </div>
 
     <div class="card">
-      <h3>Data transfer, audit & control</h3>
+      <h3>Data Transfer, Audit And Control</h3>
+      <div class="mini">Audit every sensitive file movement before you block.</div>
 
       <ul class="feature-list">
         <li>
-          <strong>Audit sensitive file movement</strong>
-          <span>See where sensitive files are going before you enforce rules.</span>
+          Audit sensitive file movement
+          <span>See where sensitive files go—before you enforce restrictions.</span>
         </li>
         <li>
-          <strong>Limit which apps can open sensitive files</strong>
-          <span>Prevent sensitive files from being opened by untrusted desktop apps.</span>
+          Restrict access from native apps
+          <span>Stop desktop apps from opening sensitive files when it’s not allowed.</span>
         </li>
         <li>
-          <strong>Prevent uploads to web apps</strong>
-          <span>Stop sensitive files from being uploaded to browsers and cloud services.</span>
+          Upload prevention to web apps
+          <span>Prevent sensitive files from being uploaded to browsers and cloud apps.</span>
         </li>
         <li>
-          <strong>Printing restrictions</strong>
-          <span>Control printing of sensitive files and reduce accidental sharing.</span>
+          Printing restrictions &amp; watermarking
+          <span>Control printing and apply watermarks to discourage misuse.</span>
         </li>
         <li>
-          <strong>Control USB, screen capture/recording, and clipboard</strong>
-          <span>Block copying sensitive content to USB drives, screenshots/recordings, and clipboard paste actions.</span>
+          Block risky channels
+          <span>Control USB transfer, screen capture/recording, clipboard copy, and more.</span>
         </li>
       </ul>
     </div>
   </div>
 </section>
 
-<section class="howitworks">
-  <div class="container">
-    <h2>How it works (audit first, enforce next)</h2>
-    <p class="lead">
-      A simple flow to roll out endpoint DLP safely—gain visibility first, then lock down what matters.
-    </p>
+<!-- ================= ACP STYLE VIDEO CAROUSEL + PILL BUTTONS ================= -->
+<section class="carousel" aria-label="EDLP walkthrough" tabindex="0">
+  <div class="carousel-shell">
+    <button class="carousel-btn prev" aria-label="Previous slide">&#10094;</button>
 
-    <!-- Pills removed -->
+    <div class="carousel-viewport">
+      <div class="carousel-track">
+
+        <div class="carousel-item active" data-title="Data Classification">
+          <div class="carousel-caption">
+            <strong>Classify Sensitive Files Automatically</strong>
+            <p>Use AI and built-in rules to tag sensitive data—then decide what’s allowed.</p>
+          </div>
+          <video autoplay muted loop playsinline>
+            <source src="Screen%20Recording%202026-02-03%20161015.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="carousel-item" data-title="Sensitive File Audit">
+          <div class="carousel-caption">
+            <strong>Audit Sensitive File Movement</strong>
+            <p>Get full visibility into how sensitive files are used and moved—before enforcing controls.</p>
+          </div>
+          <video muted loop playsinline>
+            <source src="Screen%20Recording%202026-02-04%20143010.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="carousel-item" data-title="Policy Deployment">
+          <div class="carousel-caption">
+            <strong>Deploy Policies Confidently</strong>
+            <p>Push policies at scale and apply the right control level—block, allow-with-trust, or audit.</p>
+          </div>
+          <video muted loop playsinline>
+            <source src="Screen%20Recording%202026-02-04%20160046.mp4" type="video/mp4">
+          </video>
+        </div>
+
+      </div>
+
+      <!-- Pills get auto-built here -->
+      <div class="carousel-nav" aria-label="Choose a slide"></div>
+    </div>
+
+    <button class="carousel-btn next" aria-label="Next slide">&#10095;</button>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS (EDLP STYLE, NO BLUE PILL BUTTONS) ================= -->
+<section class="how" aria-label="How It Works">
+  <div class="container">
+    <h2>How It Works (Audit First, Enforce Next)</h2>
+
     <div class="how-grid">
       <div class="how-step">
-        <strong>Discover</strong>
-        <span>Find sensitive data across endpoints.</span>
+        <div class="how-badge">1</div>
+        <h3>Discover</h3>
+        <p>Find where sensitive information exists across endpoints and user folders—without disruption.</p>
       </div>
 
       <div class="how-step">
-        <strong>Classify</strong>
-        <span>Label files using content and context.</span>
+        <div class="how-badge">2</div>
+        <h3>Classify</h3>
+        <p>Label sensitive files using AI and built-in rules, including context-based classification.</p>
       </div>
 
       <div class="how-step">
-        <strong>Monitor</strong>
-        <span>Track movement to browsers, cloud apps, USB, printing, clipboard, and screen capture.</span>
+        <div class="how-badge">3</div>
+        <h3>Monitor</h3>
+        <p>Track sensitive file activity and get out-of-the-box, compliance-ready reports.</p>
       </div>
 
       <div class="how-step">
-        <strong>Control</strong>
-        <span>Block risky actions and allow trusted use cases.</span>
-      </div>
-
-      <div class="how-step">
-        <strong>Report</strong>
-        <span>Out-of-the-box, compliance-ready reports for audits and review.</span>
+        <div class="how-badge">4</div>
+        <h3>Enforce</h3>
+        <p>Block risky transfers and control access to prevent leaks—USB, web uploads, print, screen capture, and clipboard.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="outcomes">
+<!-- ================= TESTIMONIALS ================= -->
+<section class="testimonials" aria-label="Testimonials">
   <div class="container">
-    <h2 class="outcomes-heading">When endpoint DLP controls are in place</h2>
+    <h2>What Teams Say After Rolling It Out</h2>
 
-    <div class="outcomes-grid">
-      <div class="outcome-card">
-        <h3>Fewer data leaks</h3>
-        <ul>
-          <li>Stop risky uploads to web apps and cloud services</li>
-          <li>Control copying through USB, clipboard, and screen capture</li>
-        </ul>
-      </div>
+    <div class="testimonial-grid">
+      <blockquote class="testimonial">
+        <p>
+          “We started in audit mode and quickly understood where sensitive data was moving.
+          Turning on enforcement later was smooth, with minimal user impact.”
+        </p>
+        <footer>
+          <strong>Security Operations Lead</strong>
+          <span>Mid-size Enterprise</span>
+        </footer>
+      </blockquote>
 
-      <div class="outcome-card">
-        <h3>Safer day-to-day work</h3>
-        <ul>
-          <li>Start with audit mode to avoid breaking workflows</li>
-          <li>Enforce only after you confirm what’s truly sensitive</li>
-        </ul>
-      </div>
-
-      <div class="outcome-card">
-        <h3>Better compliance readiness</h3>
-        <ul>
-          <li>Use compliance-ready reports out of the box</li>
-          <li>Maintain clear audit trails for sensitive file handling</li>
-        </ul>
-      </div>
-
-      <div class="outcome-card">
-        <h3>Stronger control on endpoints</h3>
-        <ul>
-          <li>Limit which apps can access sensitive files</li>
-          <li>Reduce accidental sharing through printing and file movement</li>
-        </ul>
-      </div>
+      <blockquote class="testimonial">
+        <p>
+          “The controls around browser uploads and USB made an immediate difference.
+          We finally had visibility and clean reports for reviews.”
+        </p>
+        <footer>
+          <strong>IT Compliance Manager</strong>
+          <span>Global Organization</span>
+        </footer>
+      </blockquote>
     </div>
   </div>
 </section>
 
-<section class="testimonials">
-  <div class="testimonial-grid">
-    <blockquote class="testimonial">
-      <p>
-        “We started in audit mode and quickly understood where sensitive files were moving.
-        Enforcing controls became easy once the rules were tuned.”
-      </p>
-      <footer>
-        <strong>Security Team</strong>
-        <span>Enterprise environment</span>
-      </footer>
-    </blockquote>
-
-    <blockquote class="testimonial">
-      <p>
-        “Upload prevention and clipboard control reduced accidental sharing immediately.
-        The policies were simple for our team to manage.”
-      </p>
-      <footer>
-        <strong>IT Operations</strong>
-        <span>Distributed workforce</span>
-      </footer>
-    </blockquote>
-  </div>
-</section>
-
-<section class="eval-soft">
+<!-- ================= PRICING ================= -->
+<section class="eval-soft" aria-label="Pricing">
   <div class="eval-wrap">
-    <h2>Choose what fits</h2>
+    <h2>Choose What Fits</h2>
     <p class="eval-lead">
-      Start free for up to 25 devices, then scale with per-device pricing.
+      Start free, validate in audit mode, and upgrade when you’re ready to enforce controls.
     </p>
 
     <div class="eval-layout">
       <div class="eval-panel">
-        <div class="eval-inner-center left">
-          <h3>Free Edition</h3>
-          <span class="eval-price">$0</span>
-          <p class="eval-meta">Up to 25 devices</p>
-          <a target="_blank" rel="noopener noreferrer"
-             href="https://www.manageengine.com/endpoint-dlp/download.html"
-             class="eval-cta subtle">Get started</a>
-        </div>
+        <h3>Free Edition</h3>
+        <span class="eval-price">$0</span>
+        <p class="eval-meta">Up to 25 devices</p>
+        <a href="https://www.manageengine.com/endpoint-dlp/download.html" target="_blank" rel="noopener" class="eval-cta subtle">
+          Get started
+        </a>
       </div>
 
       <div class="eval-panel primary">
         <h3>Endpoint DLP Plus</h3>
         <span class="eval-price">$7.9 <small>per device per year</small></span>
-        <p class="eval-meta">As the number of devices increases, the price per device decreases</p>
+        <p class="eval-meta">As the number of devices increases, the price per device decreases.</p>
 
-        <a target="_blank" rel="noopener noreferrer"
-           href="https://www.manageengine.com/endpoint-dlp/download.html"
-           class="eval-cta strong">Start free trial</a>
+        <a href="https://www.manageengine.com/endpoint-dlp/download.html" target="_blank" rel="noopener" class="eval-cta strong">
+          Start free trial
+        </a>
 
-        <small style="display:block; margin-top:8px; color:#64748b; font-size:12px;">
-          Need cloud? Sign up via
-          <a target="_blank" rel="noopener noreferrer"
-             href="https://www.manageengine.com/products/desktop-central/cloud/"
-             style="color:var(--blue); text-decoration:underline;">Endpoint Central Cloud</a>
-        </small>
+        <div style="margin-top:10px; color:var(--muted); font-size:12px; font-weight:650;">
+          Need a quote? Visit
+          <a href="https://www.manageengine.com/endpoint-dlp/get-quote.html" target="_blank" rel="noopener" style="color:var(--blue); text-decoration:underline; font-weight:900;">
+            Get quote
+          </a>
+        </div>
       </div>
     </div>
   </div>
-
-  <p style="text-align:center; font-size:12px; color:#64748b; margin-top:16px;">
-    For complete endpoint management and security,
-    <a target="_blank" rel="noopener noreferrer"
-       href="https://www.manageengine.com/products/desktop-central/"
-       style="color:var(--blue); text-decoration:underline;">ManageEngine Endpoint Central</a>
-    is the recommended solution.
-  </p>
 </section>
 
-<section class="faq-section">
+<!-- ================= FAQ (same template style as ACP) ================= -->
+<section class="faq-section" aria-label="Frequently Asked Questions">
   <div class="container">
     <h2>Frequently Asked Questions</h2>
-    <p class="faq-subtext">Answers to common evaluation questions</p>
 
     <div class="faq-carousel">
       <button class="faq-nav prev" aria-label="Previous FAQ">‹</button>
 
       <div class="faq-track">
         <div class="faq-item active">
-          <h3>Can I get a demo of ManageEngine Endpoint DLP Plus?</h3>
+          <h3>Can I get a demo of Endpoint DLP Plus?</h3>
           <p>
-            Yes, you can request a
-            <a target="_blank" rel="noopener noreferrer"
-               href="https://www.manageengine.com/endpoint-dlp/request-demo.html">personalized demo</a>
-            to see how endpoint data discovery and data controls work in your environment.
+            Yes. You can request a
+            <a href="https://www.manageengine.com/endpoint-dlp/request-demo.html" target="_blank" rel="noopener">personalized demo</a>
+            to see how discovery, audit, and enforcement work in your environment.
           </p>
         </div>
 
         <div class="faq-item">
-          <h3>Does ManageEngine Endpoint DLP Plus have a free plan?</h3>
-          <p>Yes. Endpoint DLP Plus offers a lifetime Free Edition that supports up to 25 devices.</p>
-        </div>
-
-        <div class="faq-item">
-          <h3>Is support available for the Free Edition?</h3>
+          <h3>What detection methods are available in built-in templates?</h3>
           <p>
-            Yes, ManageEngine provides technical support for the Free Edition,
-            along with documentation and knowledge base resources.
+            Endpoint DLP Plus supports four built-in rule types: <strong>Regex</strong>, <strong>Fingerprinting</strong>,
+            <strong>Keyword</strong>, and <strong>File Extension</strong> based detection.
           </p>
         </div>
 
         <div class="faq-item">
-          <h3>Is Endpoint DLP Plus the right choice if I need full endpoint management too?</h3>
+          <h3>What happens if multiple policies apply to the same action?</h3>
           <p>
-            Endpoint DLP Plus is designed for endpoint data discovery and preventing data leaks.
-            If your requirement includes patching, software deployment, asset tracking, and broader endpoint administration,
-            <a target="_blank" rel="noopener noreferrer"
-               href="https://www.manageengine.com/products/desktop-central/">ManageEngine Endpoint Central</a>
-            would be the more suitable choice.
+            Policies are merged and applied in precedence order:
+            <strong>Block</strong> (highest), <strong>Allow within trusted</strong> (lower), and <strong>Audit</strong> (lowest).
+            If any policy blocks an action (for example, file upload), it overrides allow/audit policies for that action.
           </p>
         </div>
       </div>
@@ -905,7 +1074,75 @@
 </footer>
 
 <script>
-  /* ================= FAQ CAROUSEL (same as ACP template) ================= */
+  /* ================= MOBILE MENU ================= */
+  const menuBtn = document.getElementById("menuBtn");
+  const mobileNav = document.getElementById("mobileNav");
+
+  menuBtn?.addEventListener("click", () => {
+    mobileNav.classList.toggle("open");
+    menuBtn.textContent = mobileNav.classList.contains("open") ? "Close" : "Menu";
+  });
+
+  /* ================= ACP-STYLE CAROUSEL (PILLS + PREV/NEXT) ================= */
+  const carouselEl = document.querySelector(".carousel");
+  const slides = carouselEl.querySelectorAll(".carousel-item");
+  const prevBtn = carouselEl.querySelector(".carousel-btn.prev");
+  const nextBtn = carouselEl.querySelector(".carousel-btn.next");
+  const nav = carouselEl.querySelector(".carousel-nav");
+  let currentIndex = 0;
+
+  function stopAllMedia() {
+    slides.forEach((s) => {
+      const v = s.querySelector("video");
+      if (v) v.pause();
+    });
+  }
+
+  function playActiveMedia() {
+    const active = slides[currentIndex];
+    const v = active.querySelector("video");
+    if (v) v.play().catch(() => {});
+  }
+
+  function setActive(index) {
+    currentIndex = (index + slides.length) % slides.length;
+
+    slides.forEach((s) => s.classList.remove("active"));
+    slides[currentIndex].classList.add("active");
+
+    const dots = nav.querySelectorAll(".carousel-dot");
+    dots.forEach((d) => d.classList.remove("active"));
+    dots[currentIndex]?.classList.add("active");
+
+    stopAllMedia();
+    playActiveMedia();
+  }
+
+  function buildNav() {
+    nav.innerHTML = "";
+    slides.forEach((slide, i) => {
+      const label = slide.getAttribute("data-title") || `Slide ${i + 1}`;
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "carousel-dot";
+      btn.innerHTML = `<span class="pill" aria-hidden="true"></span>${label}`;
+      btn.addEventListener("click", () => setActive(i));
+      nav.appendChild(btn);
+    });
+  }
+
+  prevBtn?.addEventListener("click", () => setActive(currentIndex - 1));
+  nextBtn?.addEventListener("click", () => setActive(currentIndex + 1));
+
+  carouselEl.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") setActive(currentIndex - 1);
+    if (e.key === "ArrowRight") setActive(currentIndex + 1);
+  });
+
+  buildNav();
+  setActive(0);
+
+  /* ================= FAQ CAROUSEL ================= */
   const faqItems = document.querySelectorAll(".faq-item");
   const faqPrev = document.querySelector(".faq-nav.prev");
   const faqNext = document.querySelector(".faq-nav.next");
