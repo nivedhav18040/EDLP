@@ -222,18 +222,23 @@
     }
 
     /* Make world map clearly visible */
-    .trust-proof::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background-repeat:no-repeat;
-      background-size:cover;
-      background-position:center center;
-      opacity:0.42; /* higher so it’s visible */
-      pointer-events:none;
-      filter:grayscale(100%) contrast(96%);
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 520'%3E%3Cg fill='%230f3d2e' fill-opacity='1'%3E%3Cpath d='M84 242c34-46 86-71 146-80 54-8 98-7 149 11 32 12 59 34 78 62 13 20 17 43 10 66-6 18-20 34-38 41-28 10-58 4-86-4-33-9-65-16-99-10-25 4-49 15-74 18-29 3-59-3-82-21-21-16-27-55-4-83z'/%3E%3Cpath d='M410 160c22-23 57-33 88-28 44 7 82 33 112 66 19 22 33 48 36 76 3 31-8 60-34 78-26 18-61 22-92 19-38-4-74-18-110-34-26-12-52-22-69-44-25-33-13-92 69-133z'/%3E%3Cpath d='M688 208c36-33 85-51 134-54 58-4 122 12 167 51 35 30 56 77 44 123-10 40-45 70-85 82-49 15-101 3-149-10-49-14-102-27-151-8-30 12-58 34-91 32-26-2-50-18-61-42-11-25-7-54 9-76 19-27 51-45 74-58z'/%3E%3Cpath d='M910 94c30-16 72-14 98 6 18 14 29 36 26 58-3 22-20 40-41 47-33 11-70-4-86-34-16-29-10-64 3-77z'/%3E%3Cpath d='M770 360c26-21 65-28 97-18 30 9 55 32 67 60 10 24 9 54-10 74-17 18-43 24-66 23-32-1-62-13-91-25-22-9-44-18-58-37-20-28-9-59 6-77 14-16 35-25 55-30z'/%3E%3C/g%3E%3C/svg%3E");
-    }
+    /* World map background for Trusted Industry section */
+.trust-proof::before{
+  content:"";
+  position:absolute;
+  inset:0;
+
+  background-image:url("worldmap (1).png");
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:center center;
+
+  opacity:0.28; /* adjust: 0.20 to 0.35 if needed */
+  pointer-events:none;
+
+  filter: grayscale(100%) contrast(96%) blur(3px);
+}
+
 
     /* light overlay (doesn't hide the map) */
     .trust-proof::after{
