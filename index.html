@@ -223,32 +223,34 @@
 
     /* Make world map clearly visible */
     /* World map background for Trusted Industry section */
+/* Map background */
 .trust-proof::before{
   content:"";
   position:absolute;
   inset:0;
 
-  background-image:url("worldmap (1).png");
-  background-repeat:no-repeat;
-  background-size:cover;
-  background-position:center center;
+  /* IMPORTANT: quote + URL encode the filename */
+  background-image: url("worldmap%20(1).png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 
-  opacity:0.28; /* adjust: 0.20 to 0.35 if needed */
+  opacity: 0.55; /* increase so it's visible */
   pointer-events:none;
 
-  filter: grayscale(100%) contrast(96%) blur(3px);
+  filter: grayscale(100%) contrast(110%) blur(4px);
 }
 
+    /* Soft white overlay (lighter so map is visible) */
+.trust-proof::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(900px 460px at 50% 35%, rgba(255,255,255,0.35), rgba(255,255,255,0.55) 70%);
+  pointer-events:none;
+}
 
-    /* light overlay (doesn't hide the map) */
-    .trust-proof::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(900px 460px at 50% 35%, rgba(255,255,255,0.72), rgba(255,255,255,0.88) 70%);
-      pointer-events:none;
-    }
 
     .trust-proof > .container{ position:relative; z-index:1; }
 
