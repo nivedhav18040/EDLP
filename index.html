@@ -781,10 +781,15 @@
       grid-template-columns: 1fr 1fr;
     }
     .plan-col{
-      position: relative;
-      padding: 24px 24px 22px;
-      text-align: left;
-    }
+  position: relative;
+  padding: 24px 24px 22px;
+  text-align: left;
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
     .plan-col + .plan-col{
       border-left: 1px solid rgba(15,23,42,0.08);
       background: rgba(46,168,107,0.05);
@@ -796,6 +801,13 @@
       margin: 6px 0 14px;
       color: #0b1220;
     }
+    .plan-subtitle{
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(100,116,139,0.95);
+  margin-top: -6px;
+  margin-bottom: 10px;
+}
     .plan-kicker{
       display: inline-block;
       font-size: 13px;
@@ -848,10 +860,12 @@
       color: var(--olive-3);
     }
     .plan-cta-row{
-      margin-top: 22px;
-      display: flex;
-      justify-content: center;
-    }
+  margin-top: auto;   /* pushes the button to bottom in both columns */
+  padding-top: 22px;
+  display: flex;
+  justify-content: center;
+}
+
     .plan-btn{
       display: inline-flex;
       align-items: center;
@@ -1211,6 +1225,7 @@
           <div class="plan-col">
             <h3>Endpoint DLP Plus</h3>
 
+            <div class="plan-subtitle">Professional edition</div>
             <span class="plan-kicker">STARTS AT</span>
             <div class="plan-amount-row">
               <span class="amt">$10</span>
