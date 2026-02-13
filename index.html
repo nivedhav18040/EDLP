@@ -776,18 +776,20 @@
       pointer-events:none;
     }
     .compare-cols{
-      position: relative;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-    .plan-col{
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch; /* makes both columns same height */
+}
+
+   .plan-col{
   position: relative;
   padding: 24px 24px 22px;
   text-align: left;
 
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 100%; /* important for the divider height */
 }
 
     .plan-col + .plan-col{
@@ -1225,7 +1227,7 @@
           <div class="plan-col">
             <h3>Endpoint DLP Plus</h3>
 
-            <div class="plan-subtitle">Professional edition</div>
+            <div class="plan-subtitle">PROFESSIONAL EDITION</div>
             <span class="plan-kicker">STARTS AT</span>
             <div class="plan-amount-row">
               <span class="amt">$10</span>
